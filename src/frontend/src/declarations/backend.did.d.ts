@@ -11,7 +11,36 @@ import type { IDL } from '@icp-sdk/core/candid';
 import type { Principal } from '@icp-sdk/core/principal';
 
 export interface BackendHealth { 'version' : string, 'timestamp' : bigint }
+export interface Holding {
+  'id' : bigint,
+  'startTime' : Time,
+  'endTime' : Time,
+  'owner' : Principal,
+  'positionStatus' : PositionStatus,
+  'tokenAmount' : bigint,
+  'lockDurationDays' : bigint,
+}
+export type PositionStatus = { 'expired' : null } |
+  { 'locked' : null } |
+  { 'unlocked' : null };
 export interface Product { 'id' : string }
+export interface Proposal {
+  'id' : bigint,
+  'status' : ProposalStatus,
+  'title' : string,
+  'creator' : Principal,
+  'votes' : ProposalVotes,
+  'description' : string,
+}
+export type ProposalStatus = { 'closed' : null } |
+  { 'open' : null } |
+  { 'approved' : null } |
+  { 'rejected' : null };
+export interface ProposalVotes {
+  'no' : bigint,
+  'yes' : bigint,
+  'abstain' : bigint,
+}
 export interface ShoppingItem {
   'productName' : string,
   'currency' : string,
@@ -27,6 +56,7 @@ export type StripeSessionStatus = {
     'completed' : { 'userPrincipal' : [] | [string], 'response' : string }
   } |
   { 'failed' : { 'error' : string } };
+export type Time = bigint;
 export interface TransformationInput {
   'context' : Uint8Array,
   'response' : http_request_result,
@@ -40,6 +70,9 @@ export interface UserProfile { 'name' : string }
 export type UserRole = { 'admin' : null } |
   { 'user' : null } |
   { 'guest' : null };
+export type VoteOption = { 'no' : null } |
+  { 'yes' : null } |
+  { 'abstain' : null };
 export interface _CaffeineStorageCreateCertificateResult {
   'method' : string,
   'blob_hash' : string,
@@ -80,11 +113,19 @@ export interface _SERVICE {
     [Array<ShoppingItem>, string, string],
     string
   >,
+  'createHolding' : ActorMethod<[bigint, bigint], bigint>,
+  'createProposal' : ActorMethod<[string, string], bigint>,
+  'deleteHolding' : ActorMethod<[bigint], undefined>,
   'deleteProduct' : ActorMethod<[string], undefined>,
+  'getAllHoldings' : ActorMethod<[], Array<Holding>>,
+  'getAllProposals' : ActorMethod<[], Array<Proposal>>,
   'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
   'getCallerUserRole' : ActorMethod<[], UserRole>,
+  'getHolding' : ActorMethod<[bigint], [] | [Holding]>,
   'getProducts' : ActorMethod<[], Array<Product>>,
+  'getProposal' : ActorMethod<[bigint], [] | [Proposal]>,
   'getStripeSessionStatus' : ActorMethod<[string], StripeSessionStatus>,
+  'getUserHoldings' : ActorMethod<[Principal], Array<Holding>>,
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
   'initializeAccessControl' : ActorMethod<[], undefined>,
   'isCallerAdmin' : ActorMethod<[], boolean>,
@@ -94,7 +135,9 @@ export interface _SERVICE {
   'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
   'setStripeConfiguration' : ActorMethod<[StripeConfiguration], undefined>,
   'transform' : ActorMethod<[TransformationInput], TransformationOutput>,
+  'unlockHolding' : ActorMethod<[bigint], undefined>,
   'updateProduct' : ActorMethod<[Product], undefined>,
+  'voteOnProposal' : ActorMethod<[bigint, VoteOption], undefined>,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

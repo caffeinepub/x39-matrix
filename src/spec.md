@@ -1,13 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Add an in-app “Connectivity & Domain Diagnostics” view to help users verify reachability and domain consistency for https://x39matrix.com, plus a lightweight backend health endpoint for troubleshooting.
+**Goal:** Prepare submission-ready Android (Google Play) and iOS (Apple App Store) release builds, plus a store asset pack with documented upload guidance.
 
 **Planned changes:**
-- Add a user-accessible “Connectivity & Domain Diagnostics” view (reachable via a documented mechanism like a footer link or URL parameter).
-- Display basic environment info in the view: current origin, HTTPS status, configured OFFICIAL_PORTAL_URL (https://x39matrix.com), and a client-side timestamp.
-- Implement client-side diagnostics checks with pass/fail results and readable English error messages: canonical domain consistency and a browser-safe reachability test that loads a known static asset from https://x39matrix.com.
-- Add a copy-to-clipboard button to export a compact diagnostics report (origin, HTTPS yes/no, check results).
-- Implement a backend query health endpoint returning canister/server timestamp, canister identifier, and app version; show these values (or a clear error) in the Diagnostics view.
+- Generate a Play Store–ready Android App Bundle (AAB) with reproducible build command(s), release package identifiers, and updated version name/code; provide artifact path(s) and short English release notes.
+- Document and produce an iOS release archive suitable for App Store Connect submission, including step-by-step signing/provisioning instructions to export an IPA; include short English release notes.
+- Add a repository “submission asset pack” under `frontend/public/assets/generated` containing required store visuals (icon(s), feature/promo graphic, and at least 3 screenshots) with exact filenames, plus an English README mapping assets to Google Play Console / App Store Connect fields.
 
-**User-visible outcome:** Users can open a Diagnostics screen to see whether they’re on the canonical domain, confirm basic asset/backend reachability for x39matrix.com, and copy a compact report to share for support/troubleshooting.
+**User-visible outcome:** The project can be built into Play Store (AAB) and App Store (archive/IPA export-ready) submission artifacts with clear versioned release notes and a ready-to-upload store listing asset pack.

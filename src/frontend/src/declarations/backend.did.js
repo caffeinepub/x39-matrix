@@ -36,6 +36,40 @@ export const ShoppingItem = IDL.Record({
   'priceInCents' : IDL.Nat,
   'productDescription' : IDL.Text,
 });
+export const Time = IDL.Int;
+export const PositionStatus = IDL.Variant({
+  'expired' : IDL.Null,
+  'locked' : IDL.Null,
+  'unlocked' : IDL.Null,
+});
+export const Holding = IDL.Record({
+  'id' : IDL.Nat,
+  'startTime' : Time,
+  'endTime' : Time,
+  'owner' : IDL.Principal,
+  'positionStatus' : PositionStatus,
+  'tokenAmount' : IDL.Nat,
+  'lockDurationDays' : IDL.Nat,
+});
+export const ProposalStatus = IDL.Variant({
+  'closed' : IDL.Null,
+  'open' : IDL.Null,
+  'approved' : IDL.Null,
+  'rejected' : IDL.Null,
+});
+export const ProposalVotes = IDL.Record({
+  'no' : IDL.Nat,
+  'yes' : IDL.Nat,
+  'abstain' : IDL.Nat,
+});
+export const Proposal = IDL.Record({
+  'id' : IDL.Nat,
+  'status' : ProposalStatus,
+  'title' : IDL.Text,
+  'creator' : IDL.Principal,
+  'votes' : ProposalVotes,
+  'description' : IDL.Text,
+});
 export const UserProfile = IDL.Record({ 'name' : IDL.Text });
 export const StripeSessionStatus = IDL.Variant({
   'completed' : IDL.Record({
@@ -65,6 +99,11 @@ export const TransformationOutput = IDL.Record({
   'status' : IDL.Nat,
   'body' : IDL.Vec(IDL.Nat8),
   'headers' : IDL.Vec(http_header),
+});
+export const VoteOption = IDL.Variant({
+  'no' : IDL.Null,
+  'yes' : IDL.Null,
+  'abstain' : IDL.Null,
 });
 
 export const idlService = IDL.Service({
@@ -102,11 +141,19 @@ export const idlService = IDL.Service({
       [IDL.Text],
       [],
     ),
+  'createHolding' : IDL.Func([IDL.Nat, IDL.Nat], [IDL.Nat], []),
+  'createProposal' : IDL.Func([IDL.Text, IDL.Text], [IDL.Nat], []),
+  'deleteHolding' : IDL.Func([IDL.Nat], [], []),
   'deleteProduct' : IDL.Func([IDL.Text], [], []),
+  'getAllHoldings' : IDL.Func([], [IDL.Vec(Holding)], ['query']),
+  'getAllProposals' : IDL.Func([], [IDL.Vec(Proposal)], ['query']),
   'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
   'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+  'getHolding' : IDL.Func([IDL.Nat], [IDL.Opt(Holding)], ['query']),
   'getProducts' : IDL.Func([], [IDL.Vec(Product)], ['query']),
+  'getProposal' : IDL.Func([IDL.Nat], [IDL.Opt(Proposal)], ['query']),
   'getStripeSessionStatus' : IDL.Func([IDL.Text], [StripeSessionStatus], []),
+  'getUserHoldings' : IDL.Func([IDL.Principal], [IDL.Vec(Holding)], ['query']),
   'getUserProfile' : IDL.Func(
       [IDL.Principal],
       [IDL.Opt(UserProfile)],
@@ -124,7 +171,9 @@ export const idlService = IDL.Service({
       [TransformationOutput],
       ['query'],
     ),
+  'unlockHolding' : IDL.Func([IDL.Nat], [], []),
   'updateProduct' : IDL.Func([Product], [], []),
+  'voteOnProposal' : IDL.Func([IDL.Nat, VoteOption], [], []),
 });
 
 export const idlInitArgs = [];
@@ -158,6 +207,40 @@ export const idlFactory = ({ IDL }) => {
     'priceInCents' : IDL.Nat,
     'productDescription' : IDL.Text,
   });
+  const Time = IDL.Int;
+  const PositionStatus = IDL.Variant({
+    'expired' : IDL.Null,
+    'locked' : IDL.Null,
+    'unlocked' : IDL.Null,
+  });
+  const Holding = IDL.Record({
+    'id' : IDL.Nat,
+    'startTime' : Time,
+    'endTime' : Time,
+    'owner' : IDL.Principal,
+    'positionStatus' : PositionStatus,
+    'tokenAmount' : IDL.Nat,
+    'lockDurationDays' : IDL.Nat,
+  });
+  const ProposalStatus = IDL.Variant({
+    'closed' : IDL.Null,
+    'open' : IDL.Null,
+    'approved' : IDL.Null,
+    'rejected' : IDL.Null,
+  });
+  const ProposalVotes = IDL.Record({
+    'no' : IDL.Nat,
+    'yes' : IDL.Nat,
+    'abstain' : IDL.Nat,
+  });
+  const Proposal = IDL.Record({
+    'id' : IDL.Nat,
+    'status' : ProposalStatus,
+    'title' : IDL.Text,
+    'creator' : IDL.Principal,
+    'votes' : ProposalVotes,
+    'description' : IDL.Text,
+  });
   const UserProfile = IDL.Record({ 'name' : IDL.Text });
   const StripeSessionStatus = IDL.Variant({
     'completed' : IDL.Record({
@@ -184,6 +267,11 @@ export const idlFactory = ({ IDL }) => {
     'status' : IDL.Nat,
     'body' : IDL.Vec(IDL.Nat8),
     'headers' : IDL.Vec(http_header),
+  });
+  const VoteOption = IDL.Variant({
+    'no' : IDL.Null,
+    'yes' : IDL.Null,
+    'abstain' : IDL.Null,
   });
   
   return IDL.Service({
@@ -221,11 +309,23 @@ export const idlFactory = ({ IDL }) => {
         [IDL.Text],
         [],
       ),
+    'createHolding' : IDL.Func([IDL.Nat, IDL.Nat], [IDL.Nat], []),
+    'createProposal' : IDL.Func([IDL.Text, IDL.Text], [IDL.Nat], []),
+    'deleteHolding' : IDL.Func([IDL.Nat], [], []),
     'deleteProduct' : IDL.Func([IDL.Text], [], []),
+    'getAllHoldings' : IDL.Func([], [IDL.Vec(Holding)], ['query']),
+    'getAllProposals' : IDL.Func([], [IDL.Vec(Proposal)], ['query']),
     'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
     'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+    'getHolding' : IDL.Func([IDL.Nat], [IDL.Opt(Holding)], ['query']),
     'getProducts' : IDL.Func([], [IDL.Vec(Product)], ['query']),
+    'getProposal' : IDL.Func([IDL.Nat], [IDL.Opt(Proposal)], ['query']),
     'getStripeSessionStatus' : IDL.Func([IDL.Text], [StripeSessionStatus], []),
+    'getUserHoldings' : IDL.Func(
+        [IDL.Principal],
+        [IDL.Vec(Holding)],
+        ['query'],
+      ),
     'getUserProfile' : IDL.Func(
         [IDL.Principal],
         [IDL.Opt(UserProfile)],
@@ -243,7 +343,9 @@ export const idlFactory = ({ IDL }) => {
         [TransformationOutput],
         ['query'],
       ),
+    'unlockHolding' : IDL.Func([IDL.Nat], [], []),
     'updateProduct' : IDL.Func([Product], [], []),
+    'voteOnProposal' : IDL.Func([IDL.Nat, VoteOption], [], []),
   });
 };
 

@@ -1,9 +1,11 @@
 import React from 'react';
-import { Smartphone, Download, Shield, Wallet, Gift } from 'lucide-react';
+import { Smartphone, Download, Shield, Wallet, Gift, ExternalLink } from 'lucide-react';
 import { getCurrentOrigin } from '../utils/urls';
+import { getAndroidUrl, isApkFallbackEnabled } from '../config/distribution';
 
 export function AndroidMobileAppSection() {
-  // Build domain-safe APK download URL
+  const androidUrl = getAndroidUrl();
+  const showApkFallback = isApkFallbackEnabled();
   const apkDownloadUrl = `${getCurrentOrigin()}/downloads/x39-matrix-mobile.apk`;
 
   return (
@@ -30,7 +32,7 @@ export function AndroidMobileAppSection() {
               X39 Matrix Mobile
             </h2>
             <p className="text-xl md:text-2xl text-gray-300 font-montserrat text-center">
-              Aplicación Android Dedicada al Token
+              Dedicated Android Token Application
             </p>
           </div>
 
@@ -44,10 +46,10 @@ export function AndroidMobileAppSection() {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-red-500 mb-2 font-orbitron">
-                    Enfoque Exclusivo en Token
+                    Exclusive Token Focus
                   </h3>
                   <p className="text-gray-300 font-montserrat text-sm">
-                    Interfaz simplificada centrada únicamente en la información del token X39 Matrix y funcionalidad de airdrop.
+                    Simplified interface focused solely on X39 Matrix token information and airdrop functionality.
                   </p>
                 </div>
               </div>
@@ -61,10 +63,10 @@ export function AndroidMobileAppSection() {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-red-500 mb-2 font-orbitron">
-                    Reclamo de Airdrop
+                    Airdrop Claim
                   </h3>
                   <p className="text-gray-300 font-montserrat text-sm">
-                    Sistema completo de reclamo para hasta 200,000 tokens con validación segura y procesamiento.
+                    Complete claim system for up to 200,000 tokens with secure validation and processing.
                   </p>
                 </div>
               </div>
@@ -78,10 +80,10 @@ export function AndroidMobileAppSection() {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-red-500 mb-2 font-orbitron">
-                    Integración de Billeteras
+                    Wallet Integration
                   </h3>
                   <p className="text-gray-300 font-montserrat text-sm">
-                    Compatible con ICP, Plug, Stoic, Bitfinity, Infinity y otras billeteras principales.
+                    Compatible with ICP, Plug, Stoic, Bitfinity, Infinity, and other major wallets.
                   </p>
                 </div>
               </div>
@@ -95,10 +97,10 @@ export function AndroidMobileAppSection() {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-red-500 mb-2 font-orbitron">
-                    Seguridad Mejorada
+                    Enhanced Security
                   </h3>
                   <p className="text-gray-300 font-montserrat text-sm">
-                    Validación segura de direcciones de billetera con protección anti-fraude y límites basados en IP.
+                    Secure wallet address validation with anti-fraud protection and IP-based limits.
                   </p>
                 </div>
               </div>
@@ -108,71 +110,104 @@ export function AndroidMobileAppSection() {
           {/* App Details */}
           <div className="bg-black/60 border border-red-500/40 rounded-lg p-6 mb-8">
             <h3 className="text-2xl font-bold text-red-500 mb-4 font-orbitron neon-text-red">
-              Características de la Aplicación
+              Application Features
             </h3>
             <ul className="space-y-3 text-gray-300 font-montserrat">
               <li className="flex items-start gap-3">
                 <span className="text-red-500 mt-1">▸</span>
-                <span><strong className="text-red-400">Estética Cyberpunk:</strong> Diseño Matrix negro-rojo-neón idéntico al sitio web</span>
+                <span><strong className="text-red-400">Cyberpunk Aesthetic:</strong> Matrix black-red-neon design identical to website</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-red-500 mt-1">▸</span>
-                <span><strong className="text-red-400">Logo Triangle-Eye:</strong> Símbolo oficial como elemento central de marca</span>
+                <span><strong className="text-red-400">Triangle-Eye Logo:</strong> Official symbol as central brand element</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-red-500 mt-1">▸</span>
-                <span><strong className="text-red-400">Idioma Español:</strong> Todos los elementos de interfaz en español</span>
+                <span><strong className="text-red-400">English Language:</strong> All interface elements in English</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-red-500 mt-1">▸</span>
-                <span><strong className="text-red-400">Selector de Billetera:</strong> Modal temático cyberpunk para selección y entrada de dirección</span>
+                <span><strong className="text-red-400">Wallet Selector:</strong> Cyberpunk-themed modal for selection and address entry</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-red-500 mt-1">▸</span>
-                <span><strong className="text-red-400">Seguimiento de Progreso:</strong> Indicadores visuales para estado de reclamo y confirmación</span>
+                <span><strong className="text-red-400">Progress Tracking:</strong> Visual indicators for claim status and confirmation</span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="text-red-500 mt-1">▸</span>
-                <span><strong className="text-red-400">Diseño Responsivo:</strong> Se adapta a diferentes tamaños de pantalla Android</span>
+                <span><strong className="text-red-400">Responsive Design:</strong> Adapts to different Android screen sizes</span>
               </li>
             </ul>
           </div>
 
           {/* Download Button */}
           <div className="flex flex-col items-center gap-4">
-            <a
-              href={apkDownloadUrl}
-              download="x39-matrix-mobile.apk"
-              className="inline-flex items-center justify-center gap-4 px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold text-lg rounded-xl shadow-2xl hover:shadow-red-glow transition-all duration-300 border-2 border-red-500 hover:border-red-400 animate-glow-pulse"
-              style={{
-                textShadow: '0 0 10px rgba(255, 0, 0, 0.8)',
-              }}
-            >
-              <Download className="w-6 h-6" />
-              <span className="font-orbitron uppercase tracking-wider">
-                Descargar APK Ahora
-              </span>
-            </a>
+            {androidUrl ? (
+              <a
+                href={androidUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-4 px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold text-lg rounded-xl shadow-2xl hover:shadow-red-glow transition-all duration-300 border-2 border-red-500 hover:border-red-400 animate-glow-pulse"
+                style={{
+                  textShadow: '0 0 10px rgba(255, 0, 0, 0.8)',
+                }}
+              >
+                <ExternalLink className="w-6 h-6" />
+                <span className="font-orbitron uppercase tracking-wider">
+                  Get on Play Store
+                </span>
+              </a>
+            ) : showApkFallback ? (
+              <a
+                href={apkDownloadUrl}
+                download="x39-matrix-mobile.apk"
+                className="inline-flex items-center justify-center gap-4 px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold text-lg rounded-xl shadow-2xl hover:shadow-red-glow transition-all duration-300 border-2 border-red-500 hover:border-red-400 animate-glow-pulse"
+                style={{
+                  textShadow: '0 0 10px rgba(255, 0, 0, 0.8)',
+                }}
+              >
+                <Download className="w-6 h-6" />
+                <span className="font-orbitron uppercase tracking-wider">
+                  Download APK Now
+                </span>
+              </a>
+            ) : (
+              <button
+                disabled
+                className="inline-flex items-center justify-center gap-4 px-8 py-4 bg-slate-600 text-slate-400 font-bold text-lg rounded-xl shadow-2xl border-2 border-slate-600 cursor-not-allowed"
+              >
+                <Smartphone className="w-6 h-6" />
+                <span className="font-orbitron uppercase tracking-wider">
+                  Coming Soon
+                </span>
+              </button>
+            )}
             
             <p className="text-sm text-gray-400 font-montserrat text-center max-w-md">
-              Descarga directa del archivo APK. Compatible con Android 8.0 y superior.
-              Tamaño: ~15 MB
+              {androidUrl 
+                ? 'Download from Google Play Store. Compatible with Android 8.0 and above.'
+                : showApkFallback
+                ? 'Direct APK download. Compatible with Android 8.0 and above. Size: ~15 MB'
+                : 'Android app will be available soon on Google Play Store.'
+              }
             </p>
           </div>
 
-          {/* Installation Instructions */}
-          <div className="mt-8 bg-black/40 border border-red-500/30 rounded-lg p-6">
-            <h4 className="text-xl font-bold text-red-500 mb-4 font-orbitron">
-              Instrucciones de Instalación
-            </h4>
-            <ol className="space-y-2 text-gray-300 font-montserrat text-sm">
-              <li><strong className="text-red-400">1.</strong> Descarga el archivo APK usando el botón de arriba</li>
-              <li><strong className="text-red-400">2.</strong> Habilita "Instalar desde fuentes desconocidas" en la configuración de Android</li>
-              <li><strong className="text-red-400">3.</strong> Abre el archivo APK descargado</li>
-              <li><strong className="text-red-400">4.</strong> Sigue las instrucciones en pantalla para completar la instalación</li>
-              <li><strong className="text-red-400">5.</strong> Abre X39 Matrix Mobile y conecta tu billetera para reclamar tokens</li>
-            </ol>
-          </div>
+          {/* Installation Instructions (only for APK) */}
+          {showApkFallback && !androidUrl && (
+            <div className="mt-8 bg-black/40 border border-red-500/30 rounded-lg p-6">
+              <h4 className="text-xl font-bold text-red-500 mb-4 font-orbitron">
+                Installation Instructions
+              </h4>
+              <ol className="space-y-2 text-gray-300 font-montserrat text-sm">
+                <li><strong className="text-red-400">1.</strong> Download the APK file using the button above</li>
+                <li><strong className="text-red-400">2.</strong> Enable "Install from unknown sources" in Android settings</li>
+                <li><strong className="text-red-400">3.</strong> Open the downloaded APK file</li>
+                <li><strong className="text-red-400">4.</strong> Follow on-screen instructions to complete installation</li>
+                <li><strong className="text-red-400">5.</strong> Open X39 Matrix Mobile and connect your wallet to claim tokens</li>
+              </ol>
+            </div>
+          )}
         </div>
       </div>
     </section>

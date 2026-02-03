@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 12,
-  "summary": "Project scope expanded beyond the original x39matrix.com rebrand into a token-launch marketing portal for the x39Matrix token (\"x39Matrix\" / X39 Matrix) on ICP. The site now centers on a prominent official triangle/eye logo as the token mark, airdrop promotion (200,000 promo tokens), claim UX with wallet selection + manual address entry, ICP live price panel, promotional/news surfaces, and SEO/indexing. A major ongoing priority is making the new custom domain https://x39matrix.com reliably resolve worldwide via correct ICP custom-domain DNS/SSL/canister mapping (prior x39dark.com still referenced/used in parallel during transition).",
+  "projectStateVersion": 32,
+  "summary": "Project scope has expanded from the x39Matrix token-centric ICP portal to include a full rebrand/launch under x39matrix.com (triangle-with-eye as the official token logo everywhere), improved global domain/DNS/SSL reliability, public-facing airdrop/claim + wallet capture UX, and a planned NNS-style x39Matrix staking/governance “portfolio” experience with multilingual UI and companion Android/iOS app distribution plans.",
   "existing_features": [
     {
       "id": "IF-1",
@@ -437,26 +437,75 @@
       "version": 1
     },
     {
-      "id": "feature-add-a-user-accessible-connectivity-domain-diagnostics-view-in-the-frontend-that-helps-verify-whether-the-app-is-reachable-reliably-from-different-networks-regions-without-requiring-developer-tools",
-      "title": "Add a user-accessible “Connectivity & Domain Diagnostics” view in the frontend that helps verify whether the app is reachable reliably from different networks/regions, without requiring developer tools.",
+      "id": "IF-40",
+      "title": "NNS-inspired Hold/Stake module (time-locked holdings)",
+      "synonyms": [
+        "StakeHoldModule",
+        "holdings",
+        "time-locked holding entries"
+      ],
+      "description": "Frontend provides an authenticated Hold/Stake experience for creating and managing time-locked holding entries (amount, lock duration, start/end), with dedicated UI (CreateHoldingForm, HoldingsList, StakeHoldModule) and react-query hooks (useHoldings) for persistence/refresh.",
       "reqIds": [
-        "REQ-1"
+        "REQ-4"
       ],
       "version": 1
     },
     {
-      "id": "feature-implement-automated-client-side-checks-in-the-diagnostics-view-that-validate-domain-consistency-and-basic-asset-reachability-for-https-x39matrix-com",
-      "title": "Implement automated client-side checks in the Diagnostics view that validate domain consistency and basic asset reachability for https://x39matrix.com.",
+      "id": "IF-41",
+      "title": "NNS-inspired governance module (proposal list/detail)",
+      "synonyms": [
+        "GovernanceModule",
+        "proposals",
+        "governance UI"
+      ],
+      "description": "Frontend adds an NNS-like governance surface (GovernanceModule) with proposal browsing and details (ProposalList/ProposalDetail) backed by react-query hooks (useProposals), integrated into the authenticated app experience.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-42",
+      "title": "Token portfolio shell and navigation for NNS-like modules",
+      "synonyms": [
+        "X39PortfolioShell",
+        "PortfolioHeader",
+        "PortfolioNav"
+      ],
+      "description": "Introduced a dedicated portfolio shell layout and navigation components to host the new hold/stake and governance modules in a cohesive NNS-like UI flow.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-43",
+      "title": "Connectivity diagnostics UI for ICP/network troubleshooting",
+      "synonyms": [
+        "ConnectivityDiagnostics",
+        "useConnectivityDiagnostics"
+      ],
+      "description": "Frontend includes a connectivity diagnostics component and hook to help users troubleshoot common ICP access/network issues (e.g., reachability checks and guidance), integrated into the SPA UI.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "feature-prepare-an-android-release-submission-build-for-google-play-including-generating-a-play-ready-android-app-bundle-aab-ensuring-the-app-s-package-identifiers-and-versioning-are-set-for-release-and-providing-the-final-build-artifact-path-s-and-release-notes-english",
+      "title": "Prepare an Android release submission build for Google Play, including generating a Play-ready Android App Bundle (AAB), ensuring the app’s package identifiers and versioning are set for release, and providing the final build artifact path(s) and release notes (English).",
       "reqIds": [
-        "REQ-2"
+        "REQ-7"
       ],
       "version": 1
     },
     {
-      "id": "feature-add-a-lightweight-backend-health-endpoint-that-returns-canister-time-and-build-version-info-for-troubleshooting-inconsistent-routing-canister-mapping-and-surface-that-info-in-the-frontend-diagnostics-view",
-      "title": "Add a lightweight backend health endpoint that returns canister time and build/version info for troubleshooting inconsistent routing/canister mapping, and surface that info in the frontend Diagnostics view.",
+      "id": "feature-prepare-an-ios-release-submission-build-for-the-apple-app-store-including-producing-a-release-archive-suitable-for-app-store-connect-submission-and-providing-step-by-step-signing-provisioning-instructions-required-for-a-developer-to-export-an-ipa-english",
+      "title": "Prepare an iOS release submission build for the Apple App Store, including producing a release archive suitable for App Store Connect submission and providing step-by-step signing/provisioning instructions required for a developer to export an IPA (English).",
       "reqIds": [
-        "REQ-3"
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-app-store-play-store-submission-asset-pack-to-the-repository-that-includes-required-icons-and-store-listing-visuals-at-standard-sizes-and-ensure-the-web-app-s-branding-is-consistent-with-these-assets-english-naming-and-documentation",
+      "title": "Add an App Store / Play Store submission asset pack to the repository that includes required icons and store listing visuals at standard sizes, and ensure the web app’s branding is consistent with these assets (English naming and documentation).",
+      "reqIds": [
+        "REQ-9"
       ],
       "version": 1
     }
@@ -476,25 +525,101 @@
     },
     {
       "id": "AR-6",
-      "summary": "Make https://x39matrix.com work globally (DNS/SSL + ICP custom domain mapping) and ensure consistent canonical/links after rebrand from x39dark.com",
+      "summary": "Add user registration (name-only) to claim free x39Matrix tokens (airdrop) and store per-user state (claimed status, wallet address)",
       "reqIds": [],
       "status": "pending"
     },
     {
       "id": "AR-7",
-      "summary": "Implement x39Matrix token launch promo surfaces: official triangle/eye logo as header+favicon, airdrop banner (200,000), and updated marketing copy/sections",
+      "summary": "Add buy flow for x39Matrix at real market price sourced from MEXC (display price + allow user to proceed with purchase via supported wallets/links)",
       "reqIds": [],
       "status": "pending"
     },
     {
       "id": "AR-8",
-      "summary": "Airdrop claim UX: on clicking “Reclamar”, show wallet selector (ICP wallets like Plug/Stoic/Infinity/etc.) and allow user to input/confirm their wallet address for receiving tokens",
+      "summary": "Add wallet selector/connector UX for claim/buy/exchange actions (ICP wallets and other supported wallets), including manual address entry and validation",
       "reqIds": [],
       "status": "pending"
     },
     {
-      "id": "AR-9",
-      "summary": "Add/restore SEO assets for the new domain (robots.txt, sitemap.xml, canonical URLs) and ensure indexing across browsers/search engines",
+      "id": "AR-10",
+      "summary": "Implement a real per-user registration + free-claim (airdrop) flow for the X39 Matrix token using Internet Identity authentication, persisting the user’s claim status and registered wallet details in the backend (one claim per authenticated principal).",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Add X39 Matrix live market-price display sourced from MEXC (real-time public market data), with a frontend direct-fetch attempt and a backend HTTP-outcall proxy fallback for reliability/CORS (mirroring the existing ICP/Binance proxy pattern).",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Create a “Buy X39 Matrix” flow that uses the MEXC-derived market price display and provides a clear path to purchase via supported external links and/or wallet instructions, while also recording the user’s intent/action in their account for later reference (without claiming on-chain execution).",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Add a wallet exchange/transfer helper UI that lets users store and manage their wallet addresses in their user account and provides clear external actions to move/exchange holdings using their wallet(s), without implementing direct wallet connectivity or on-chain transfers inside the app.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Ensure all newly added user-facing UI text for the new registration/buy/stake/exchange flows is in English and integrated into the existing translation approach (without editing immutable frontend hook files).",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-16",
+      "summary": "Add name-only user registration with unique display names plus a community comments area (welcome message + ability to comment on the project)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Implement a public airdrop claim mechanic tied to registration (e.g., up to 20 tokens per registered user) with wallet selection + manual address entry during claim",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-18",
+      "summary": "Standardize x39Matrix token branding assets: reuse the original triangle-with-eye logo as the official x39Matrix token logo across header, favicon, and all token references",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Build an NNS-style x39Matrix staking + governance portfolio experience (Internet Identity login, staking/lockups, governance proposals/voting) matching NNS blue portfolio UI",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Add multilingual UI selector and translations (at least ES/EN/JP/ZH/KR; optionally DE) for the new x39Matrix portal/modules",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Create companion native mobile apps for x39Matrix (Android + iOS) aligned with the web UX, with download distribution plan (Play Store/App Store builds and/or APK)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-22",
+      "summary": "Add/adjust live market panels: ICP official logo + price/market metrics sourced from Binance with regular refresh (e.g., every 30s) and consistent header layout",
       "reqIds": [],
       "status": "pending"
     }
@@ -515,33 +640,77 @@
     "x39Matrix token marketing UI uses a single official triangular ‘eye’ logo as the token mark across all placements (header/token blocks/favicon).",
     "Airdrop claim UX includes wallet selection and manual wallet address entry by the user; avoid displaying any private/team allocation details publicly.",
     "Backend modules and build-template dependencies were updated to newer component versions (authorization v3.0.0, stripe v3.0.0, http-outcalls v3.0.0, blob-storage v4.0.0, core-infrastructure v1.0.2).",
-    "Custom domain work now includes x39matrix.com (in addition to prior x39dark.com): requires correct ICP custom-domain mapping plus DNS (A/AAAA/CNAME/TXT as required by IC boundary nodes) and SSL issuance for worldwide availability.",
-    "Token claim flow requires a wallet-selection UI and manual address capture (no private allocation details displayed publicly)."
+    "Product direction now includes token utility surfaces beyond marketing: registration/airdrop claims, wallet linking, exchange price integration (MEXC), and an NNS-like staking/governance module for x39Matrix.",
+    "Frontend now includes an NNS-like module area with portfolio shell/navigation plus separate stake/holdings and governance feature modules.",
+    "Holdings and governance data access are implemented via dedicated React Query hooks (useHoldings/useProposals) to integrate with the existing identity-aware actor/query invalidation patterns.",
+    "Authentication UX is extended with a dedicated login button component (components/auth/X39LoginButton) for gating the new modules behind Internet Identity.",
+    "Added a frontend connectivity diagnostics hook/component to surface network/ICP access troubleshooting guidance to users.",
+    "Planned expansion: deliver an NNS-style x39Matrix staking/governance portfolio UX gated by Internet Identity, targeting web plus native Android/iOS app packaging.",
+    "Planned UX: claim/airdrop flow should prompt wallet type selection and manual wallet address entry before completing registration/claim.",
+    "Branding requirement: triangle-with-eye artwork used previously (\"Oráculo de Davos\") is the canonical x39Matrix token logo and must be reused consistently (header/favicon/token blocks)."
   ],
   "knownIssues": [
-    "Language selection UI in App.tsx maintains a local currentLanguage state but does not call LanguageContext.setLanguage; changing the language from the navbar likely does not affect translations rendered via useLanguage().",
-    "LiveICPPrice useEffect depends on icpPriceData, which causes the polling interval to be recreated on each price update (potential interval churn).",
-    "X39ICPGame: lives are displayed and game-over is checked, but enemy collisions do not decrement lives; as implemented, game over may be unreachable unless lives are reduced elsewhere.",
-    "X39ICPGame updates React state (setEnemies/setCollectibles) inside useFrame every frame, which can cause frequent re-renders and performance issues as entity counts grow.",
     "ICPPaymentGate describes automatic unlocking after payment, but no payment verification/unlock mechanism is implemented in the frontend (and no matching backend logic is present in the provided code).",
     "Several UI panels use mock/generated data (TokenAnalyticsPanel, PerformanceMetricsDashboard, DailyNewsUpdates, token counters), indicating missing real backend integrations.",
-    "Stripe buildCheckoutSessionBody uses shipping_address_collection[allowed_countries][0] for every country, which likely overwrites previous entries and results in only one allowed country being effective.",
-    "Stripe session parsing (extractClientReferenceId) relies on naive substring/split matching over raw JSON text; it is brittle vs. formatting changes.",
-    "QRCodeSection cleanup removes all <script> tags whose src contains 'qrcode', which can inadvertently remove shared scripts if other components rely on them simultaneously.",
     "Hard-coded reliance on Binance public APIs may fail in some environments due to rate limits, regional blocks, or CORS/network restrictions.",
     "AccessControl assigns the first non-anonymous principal calling initializeAccessControl() as admin; there is no recovery/rotation mechanism if that principal is lost or never initializes.",
     "Blob storage module requires the CAFFFEINE_STORAGE_CASHIER_PRINCIPAL environment variable; canister traps if missing.",
-    "Some referenced components/files appear as placeholders/empty in the provided listing (e.g., frontend/src/components/GolumanjiGame.tsx, GameHUD.tsx, GameWorld.tsx, several Matrix/Davos blocks), suggesting incomplete or missing implementations in parts of the codebase snapshot.",
     "Custom domain (x39matrix.com / x39.org) intermittently fails to resolve to the ICP canister and may show a default Nginx page, indicating DNS/SSL/canister domain-mapping misconfiguration or incomplete propagation.",
     "Countdown/launch-timer logic has been unstable and was requested to be removed or replaced to avoid credibility issues.",
-    "https://x39matrix.com does not reliably open (domain resolves incorrectly / not mapped to ICP canister / SSL not active), indicating DNS/SSL/custom-domain mapping misconfiguration or incomplete propagation.",
-    "User reports persistent 'site does not open in any browser' symptoms; needs global verification and remediation beyond frontend changes."
+    "x39matrix.com domain access reported as failing/not opening; indicates ongoing DNS/SSL/custom-domain-to-canister mapping issues similar to prior x39dark.com problems.",
+    "Users report x39matrix.com / x39Matrix.com not opening in browsers; indicates ongoing DNS/SSL/custom-domain-to-canister mapping problems beyond existing intermittent resolution issues.",
+    "Frequent deploy/publish failures and draft expirations interrupt continuity; deployment process appears unreliable and may block changes from reaching production."
   ],
   "isFixRequest": true,
+  "imageRequirements": "## Required Images\n- App icon, triangle-with-eye mark on dark background (app-icon.dim_1024x1024.png)\n- Android adaptive icon foreground, triangle-with-eye mark only with transparent background (android-adaptive-foreground.dim_1024x1024.png)\n- Android adaptive icon background, subtle dark tech pattern (android-adaptive-background.dim_1024x1024.png)\n- Google Play feature graphic, dark cyber/tech banner with triangle-with-eye mark and minimal title text styling (play-feature-graphic.dim_1024x500.png)\n- App Store screenshot 1, dark cyberpunk UI mock screenshot frame with title area and device frame (appstore-screenshot-1.dim_1290x2796.png)\n- App Store screenshot 2, dark cyberpunk UI mock screenshot frame with title area and device frame (appstore-screenshot-2.dim_1290x2796.png)\n- App Store screenshot 3, dark cyberpunk UI mock screenshot frame with title area and device frame (appstore-screenshot-3.dim_1290x2796.png)",
+  "generatedImages": [
+    {
+      "filename": "app-icon.dim_1024x1024.png",
+      "description": "App icon, triangle-with-eye mark on dark background",
+      "targetWidth": 1024,
+      "targetHeight": 1024
+    },
+    {
+      "filename": "android-adaptive-foreground.dim_1024x1024.png",
+      "description": "Android adaptive icon foreground, triangle-with-eye mark only with transparent background",
+      "targetWidth": 1024,
+      "targetHeight": 1024
+    },
+    {
+      "filename": "android-adaptive-background.dim_1024x1024.png",
+      "description": "Android adaptive icon background, subtle dark tech pattern",
+      "targetWidth": 1024,
+      "targetHeight": 1024
+    },
+    {
+      "filename": "play-feature-graphic.dim_1024x500.png",
+      "description": "Google Play feature graphic, dark cyber/tech banner with triangle-with-eye mark and minimal title text styling",
+      "targetWidth": 1024,
+      "targetHeight": 500
+    },
+    {
+      "filename": "appstore-screenshot-1.dim_1290x2796.png",
+      "description": "App Store screenshot 1, dark cyberpunk UI mock screenshot frame with title area and device frame",
+      "targetWidth": 1290,
+      "targetHeight": 2796
+    },
+    {
+      "filename": "appstore-screenshot-2.dim_1290x2796.png",
+      "description": "App Store screenshot 2, dark cyberpunk UI mock screenshot frame with title area and device frame",
+      "targetWidth": 1290,
+      "targetHeight": 2796
+    },
+    {
+      "filename": "appstore-screenshot-3.dim_1290x2796.png",
+      "description": "App Store screenshot 3, dark cyberpunk UI mock screenshot frame with title area and device frame",
+      "targetWidth": 1290,
+      "targetHeight": 2796
+    }
+  ],
   "gameProjectType": "none",
   "projectName": "X39 Matrix",
   "clarification_mode": "instant",
   "clarification_rounds": 0,
-  "requiresBackendChanges": true,
+  "requiresBackendChanges": false,
   "requiresFrontendChanges": true
 }

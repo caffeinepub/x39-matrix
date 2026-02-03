@@ -6,6 +6,19 @@
 
 @layer base {
   :root {
+    /* NNS-inspired blue theme tokens */
+    --nns-primary: oklch(0.55 0.20 250);
+    --nns-primary-light: oklch(0.65 0.18 250);
+    --nns-primary-dark: oklch(0.35 0.15 250);
+    --nns-bg-primary: oklch(0.15 0.02 250);
+    --nns-bg-secondary: oklch(0.20 0.02 250);
+    --nns-bg-card: oklch(0.28 0.02 250);
+    --nns-border: oklch(0.35 0.02 250);
+    --nns-text-primary: oklch(0.98 0.01 250);
+    --nns-text-secondary: oklch(0.80 0.02 250);
+    --nns-text-muted: oklch(0.60 0.02 250);
+    
+    /* Original theme tokens */
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;

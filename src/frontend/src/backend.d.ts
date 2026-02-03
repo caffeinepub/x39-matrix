@@ -7,17 +7,26 @@ export interface None {
     __kind__: "None";
 }
 export type Option<T> = Some<T> | None;
-export interface UserProfile {
-    name: string;
+export interface Product {
+    id: string;
 }
 export interface TransformationOutput {
     status: bigint;
     body: Uint8Array;
     headers: Array<http_header>;
 }
+export type Time = bigint;
 export interface BackendHealth {
     version: string;
     timestamp: bigint;
+}
+export interface Proposal {
+    id: bigint;
+    status: ProposalStatus;
+    title: string;
+    creator: Principal;
+    votes: ProposalVotes;
+    description: string;
 }
 export interface http_header {
     value: string;
@@ -35,9 +44,23 @@ export interface ShoppingItem {
     priceInCents: bigint;
     productDescription: string;
 }
+export interface Holding {
+    id: bigint;
+    startTime: Time;
+    endTime: Time;
+    owner: Principal;
+    positionStatus: PositionStatus;
+    tokenAmount: bigint;
+    lockDurationDays: bigint;
+}
 export interface TransformationInput {
     context: Uint8Array;
     response: http_request_result;
+}
+export interface ProposalVotes {
+    no: bigint;
+    yes: bigint;
+    abstain: bigint;
 }
 export type StripeSessionStatus = {
     __kind__: "completed";
@@ -55,24 +78,48 @@ export interface StripeConfiguration {
     allowedCountries: Array<string>;
     secretKey: string;
 }
-export interface Product {
-    id: string;
+export interface UserProfile {
+    name: string;
+}
+export enum PositionStatus {
+    expired = "expired",
+    locked = "locked",
+    unlocked = "unlocked"
+}
+export enum ProposalStatus {
+    closed = "closed",
+    open = "open",
+    approved = "approved",
+    rejected = "rejected"
 }
 export enum UserRole {
     admin = "admin",
     user = "user",
     guest = "guest"
 }
+export enum VoteOption {
+    no = "no",
+    yes = "yes",
+    abstain = "abstain"
+}
 export interface backendInterface {
     addProduct(product: Product): Promise<void>;
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
     checkBackendHealth(): Promise<BackendHealth>;
     createCheckoutSession(items: Array<ShoppingItem>, successUrl: string, cancelUrl: string): Promise<string>;
+    createHolding(tokenAmount: bigint, lockDurationDays: bigint): Promise<bigint>;
+    createProposal(title: string, description: string): Promise<bigint>;
+    deleteHolding(id: bigint): Promise<void>;
     deleteProduct(productId: string): Promise<void>;
+    getAllHoldings(): Promise<Array<Holding>>;
+    getAllProposals(): Promise<Array<Proposal>>;
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
+    getHolding(id: bigint): Promise<Holding | null>;
     getProducts(): Promise<Array<Product>>;
+    getProposal(id: bigint): Promise<Proposal | null>;
     getStripeSessionStatus(sessionId: string): Promise<StripeSessionStatus>;
+    getUserHoldings(principal: Principal): Promise<Array<Holding>>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
     initializeAccessControl(): Promise<void>;
     isCallerAdmin(): Promise<boolean>;
@@ -82,5 +129,7 @@ export interface backendInterface {
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
     setStripeConfiguration(config: StripeConfiguration): Promise<void>;
     transform(input: TransformationInput): Promise<TransformationOutput>;
+    unlockHolding(id: bigint): Promise<void>;
     updateProduct(product: Product): Promise<void>;
+    voteOnProposal(proposalId: bigint, vote: VoteOption): Promise<void>;
 }

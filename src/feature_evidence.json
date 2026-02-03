@@ -2,12 +2,13 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-add-a-user-accessible-connectivity-domain-diagnostics-view-in-the-frontend-that-helps-verify-whether-the-app-is-reachable-reliably-from-different-networks-regions-without-requiring-developer-tools",
-      "featureTitle": "Add a user-accessible “Connectivity & Domain Diagnostics” view in the frontend that helps verify whether the app is reachable reliably from different networks/regions, without requiring developer tools.",
+      "featureId": "feature-prepare-an-android-release-submission-build-for-google-play-including-generating-a-play-ready-android-app-bundle-aab-ensuring-the-app-s-package-identifiers-and-versioning-are-set-for-release-and-providing-the-final-build-artifact-path-s-and-release-notes-english",
+      "featureTitle": "Prepare an Android release submission build for Google Play, including generating a Play-ready Android App Bundle (AAB), ensuring the app’s package identifiers and versioning are set for release, and providing the final build artifact path(s) and release notes (English).",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/ConnectivityDiagnostics.tsx",
-        "frontend/src/hooks/useConnectivityDiagnostics.ts"
+        "frontend/README-store-submission.md",
+        "frontend/docs/store-submission/android-google-play.md",
+        "frontend/release/release-notes.en.md",
+        "frontend/release/versions/android-release-version.md"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -23,17 +24,18 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-1"
+        "REQ-7"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-implement-automated-client-side-checks-in-the-diagnostics-view-that-validate-domain-consistency-and-basic-asset-reachability-for-https-x39matrix-com",
-      "featureTitle": "Implement automated client-side checks in the Diagnostics view that validate domain consistency and basic asset reachability for https://x39matrix.com.",
+      "featureId": "feature-prepare-an-ios-release-submission-build-for-the-apple-app-store-including-producing-a-release-archive-suitable-for-app-store-connect-submission-and-providing-step-by-step-signing-provisioning-instructions-required-for-a-developer-to-export-an-ipa-english",
+      "featureTitle": "Prepare an iOS release submission build for the Apple App Store, including producing a release archive suitable for App Store Connect submission and providing step-by-step signing/provisioning instructions required for a developer to export an IPA (English).",
       "files": [
-        "frontend/src/components/ConnectivityDiagnostics.tsx",
-        "frontend/src/hooks/useConnectivityDiagnostics.ts",
-        "frontend/src/utils/urls.ts"
+        "frontend/README-store-submission.md",
+        "frontend/docs/store-submission/ios-app-store.md",
+        "frontend/release/release-notes.en.md",
+        "frontend/release/versions/ios-release-version.md"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -49,17 +51,16 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-2"
+        "REQ-8"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-add-a-lightweight-backend-health-endpoint-that-returns-canister-time-and-build-version-info-for-troubleshooting-inconsistent-routing-canister-mapping-and-surface-that-info-in-the-frontend-diagnostics-view",
-      "featureTitle": "Add a lightweight backend health endpoint that returns canister time and build/version info for troubleshooting inconsistent routing/canister mapping, and surface that info in the frontend Diagnostics view.",
+      "featureId": "feature-add-an-app-store-play-store-submission-asset-pack-to-the-repository-that-includes-required-icons-and-store-listing-visuals-at-standard-sizes-and-ensure-the-web-app-s-branding-is-consistent-with-these-assets-english-naming-and-documentation",
+      "featureTitle": "Add an App Store / Play Store submission asset pack to the repository that includes required icons and store listing visuals at standard sizes, and ensure the web app’s branding is consistent with these assets (English naming and documentation).",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/ConnectivityDiagnostics.tsx",
-        "frontend/src/hooks/useConnectivityDiagnostics.ts"
+        "frontend/index.html",
+        "frontend/public/sitemap.xml"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -75,7 +76,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-3"
+        "REQ-9"
       ],
       "confidence": "high"
     }

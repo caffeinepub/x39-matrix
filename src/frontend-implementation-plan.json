@@ -1,83 +1,129 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Connectivity & Domain Diagnostics view for x39matrix.com (frontend)",
+  "title": "Store submission build preparation (Google Play + Apple App Store)",
   "requirements": [
     {
-      "id": "REQ-1",
-      "summary": "Add a user-accessible Connectivity & Domain Diagnostics view with clear access mechanism, core environment details, and readable automated check results.",
+      "id": "REQ-7",
+      "summary": "Prepare a reproducible Android release submission build plan (AAB), including release versioning documentation, artifact paths, and English release notes.",
       "acceptanceCriteria": [
-        "A diagnostics view can be opened via a clearly documented mechanism (e.g., a footer link labeled \"Diagnostics\" or a URL parameter).",
-        "The view displays: current origin (window.location.origin), whether the page is in HTTPS, the configured OFFICIAL_PORTAL_URL (https://x39matrix.com), and the current timestamp (client-side).",
-        "The view runs a small set of automated checks and shows pass/fail per check with readable error messages in English (no raw stack traces)."
+        "A Play Store submission artifact (AAB) is produced via the project’s build tooling with a reproducible command.",
+        "Release versioning (version name + version code) is incremented and documented for the submission build.",
+        "A short English release notes text is included in the repo (or build output) and references the submission build version.",
+        "The build output includes clear instructions for where to find the AAB and how to upload it to Google Play Console."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/ConnectivityDiagnostics.tsx",
+          "path": "frontend/docs/store-submission/android-google-play.md",
           "operation": "create",
-          "description": "Create the \"Connectivity & Domain Diagnostics\" view component that renders environment info (origin, HTTPS yes/no, OFFICIAL_PORTAL_URL, client timestamp) and a check-results table/list with English pass/fail states and user-friendly error messages (no raw stack traces)."
+          "description": "Add English documentation for producing a Play-ready Android App Bundle (AAB) with reproducible commands, required local prerequisites, where to find the resulting AAB artifact path(s), and concise steps for uploading to Google Play Console (without performing the submission). Include explicit guidance for setting/reviewing Android applicationId (package identifier) and release versioning (versionName + versionCode) in the Android build configuration used by this project."
         },
         {
-          "path": "frontend/src/hooks/useConnectivityDiagnostics.ts",
+          "path": "frontend/release/versions/android-release-version.md",
           "operation": "create",
-          "description": "Add a hook that orchestrates running diagnostics checks on demand (and/or on open), normalizes errors into readable English messages, and returns structured check state (pending/pass/fail) for the Diagnostics view."
+          "description": "Document the Android submission build version name and version code for the release submission build, including an explicit increment note and a reference to the related English release notes file."
         },
         {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Wire the Diagnostics view into the app so it is user-accessible: add a clearly labeled footer link (\"Diagnostics\") that opens the diagnostics UI and also support a URL-parameter-based entry (e.g., diagnostics=1) using existing URL param utilities."
+          "path": "frontend/release/release-notes.en.md",
+          "operation": "create",
+          "description": "Add short English release notes for the submission build and ensure it explicitly references the Android submission build version documented in frontend/release/versions/android-release-version.md."
+        },
+        {
+          "path": "frontend/README-store-submission.md",
+          "operation": "create",
+          "description": "Add a single English entry point README that links to the Android submission guide, lists the reproducible build command(s), and summarizes where to locate the AAB build artifact path(s) after the build completes."
         }
       ]
     },
     {
-      "id": "REQ-2",
-      "summary": "Implement client-side diagnostics checks for canonical domain consistency, static asset reachability from https://x39matrix.com, and a copy-to-clipboard compact report.",
+      "id": "REQ-8",
+      "summary": "Prepare a reproducible iOS release submission build plan, including archive/export signing instructions for generating an IPA and English release notes referencing the submission build version.",
       "acceptanceCriteria": [
-        "The diagnostics checks include: (1) canonical domain consistency check (detect if the app is not being served from x39matrix.com), and (2) a reachability test that attempts to load at least one known static asset from https://x39matrix.com (e.g., the favicon or a generated logo image) and reports success/failure.",
-        "If the browser blocks cross-origin fetches, the reachability test uses a browser-safe method (e.g., image load) and still reports a definitive success/failure state.",
-        "The diagnostics output includes a copy-to-clipboard button that copies a compact report string (origin, HTTPS yes/no, results of checks) so users can share it."
+        "A reproducible iOS release build process is documented (commands + required local prerequisites).",
+        "The output includes clear instructions for provisioning profiles, signing certificates, and exporting an IPA for App Store Connect.",
+        "A short English release notes text is included in the repo (or build output) and references the submission build version."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/hooks/useConnectivityDiagnostics.ts",
-          "operation": "modify",
-          "description": "Implement automated checks: (1) canonical domain consistency against OFFICIAL_PORTAL_URL, and (2) static asset reachability by attempting a browser-safe cross-origin image load from https://x39matrix.com (use a known existing asset path such as /assets/generated/x39matrix-favicon.dim_32x32.png) and producing definitive success/failure plus readable error text."
+          "path": "frontend/docs/store-submission/ios-app-store.md",
+          "operation": "create",
+          "description": "Add English documentation for producing an iOS release archive suitable for App Store Connect submission, including reproducible commands (as applicable to this project), required local prerequisites, and step-by-step signing/provisioning/export instructions a developer can follow to export an IPA (without performing the submission)."
         },
         {
-          "path": "frontend/src/components/ConnectivityDiagnostics.tsx",
-          "operation": "modify",
-          "description": "Add a copy-to-clipboard control that copies a compact report string including current origin, HTTPS yes/no, and per-check pass/fail outcomes; show a small English success/failure status for the copy action."
+          "path": "frontend/release/versions/ios-release-version.md",
+          "operation": "create",
+          "description": "Document the iOS submission build version (e.g., marketing version + build number) for the release submission build, including an explicit increment note and a reference to the related English release notes file."
         },
         {
-          "path": "frontend/src/utils/urls.ts",
+          "path": "frontend/release/release-notes.en.md",
           "operation": "modify",
-          "description": "Add a small helper for domain diagnostics as needed (e.g., extracting the expected hostname from OFFICIAL_PORTAL_URL and/or building a canonical-asset URL) to keep the Diagnostics logic consistent and centralized."
+          "description": "Extend the existing English release notes to also reference the iOS submission build version documented in frontend/release/versions/ios-release-version.md, keeping the notes consistent for both stores."
+        },
+        {
+          "path": "frontend/README-store-submission.md",
+          "operation": "modify",
+          "description": "Update the submission entry point README to link to the iOS submission guide and summarize how to produce the iOS archive and where a developer should expect to export/find the IPA during the documented process."
         }
       ]
     },
     {
-      "id": "REQ-3",
-      "summary": "Surface lightweight backend health info (time/version/identifier) inside the frontend Diagnostics view and show a clear unreachable error if it cannot be reached.",
+      "id": "REQ-9",
+      "summary": "Add a store submission asset pack (icons, feature graphic, screenshots) under frontend/public/assets/generated with required filenames, document mapping to store listing slots, and align web branding to these assets.",
       "acceptanceCriteria": [
-        "Backend exposes a query method (no auth required) that returns: server/canister timestamp, canister principal (or a stable identifier), and an app version string.",
-        "Frontend Diagnostics view calls this endpoint and displays the returned values or a clear error message if unreachable.",
-        "The UI labels are in English (e.g., \"Backend reachable\", \"Backend time\", \"Version\")."
+        "A dedicated folder exists under frontend/public/assets/generated containing the generated store assets with the exact filenames listed in imageRequirements.required.",
+        "The asset pack includes at minimum: app icon(s), feature graphic / promotional graphic, and at least 3 screenshots.",
+        "A short English README is added describing which files map to Google Play Console and App Store Connect upload slots."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/hooks/useConnectivityDiagnostics.ts",
-          "operation": "modify",
-          "description": "Integrate backend health retrieval into the diagnostics run using the existing backend actor capability (backendInterface.checkBackendHealth) and map failures to a clear, English \"Backend unreachable\"-style error state."
+          "path": "frontend/public/assets/generated/app-icon.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated store asset required by imageRequirements: App icon, triangle-with-eye mark on dark background (app-icon.dim_1024x1024.png)."
         },
         {
-          "path": "frontend/src/components/ConnectivityDiagnostics.tsx",
-          "operation": "modify",
-          "description": "Display backend health section with English labels (e.g., \"Backend reachable\", \"Backend time\", \"Version\") using the health data returned by the backend call, and show a clear English error message when the call fails."
+          "path": "frontend/public/assets/generated/android-adaptive-foreground.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated store asset required by imageRequirements: Android adaptive icon foreground, triangle-with-eye mark only with transparent background (android-adaptive-foreground.dim_1024x1024.png)."
         },
         {
-          "path": "frontend/src/App.tsx",
+          "path": "frontend/public/assets/generated/android-adaptive-background.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated store asset required by imageRequirements: Android adaptive icon background, subtle dark tech pattern (android-adaptive-background.dim_1024x1024.png)."
+        },
+        {
+          "path": "frontend/public/assets/generated/play-feature-graphic.dim_1024x500.png",
+          "operation": "create",
+          "description": "Add the generated store asset required by imageRequirements: Google Play feature graphic, dark cyber/tech banner with triangle-with-eye mark and minimal title text styling (play-feature-graphic.dim_1024x500.png)."
+        },
+        {
+          "path": "frontend/public/assets/generated/appstore-screenshot-1.dim_1290x2796.png",
+          "operation": "create",
+          "description": "Add the generated store asset required by imageRequirements: App Store screenshot 1, dark cyberpunk UI mock screenshot frame with title area and device frame (appstore-screenshot-1.dim_1290x2796.png)."
+        },
+        {
+          "path": "frontend/public/assets/generated/appstore-screenshot-2.dim_1290x2796.png",
+          "operation": "create",
+          "description": "Add the generated store asset required by imageRequirements: App Store screenshot 2, dark cyberpunk UI mock screenshot frame with title area and device frame (appstore-screenshot-2.dim_1290x2796.png)."
+        },
+        {
+          "path": "frontend/public/assets/generated/appstore-screenshot-3.dim_1290x2796.png",
+          "operation": "create",
+          "description": "Add the generated store asset required by imageRequirements: App Store screenshot 3, dark cyberpunk UI mock screenshot frame with title area and device frame (appstore-screenshot-3.dim_1290x2796.png)."
+        },
+        {
+          "path": "frontend/public/assets/generated/STORE_ASSET_PACK_README.en.md",
+          "operation": "create",
+          "description": "Add a short English README mapping each generated file in frontend/public/assets/generated to the correct upload slots in Google Play Console (launcher icon/adaptive icon/feature graphic/screenshots) and App Store Connect (app icon/screenshots). Use English naming and keep the filenames exactly as listed in imageRequirements.required."
+        },
+        {
+          "path": "frontend/index.html",
           "operation": "modify",
-          "description": "Ensure Diagnostics view wiring triggers/permits backend health loading when the view is opened (via footer link or URL parameter) and that unreachable states are visible to the user within the same Diagnostics UI."
+          "description": "Align web branding metadata to the new store asset pack by updating the favicon and social preview image references to use frontend/public/assets/generated/app-icon.dim_1024x1024.png (and keep titles/descriptions consistent)."
+        },
+        {
+          "path": "frontend/public/sitemap.xml",
+          "operation": "modify",
+          "description": "Update any referenced branding images (if present) to stay consistent with the new store asset pack, preferring frontend/public/assets/generated/app-icon.dim_1024x1024.png where appropriate."
         }
       ]
     }

@@ -1,7 +1,7 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-03T10:43:00.077Z",
+  "generatedAt": "2026-02-03T11:40:31.214Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
@@ -11,67 +11,91 @@
     "implemented": 3,
     "items": [
       {
-        "id": "REQ-1",
-        "summary": "Add a user-accessible “Connectivity & Domain Diagnostics” view in the frontend that helps verify whether the app is reachable reliably from different networks/regions, without requiring developer tools.",
+        "id": "REQ-7",
+        "summary": "Prepare an Android release submission build for Google Play, including generating a Play-ready Android App Bundle (AAB), ensuring the app’s package identifiers and versioning are set for release, and providing the final build artifact path(s) and release notes (English).",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/ConnectivityDiagnostics.tsx",
-          "frontend/src/hooks/useConnectivityDiagnostics.ts",
-          "frontend/src/App.tsx"
+          "frontend/docs/store-submission/android-google-play.md",
+          "frontend/release/versions/android-release-version.md",
+          "frontend/release/release-notes.en.md",
+          "frontend/README-store-submission.md"
         ],
         "matchedFiles": [
-          "frontend/src/components/ConnectivityDiagnostics.tsx",
-          "frontend/src/hooks/useConnectivityDiagnostics.ts",
-          "frontend/src/App.tsx"
+          "frontend/docs/store-submission/android-google-play.md",
+          "frontend/release/versions/android-release-version.md",
+          "frontend/release/release-notes.en.md",
+          "frontend/README-store-submission.md"
         ]
       },
       {
-        "id": "REQ-2",
-        "summary": "Implement automated client-side checks in the Diagnostics view that validate domain consistency and basic asset reachability for https://x39matrix.com.",
+        "id": "REQ-8",
+        "summary": "Prepare an iOS release submission build for the Apple App Store, including producing a release archive suitable for App Store Connect submission and providing step-by-step signing/provisioning instructions required for a developer to export an IPA (English).",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/hooks/useConnectivityDiagnostics.ts",
-          "frontend/src/components/ConnectivityDiagnostics.tsx",
-          "frontend/src/utils/urls.ts"
+          "frontend/docs/store-submission/ios-app-store.md",
+          "frontend/release/versions/ios-release-version.md",
+          "frontend/release/release-notes.en.md",
+          "frontend/README-store-submission.md"
         ],
         "matchedFiles": [
-          "frontend/src/hooks/useConnectivityDiagnostics.ts",
-          "frontend/src/components/ConnectivityDiagnostics.tsx",
-          "frontend/src/utils/urls.ts"
+          "frontend/docs/store-submission/ios-app-store.md",
+          "frontend/release/versions/ios-release-version.md",
+          "frontend/release/release-notes.en.md",
+          "frontend/README-store-submission.md"
         ]
       },
       {
-        "id": "REQ-3",
-        "summary": "Add a lightweight backend health endpoint that returns canister time and build/version info for troubleshooting inconsistent routing/canister mapping, and surface that info in the frontend Diagnostics view.",
+        "id": "REQ-9",
+        "summary": "Add an App Store / Play Store submission asset pack to the repository that includes required icons and store listing visuals at standard sizes, and ensure the web app’s branding is consistent with these assets (English naming and documentation).",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/hooks/useConnectivityDiagnostics.ts",
-          "frontend/src/components/ConnectivityDiagnostics.tsx",
-          "frontend/src/App.tsx"
+          "frontend/public/assets/generated/app-icon.dim_1024x1024.png",
+          "frontend/public/assets/generated/android-adaptive-foreground.dim_1024x1024.png",
+          "frontend/public/assets/generated/android-adaptive-background.dim_1024x1024.png",
+          "frontend/public/assets/generated/play-feature-graphic.dim_1024x500.png",
+          "frontend/public/assets/generated/appstore-screenshot-1.dim_1290x2796.png",
+          "frontend/public/assets/generated/appstore-screenshot-2.dim_1290x2796.png",
+          "frontend/public/assets/generated/appstore-screenshot-3.dim_1290x2796.png",
+          "frontend/public/assets/generated/STORE_ASSET_PACK_README.en.md",
+          "frontend/index.html",
+          "frontend/public/sitemap.xml"
         ],
         "matchedFiles": [
-          "frontend/src/hooks/useConnectivityDiagnostics.ts",
-          "frontend/src/components/ConnectivityDiagnostics.tsx",
-          "frontend/src/App.tsx"
+          "frontend/public/assets/generated/app-icon.dim_1024x1024.png",
+          "frontend/public/assets/generated/android-adaptive-foreground.dim_1024x1024.png",
+          "frontend/public/assets/generated/android-adaptive-background.dim_1024x1024.png",
+          "frontend/public/assets/generated/play-feature-graphic.dim_1024x500.png",
+          "frontend/public/assets/generated/appstore-screenshot-1.dim_1290x2796.png",
+          "frontend/public/assets/generated/appstore-screenshot-2.dim_1290x2796.png",
+          "frontend/public/assets/generated/appstore-screenshot-3.dim_1290x2796.png",
+          "frontend/public/assets/generated/STORE_ASSET_PACK_README.en.md",
+          "frontend/index.html",
+          "frontend/public/sitemap.xml"
         ]
       }
     ]
   },
   "changedFiles": [
-    "backend/main.mo",
     "build-request.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/App.tsx",
-    "frontend/src/backend.d.ts",
-    "frontend/src/backend.ts",
-    "frontend/src/components/ConnectivityDiagnostics.tsx",
-    "frontend/src/declarations/backend.did.d.ts",
-    "frontend/src/declarations/backend.did.js",
-    "frontend/src/hooks/useConnectivityDiagnostics.ts",
-    "frontend/src/hooks/useQueries.ts",
-    "frontend/src/utils/urls.ts",
+    "frontend/README-store-submission.md",
+    "frontend/docs/store-submission/android-google-play.md",
+    "frontend/docs/store-submission/ios-app-store.md",
+    "frontend/index.html",
+    "frontend/public/assets/generated/STORE_ASSET_PACK_README.en.md",
+    "frontend/public/assets/generated/android-adaptive-background.dim_1024x1024.png",
+    "frontend/public/assets/generated/android-adaptive-foreground.dim_1024x1024.png",
+    "frontend/public/assets/generated/app-icon.dim_1024x1024.png",
+    "frontend/public/assets/generated/appstore-screenshot-1.dim_1290x2796.png",
+    "frontend/public/assets/generated/appstore-screenshot-2.dim_1290x2796.png",
+    "frontend/public/assets/generated/appstore-screenshot-3.dim_1290x2796.png",
+    "frontend/public/assets/generated/play-feature-graphic.dim_1024x500.png",
+    "frontend/public/sitemap.xml",
+    "frontend/release/release-notes.en.md",
+    "frontend/release/versions/android-release-version.md",
+    "frontend/release/versions/ios-release-version.md",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",
