@@ -1,0 +1,83 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-add-a-user-accessible-connectivity-domain-diagnostics-view-in-the-frontend-that-helps-verify-whether-the-app-is-reachable-reliably-from-different-networks-regions-without-requiring-developer-tools",
+      "featureTitle": "Add a user-accessible “Connectivity & Domain Diagnostics” view in the frontend that helps verify whether the app is reachable reliably from different networks/regions, without requiring developer tools.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/ConnectivityDiagnostics.tsx",
+        "frontend/src/hooks/useConnectivityDiagnostics.ts"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "http-outcalls@3.0.0",
+        "qr-code@1.0.0",
+        "camera@1.0.0",
+        "stripe@3.0.0",
+        "authorization@3.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-automated-client-side-checks-in-the-diagnostics-view-that-validate-domain-consistency-and-basic-asset-reachability-for-https-x39matrix-com",
+      "featureTitle": "Implement automated client-side checks in the Diagnostics view that validate domain consistency and basic asset reachability for https://x39matrix.com.",
+      "files": [
+        "frontend/src/components/ConnectivityDiagnostics.tsx",
+        "frontend/src/hooks/useConnectivityDiagnostics.ts",
+        "frontend/src/utils/urls.ts"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "http-outcalls@3.0.0",
+        "qr-code@1.0.0",
+        "camera@1.0.0",
+        "stripe@3.0.0",
+        "authorization@3.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-lightweight-backend-health-endpoint-that-returns-canister-time-and-build-version-info-for-troubleshooting-inconsistent-routing-canister-mapping-and-surface-that-info-in-the-frontend-diagnostics-view",
+      "featureTitle": "Add a lightweight backend health endpoint that returns canister time and build/version info for troubleshooting inconsistent routing/canister mapping, and surface that info in the frontend Diagnostics view.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/ConnectivityDiagnostics.tsx",
+        "frontend/src/hooks/useConnectivityDiagnostics.ts"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "http-outcalls@3.0.0",
+        "qr-code@1.0.0",
+        "camera@1.0.0",
+        "stripe@3.0.0",
+        "authorization@3.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

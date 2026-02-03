@@ -1,0 +1,80 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-03T10:43:00.077Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 3,
+    "implemented": 3,
+    "items": [
+      {
+        "id": "REQ-1",
+        "summary": "Add a user-accessible “Connectivity & Domain Diagnostics” view in the frontend that helps verify whether the app is reachable reliably from different networks/regions, without requiring developer tools.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/ConnectivityDiagnostics.tsx",
+          "frontend/src/hooks/useConnectivityDiagnostics.ts",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/ConnectivityDiagnostics.tsx",
+          "frontend/src/hooks/useConnectivityDiagnostics.ts",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-2",
+        "summary": "Implement automated client-side checks in the Diagnostics view that validate domain consistency and basic asset reachability for https://x39matrix.com.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useConnectivityDiagnostics.ts",
+          "frontend/src/components/ConnectivityDiagnostics.tsx",
+          "frontend/src/utils/urls.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useConnectivityDiagnostics.ts",
+          "frontend/src/components/ConnectivityDiagnostics.tsx",
+          "frontend/src/utils/urls.ts"
+        ]
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Add a lightweight backend health endpoint that returns canister time and build/version info for troubleshooting inconsistent routing/canister mapping, and surface that info in the frontend Diagnostics view.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useConnectivityDiagnostics.ts",
+          "frontend/src/components/ConnectivityDiagnostics.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useConnectivityDiagnostics.ts",
+          "frontend/src/components/ConnectivityDiagnostics.tsx",
+          "frontend/src/App.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "backend/main.mo",
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/App.tsx",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/ConnectivityDiagnostics.tsx",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useConnectivityDiagnostics.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/utils/urls.ts",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

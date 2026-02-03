@@ -1,0 +1,74 @@
+{
+  "kind": "build_request",
+  "title": "Add global reachability verification and diagnostics for x39matrix.com",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Add a user-accessible “Connectivity & Domain Diagnostics” view in the frontend that helps verify whether the app is reachable reliably from different networks/regions, without requiring developer tools.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Corroborarlo ti en todos los servidores"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A diagnostics view can be opened via a clearly documented mechanism (e.g., a footer link labeled \"Diagnostics\" or a URL parameter).",
+        "The view displays: current origin (window.location.origin), whether the page is in HTTPS, the configured OFFICIAL_PORTAL_URL (https://x39matrix.com), and the current timestamp (client-side).",
+        "The view runs a small set of automated checks and shows pass/fail per check with readable error messages in English (no raw stack traces)."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement automated client-side checks in the Diagnostics view that validate domain consistency and basic asset reachability for https://x39matrix.com.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Corroborarlo ti en todos los servidores"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The diagnostics checks include: (1) canonical domain consistency check (detect if the app is not being served from x39matrix.com), and (2) a reachability test that attempts to load at least one known static asset from https://x39matrix.com (e.g., the favicon or a generated logo image) and reports success/failure.",
+        "If the browser blocks cross-origin fetches, the reachability test uses a browser-safe method (e.g., image load) and still reports a definitive success/failure state.",
+        "The diagnostics output includes a copy-to-clipboard button that copies a compact report string (origin, HTTPS yes/no, results of checks) so users can share it."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Add a lightweight backend health endpoint that returns canister time and build/version info for troubleshooting inconsistent routing/canister mapping, and surface that info in the frontend Diagnostics view.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Corroborarlo ti en todos los servidores"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend exposes a query method (no auth required) that returns: server/canister timestamp, canister principal (or a stable identifier), and an app version string.",
+        "Frontend Diagnostics view calls this endpoint and displays the returned values or a clear error message if unreachable.",
+        "The UI labels are in English (e.g., \"Backend reachable\", \"Backend time\", \"Version\")."
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not modify files under frontend/immutablePaths (Internet Identity hooks, useActor, main.tsx, and frontend/src/components/ui).",
+    "Keep all Motoko logic in the single backend actor (backend/main.mo).",
+    "Do not introduce external databases, third-party auth providers, or non-ICP backend services."
+  ],
+  "nonGoals": [
+    "Performing real multi-region/server verification from within the build system (only in-app diagnostics and health reporting are in scope).",
+    "Changing DNS, SSL, ICP boundary node configuration, or registrar settings automatically."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

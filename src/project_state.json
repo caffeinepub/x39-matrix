@@ -1,0 +1,547 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 12,
+  "summary": "Project scope expanded beyond the original x39matrix.com rebrand into a token-launch marketing portal for the x39Matrix token (\"x39Matrix\" / X39 Matrix) on ICP. The site now centers on a prominent official triangle/eye logo as the token mark, airdrop promotion (200,000 promo tokens), claim UX with wallet selection + manual address entry, ICP live price panel, promotional/news surfaces, and SEO/indexing. A major ongoing priority is making the new custom domain https://x39matrix.com reliably resolve worldwide via correct ICP custom-domain DNS/SSL/canister mapping (prior x39dark.com still referenced/used in parallel during transition).",
+  "existing_features": [
+    {
+      "id": "IF-1",
+      "title": "Cyberpunk landing page layout with responsive navigation",
+      "synonyms": [
+        "SPA landing page",
+        "marketing homepage"
+      ],
+      "description": "Main App page renders a multi-section, scroll-to navigation experience with desktop and mobile menus, cyberpunk visuals, and section anchors (ICP, Dark Web, token sections, etc.).",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-2",
+      "title": "Tailwind + custom cyberpunk theme and animation system",
+      "synonyms": [
+        "neon theme",
+        "matrix UI styling"
+      ],
+      "description": "Global CSS defines neon text/glow effects, triangle pulse, glow pulse, mist float, and fade-in animations; Tailwind config extends fonts and OKLCH theme variables to support consistent styling.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-3",
+      "title": "SEO and indexing configuration (meta tags, JSON-LD, sitemap, robots)",
+      "synonyms": [
+        "SEO",
+        "OpenGraph",
+        "structured data"
+      ],
+      "description": "index.html includes extensive SEO tags (Open Graph/Twitter, canonical, hreflang) and JSON-LD for WebSite/Article; public/robots.txt and public/sitemap.xml are configured for x39matrix.com.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-4",
+      "title": "Intro splash screen with Matrix-style text rain",
+      "synonyms": [
+        "splash screen",
+        "intro animation"
+      ],
+      "description": "IntroScreen shows a 2-second branded intro with canvas text rain and background image, then transitions to the main application.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-5",
+      "title": "Three.js holographic background hero",
+      "synonyms": [
+        "3D hero background",
+        "holographic triangle"
+      ],
+      "description": "HolographicHero renders an animated Three.js scene (triangle + outline + particle field) as a subtle fixed background layer with resize handling and cleanup.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-6",
+      "title": "Live ICP price widget (Binance polling)",
+      "synonyms": [
+        "ICP ticker",
+        "live price panel"
+      ],
+      "description": "LiveICPPrice fetches ICPUSDT 24h ticker from Binance every 30s, displays price, 24h change, estimated market cap, and animated progress indicator.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-7",
+      "title": "Interactive ICP charting with RSI and buy/sell signals",
+      "synonyms": [
+        "technical analysis",
+        "RSI panel"
+      ],
+      "description": "GraficosSection fetches Binance klines (15m/1h/1d), computes RSI, generates buy/sell signals on threshold crosses, and renders simplified visual graphs and projections in a collapsible panel.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-8",
+      "title": "Daily news updates feed (mock data) with auto refresh",
+      "synonyms": [
+        "news feed",
+        "daily updates"
+      ],
+      "description": "DailyNewsUpdates displays categorized ICP/Crypto/DeFi/Web3 news items (mocked) with relative timestamps and refreshes every 24 hours.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-9",
+      "title": "Token info/registration presentation section",
+      "synonyms": [
+        "token parameters",
+        "token info page"
+      ],
+      "description": "X39TokenRegistrationSection presents token metadata (name/symbol/supply/decimals) and ecosystem contribution messaging, including an airdrop counter (mock).",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-10",
+      "title": "Promotional airdrop claim UX (frontend-only)",
+      "synonyms": [
+        "airdrop promotion",
+        "claim flow"
+      ],
+      "description": "X39TokenPromotionalAirdropSection displays campaign details, a claimed counter (mock), and a claim button that triggers wallet registration; shows a success state after simulated completion.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-11",
+      "title": "Wallet registration modal with validation and simulated submission",
+      "synonyms": [
+        "wallet capture form",
+        "claim registration modal"
+      ],
+      "description": "WalletRegistrationModal collects wallet type and address, performs basic client-side validation, shows error/success UI, and simulates async registration before calling onSuccess.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-12",
+      "title": "Android app promotion and APK download links",
+      "synonyms": [
+        "mobile app section",
+        "APK download"
+      ],
+      "description": "AndroidMobileAppSection and AndroidDownloadButton provide direct APK download links and marketing copy; AndroidDownloadModal provides PWA-style installation instructions content (where used).",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-13",
+      "title": "Element (Matrix) community chat deep link",
+      "synonyms": [
+        "Matrix chat",
+        "Element link"
+      ],
+      "description": "ElementChatSection opens a matrix.to room link in a new tab with cyberpunk-styled call-to-action.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-14",
+      "title": "Premium ICP content sections (static full content)",
+      "synonyms": [
+        "premium articles",
+        "ICP premium sections"
+      ],
+      "description": "PremiumICPSections renders two long-form premium-style content sections with animated triangle imagery and strong branded messaging (content is not actually gated in the provided implementation).",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-15",
+      "title": "Davos outcomes report article section",
+      "synonyms": [
+        "Davos report",
+        "WEF outcomes content"
+      ],
+      "description": "DavosOutcomesReportSection provides a styled, long-form informational article layout with cyberpunk decorative assets and content blocks.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-16",
+      "title": "Información Variada section with timed video overlay",
+      "synonyms": [
+        "resources section",
+        "Chopin video overlay"
+      ],
+      "description": "InformacionVariadaSection includes a button that plays ChopinVideoPlayer as a full-screen background overlay for 45 seconds and provides additional resource links (APIs/CLI references).",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-17",
+      "title": "Reddit promo message section",
+      "synonyms": [
+        "Reddit formatted post",
+        "promo copy block"
+      ],
+      "description": "RedditPromoSection shows a preformatted promotional post (hashtags/links) styled with Matrix-like mono typography and neon accents.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-18",
+      "title": "Performance metrics dashboard (mock, auto-updating)",
+      "synonyms": [
+        "marketing metrics",
+        "platform KPIs"
+      ],
+      "description": "PerformanceMetricsDashboard generates platform metrics (traffic, engagement, CTR, reach) with progress bars and refreshes automatically every 30 seconds (mocked data).",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-19",
+      "title": "Token analytics panel (mock)",
+      "synonyms": [
+        "analytics widget",
+        "volume/value panel"
+      ],
+      "description": "TokenAnalyticsPanel displays mocked trading volume/TVL/inflow/outflow metrics using a cyberpunk panel layout.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-20",
+      "title": "QR code display widget with CDN fallback and minimize/expand",
+      "synonyms": [
+        "QR generator",
+        "qrcodejs loader"
+      ],
+      "description": "QRCodeSection loads qrcodejs from multiple CDNs with retries/backoff, renders a QR code for a given URL, and supports a minimized floating UI state.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-21",
+      "title": "Camera access and QR scanning hook (jsQR)",
+      "synonyms": [
+        "QR scanner",
+        "camera hook"
+      ],
+      "description": "useCamera manages getUserMedia lifecycle, switching cameras, and photo capture; useQRScanner loads jsQR and scans frames at an interval, storing recent decoded results.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-22",
+      "title": "Internet Identity authentication context provider",
+      "synonyms": [
+        "II login",
+        "AuthClient provider"
+      ],
+      "description": "InternetIdentityProvider wraps the app and exposes identity state plus login/logout actions, with persisted identity loading and status flags for UI.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-23",
+      "title": "Backend actor creation hook with identity support (React Query)",
+      "synonyms": [
+        "useActor",
+        "DFINITY actor hook"
+      ],
+      "description": "useActor creates an anonymous or authenticated actor via createActorWithConfig, calls initializeAccessControl, and invalidates/refetches non-actor queries when identity changes.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-24",
+      "title": "Access control system (roles: admin/user/guest) in backend",
+      "synonyms": [
+        "RBAC",
+        "authorization module"
+      ],
+      "description": "Motoko access-control module assigns the first registered principal as admin and subsequent principals as users; provides permission checks and admin-only role assignment.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-25",
+      "title": "User profile storage and retrieval in backend",
+      "synonyms": [
+        "profiles",
+        "caller profile"
+      ],
+      "description": "Backend supports saving and querying UserProfile records keyed by Principal; access is restricted to the caller or admin.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-26",
+      "title": "Admin-managed product CRUD in backend",
+      "synonyms": [
+        "products registry",
+        "product management"
+      ],
+      "description": "Backend exposes get/add/update/delete product endpoints; add/update/delete are restricted to admin role via access control.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-27",
+      "title": "Stripe Checkout session creation and status lookup",
+      "synonyms": [
+        "Stripe integration",
+        "payments"
+      ],
+      "description": "Backend stripe module creates Stripe Checkout sessions via HTTP outcalls and allows querying session status, including extraction of client_reference_id.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-28",
+      "title": "HTTP outcall helper with response transform",
+      "synonyms": [
+        "IC http_request wrapper",
+        "outcalls"
+      ],
+      "description": "Backend outcall module wraps IC management canister http_request for GET/POST, attaches headers, assigns cycles, and uses a transform function to sanitize response headers.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-29",
+      "title": "Blob storage operations mixin (Caffeine storage gateway integration)",
+      "synonyms": [
+        "storage mixin",
+        "dead blob pruning",
+        "cycles refill"
+      ],
+      "description": "Storage mixin supports updating authorized gateway principals from a cashier canister, listing/pruning dead blobs, triggering GC, and topping up cashier cycles with reserved balance handling.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-30",
+      "title": "3D mini-game: “ICP vs Criptos” (React Three Fiber)",
+      "synonyms": [
+        "X39ICPGame",
+        "ICP vs Criptos"
+      ],
+      "description": "Full-screen modal 3D game where a rotating ICP torus player moves with WASD/arrows, enemies (BTC/SOL/ETH) spawn and chase the player, collectibles grant points and extra lives, and victory is achieved by eating 20 enemies; includes HUD and overlays (start/game over/victory).",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-31",
+      "title": "2D mini-game: Comecoco (Pac-Man style) on Canvas",
+      "synonyms": [
+        "Pac-Man clone",
+        "canvas arcade game"
+      ],
+      "description": "Comecoco implements a maze, dot collection, ghost chase AI, score and lives tracking, and win/game-over overlays with Spanish UI.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-32",
+      "title": "ICP payment gate UI (copy-to-clipboard wallet address)",
+      "synonyms": [
+        "payment gate",
+        "premium unlock UI"
+      ],
+      "description": "ICPPaymentGate renders an ICP-only payment instruction panel with a hard-coded wallet address and copy-to-clipboard support, intended to gate premium content.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-33",
+      "title": "ICP external utility buttons (staking + wallet dashboard)",
+      "synonyms": [
+        "NNS staking link",
+        "wallet dashboard link"
+      ],
+      "description": "ICPStakingButton opens the NNS app for staking; ICPWalletButton opens the Internet Computer dashboard account page for a specified wallet address.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-34",
+      "title": "Inline source code display with copy",
+      "synonyms": [
+        "code viewer",
+        "copy source feature"
+      ],
+      "description": "SourceCodeDisplay renders provided file contents with file headers and a one-click copy button that concatenates all file contents to clipboard.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-35",
+      "title": "URL parameter utilities with session persistence and secret-hash handling",
+      "synonyms": [
+        "url params helper",
+        "hash secret extraction"
+      ],
+      "description": "urlParams utilities support reading query/hash parameters, persisting them in sessionStorage, extracting secrets from hash fragments, and clearing them from the URL to reduce leakage.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-36",
+      "title": "React Query hook to fetch current user profile via actor",
+      "synonyms": [
+        "useGetCallerUserProfile",
+        "profile query hook"
+      ],
+      "description": "useGetCallerUserProfile uses the ICP actor to call getCallerUserProfile with proper enabled gating on actor readiness and a combined loading state.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-37",
+      "title": "shadcn/ui component library scaffold (frontend build-template)",
+      "synonyms": [
+        "shadcn-ui",
+        "UI component primitives"
+      ],
+      "description": "Project now includes a shadcn/ui-style component set (accordion, dialog, dropdown-menu, form, sidebar, etc.) and supporting frontend build-template configuration for consistent UI primitives.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-38",
+      "title": "Build/deploy template for ICP app (Dockerfile, scripts, canister yamls)",
+      "synonyms": [
+        "build template",
+        "deployment scaffold",
+        "icp.yaml"
+      ],
+      "description": "Added/updated a build-template with Dockerfile, deploy.sh, workspace/package configs, canister.yaml files for frontend/backend, and utility scripts (e.g., prune/resize images) to standardize builds and deployments.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-39",
+      "title": "Custom frontend ESLint rules for ICP/React patterns",
+      "synonyms": [
+        "eslint custom rules",
+        "require InternetIdentityProvider",
+        "no bigint query keys"
+      ],
+      "description": "Introduced custom ESLint rules (e.g., require-internet-identity-provider, no-bigint-in-query-keys) and updated ESLint configuration to enforce project-specific best practices.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-user-accessible-connectivity-domain-diagnostics-view-in-the-frontend-that-helps-verify-whether-the-app-is-reachable-reliably-from-different-networks-regions-without-requiring-developer-tools",
+      "title": "Add a user-accessible “Connectivity & Domain Diagnostics” view in the frontend that helps verify whether the app is reachable reliably from different networks/regions, without requiring developer tools.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-automated-client-side-checks-in-the-diagnostics-view-that-validate-domain-consistency-and-basic-asset-reachability-for-https-x39matrix-com",
+      "title": "Implement automated client-side checks in the Diagnostics view that validate domain consistency and basic asset reachability for https://x39matrix.com.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-lightweight-backend-health-endpoint-that-returns-canister-time-and-build-version-info-for-troubleshooting-inconsistent-routing-canister-mapping-and-surface-that-info-in-the-frontend-diagnostics-view",
+      "title": "Add a lightweight backend health endpoint that returns canister time and build/version info for troubleshooting inconsistent routing/canister mapping, and surface that info in the frontend Diagnostics view.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Rebrand site to x39matrix.com (update branding/title/canonicals) and set up domain mapping + HTTPS; optional 301 redirect from x39dark.com",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Create Android mobile app focused only on x39Matrix token + airdrop + wallet-buy info (separate from web)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Make https://x39matrix.com work globally (DNS/SSL + ICP custom domain mapping) and ensure consistent canonical/links after rebrand from x39dark.com",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Implement x39Matrix token launch promo surfaces: official triangle/eye logo as header+favicon, airdrop banner (200,000), and updated marketing copy/sections",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Airdrop claim UX: on clicking “Reclamar”, show wallet selector (ICP wallets like Plug/Stoic/Infinity/etc.) and allow user to input/confirm their wallet address for receiving tokens",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Add/restore SEO assets for the new domain (robots.txt, sitemap.xml, canonical URLs) and ensure indexing across browsers/search engines",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "architecturalNotes": [
+    "Frontend is a React SPA (TypeScript) styled with Tailwind CSS + custom cyberpunk animation utilities (neon glow, triangle pulse, mist float) and uses lucide-react icons extensively.",
+    "Uses @tanstack/react-query for data fetching/caching; actor creation is identity-aware and triggers dependent query invalidation/refetch on identity changes.",
+    "Authentication uses DFINITY Internet Identity via @dfinity/auth-client, exposed through a React context provider (login/logout, persisted identity, 30-day TTL).",
+    "ICP canister interaction follows the actor pattern: an anonymous actor is used when unauthenticated; an authenticated actor is created with identity and runs an initialization step (initializeAccessControl).",
+    "3D rendering is used in multiple places: a Three.js canvas background (HolographicHero) and a React Three Fiber mini-game (X39ICPGame).",
+    "QR utilities rely on dynamically loaded external CDN scripts (qrcodejs for generation and jsQR for scanning) with retry/fallback logic.",
+    "Backend is a single Motoko actor composed from modules: authorization/access-control, stripe integration, HTTP outcall helper, and blob-storage mixin; authorization is role-based (#admin/#user/#guest).",
+    "Backend HTTP calls to Stripe use IC management canister http_request with a transform function to strip headers, and attach cycles explicitly per request.",
+    "A shadcn/ui-style component library scaffold has been added (via build-template), providing reusable UI primitives and associated frontend tooling/configuration.",
+    "Repository now includes a build-template for standardized ICP deployments (Dockerfile, deploy.sh, canister.yaml files, workspace/package setup) and build utility scripts (prune-unused-images, resize-images).",
+    "Frontend linting now includes custom ESLint rules specific to project patterns (e.g., enforcing InternetIdentityProvider usage and avoiding BigInt in React Query keys).",
+    "Project undergoing domain/brand migration from x39dark.com to x39matrix.com; requires ICP canister custom-domain mapping and DNS/SSL setup for global availability.",
+    "x39Matrix token marketing UI uses a single official triangular ‘eye’ logo as the token mark across all placements (header/token blocks/favicon).",
+    "Airdrop claim UX includes wallet selection and manual wallet address entry by the user; avoid displaying any private/team allocation details publicly.",
+    "Backend modules and build-template dependencies were updated to newer component versions (authorization v3.0.0, stripe v3.0.0, http-outcalls v3.0.0, blob-storage v4.0.0, core-infrastructure v1.0.2).",
+    "Custom domain work now includes x39matrix.com (in addition to prior x39dark.com): requires correct ICP custom-domain mapping plus DNS (A/AAAA/CNAME/TXT as required by IC boundary nodes) and SSL issuance for worldwide availability.",
+    "Token claim flow requires a wallet-selection UI and manual address capture (no private allocation details displayed publicly)."
+  ],
+  "knownIssues": [
+    "Language selection UI in App.tsx maintains a local currentLanguage state but does not call LanguageContext.setLanguage; changing the language from the navbar likely does not affect translations rendered via useLanguage().",
+    "LiveICPPrice useEffect depends on icpPriceData, which causes the polling interval to be recreated on each price update (potential interval churn).",
+    "X39ICPGame: lives are displayed and game-over is checked, but enemy collisions do not decrement lives; as implemented, game over may be unreachable unless lives are reduced elsewhere.",
+    "X39ICPGame updates React state (setEnemies/setCollectibles) inside useFrame every frame, which can cause frequent re-renders and performance issues as entity counts grow.",
+    "ICPPaymentGate describes automatic unlocking after payment, but no payment verification/unlock mechanism is implemented in the frontend (and no matching backend logic is present in the provided code).",
+    "Several UI panels use mock/generated data (TokenAnalyticsPanel, PerformanceMetricsDashboard, DailyNewsUpdates, token counters), indicating missing real backend integrations.",
+    "Stripe buildCheckoutSessionBody uses shipping_address_collection[allowed_countries][0] for every country, which likely overwrites previous entries and results in only one allowed country being effective.",
+    "Stripe session parsing (extractClientReferenceId) relies on naive substring/split matching over raw JSON text; it is brittle vs. formatting changes.",
+    "QRCodeSection cleanup removes all <script> tags whose src contains 'qrcode', which can inadvertently remove shared scripts if other components rely on them simultaneously.",
+    "Hard-coded reliance on Binance public APIs may fail in some environments due to rate limits, regional blocks, or CORS/network restrictions.",
+    "AccessControl assigns the first non-anonymous principal calling initializeAccessControl() as admin; there is no recovery/rotation mechanism if that principal is lost or never initializes.",
+    "Blob storage module requires the CAFFFEINE_STORAGE_CASHIER_PRINCIPAL environment variable; canister traps if missing.",
+    "Some referenced components/files appear as placeholders/empty in the provided listing (e.g., frontend/src/components/GolumanjiGame.tsx, GameHUD.tsx, GameWorld.tsx, several Matrix/Davos blocks), suggesting incomplete or missing implementations in parts of the codebase snapshot.",
+    "Custom domain (x39matrix.com / x39.org) intermittently fails to resolve to the ICP canister and may show a default Nginx page, indicating DNS/SSL/canister domain-mapping misconfiguration or incomplete propagation.",
+    "Countdown/launch-timer logic has been unstable and was requested to be removed or replaced to avoid credibility issues.",
+    "https://x39matrix.com does not reliably open (domain resolves incorrectly / not mapped to ICP canister / SSL not active), indicating DNS/SSL/custom-domain mapping misconfiguration or incomplete propagation.",
+    "User reports persistent 'site does not open in any browser' symptoms; needs global verification and remediation beyond frontend changes."
+  ],
+  "isFixRequest": true,
+  "gameProjectType": "none",
+  "projectName": "X39 Matrix",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0,
+  "requiresBackendChanges": true,
+  "requiresFrontendChanges": true
+}

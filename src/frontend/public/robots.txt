@@ -1,0 +1,67 @@
+# X39 Matrix - Robots.txt Configuration
+# Global crawling directives for worldwide search engines
+# Domain: x39matrix.com
+# Last Updated: 2026-02-03
+
+# Allow all major search engine bots with strategic priorities
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Googlebot-Image
+Allow: /
+Crawl-delay: 0
+
+User-agent: Googlebot-Mobile
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 2
+
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 2
+
+User-agent: Sogou
+Allow: /
+Crawl-delay: 2
+
+# Default rule for all other bots
+User-agent: *
+Allow: /
+Crawl-delay: 5
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.json$
+Disallow: /api/
+
+# Allow important resources
+Allow: /assets/
+Allow: /src/
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.gif$
+Allow: /*.svg$
+Allow: /*.webp$
+
+# Sitemap location for global crawling
+Sitemap: https://x39matrix.com/sitemap.xml
