@@ -1,129 +1,39 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Store submission build preparation (Google Play + Apple App Store)",
+  "title": "Replace X39 Matrix launch green accents with celestial sky blue",
   "requirements": [
     {
-      "id": "REQ-7",
-      "summary": "Prepare a reproducible Android release submission build plan (AAB), including release versioning documentation, artifact paths, and English release notes.",
+      "id": "REQ-16",
+      "summary": "Update X39 Matrix launch hero styling to replace all green accents with celestial sky blue while keeping red accents and layout/copy unchanged.",
       "acceptanceCriteria": [
-        "A Play Store submission artifact (AAB) is produced via the project’s build tooling with a reproducible command.",
-        "Release versioning (version name + version code) is incremented and documented for the submission build.",
-        "A short English release notes text is included in the repo (or build output) and references the submission build version.",
-        "The build output includes clear instructions for where to find the AAB and how to upload it to Google Play Console."
+        "In `frontend/src/components/X39MatrixLaunchHeroBlock.tsx`, no visible UI element in the launch hero uses green as the accent color; the corresponding accent color is a sky-blue/celestial-blue tone instead.",
+        "Red accents (e.g., `red-500` treatments) remain present and visually consistent with the existing design.",
+        "Glow/shadow effects previously using green RGBA values are updated to matching sky-blue/celestial-blue RGBA values (no green glow remains).",
+        "The CTA gradient start color is updated from green to sky blue, while still blending into red on the other side (no green gradient stop remains).",
+        "The supporting cards that currently use green borders/icons/headings are updated to sky-blue equivalents, keeping the middle red card unchanged."
       ],
       "file_operations": [
         {
-          "path": "frontend/docs/store-submission/android-google-play.md",
-          "operation": "create",
-          "description": "Add English documentation for producing a Play-ready Android App Bundle (AAB) with reproducible commands, required local prerequisites, where to find the resulting AAB artifact path(s), and concise steps for uploading to Google Play Console (without performing the submission). Include explicit guidance for setting/reviewing Android applicationId (package identifier) and release versioning (versionName + versionCode) in the Android build configuration used by this project."
-        },
-        {
-          "path": "frontend/release/versions/android-release-version.md",
-          "operation": "create",
-          "description": "Document the Android submission build version name and version code for the release submission build, including an explicit increment note and a reference to the related English release notes file."
-        },
-        {
-          "path": "frontend/release/release-notes.en.md",
-          "operation": "create",
-          "description": "Add short English release notes for the submission build and ensure it explicitly references the Android submission build version documented in frontend/release/versions/android-release-version.md."
-        },
-        {
-          "path": "frontend/README-store-submission.md",
-          "operation": "create",
-          "description": "Add a single English entry point README that links to the Android submission guide, lists the reproducible build command(s), and summarizes where to locate the AAB build artifact path(s) after the build completes."
+          "path": "frontend/src/components/X39MatrixLaunchHeroBlock.tsx",
+          "operation": "modify",
+          "description": "Replace all green Tailwind accent classes (e.g., `text-green-*`, `border-green-*`, `via-green-*`, `from-green-*`, `hover:*green-*`) with celestial/sky-blue equivalents (e.g., `sky-*`), while keeping all existing red accents unchanged. Update any inline green glow/text-shadow/drop-shadow RGBA values (e.g., `rgba(34, 197, 94, ...)`) to matching celestial/sky-blue RGBA values; ensure the CTA gradient starts with sky-blue and still blends into red, and update supporting cards 1 & 3 accents to sky-blue while leaving the middle red card unchanged."
         }
       ]
     },
     {
-      "id": "REQ-8",
-      "summary": "Prepare a reproducible iOS release submission build plan, including archive/export signing instructions for generating an IPA and English release notes referencing the submission build version.",
+      "id": "REQ-17",
+      "summary": "Update Matrix code-rain ambient effects to use celestial sky blue instead of green for non-red particles, preserving reduced-motion behavior.",
       "acceptanceCriteria": [
-        "A reproducible iOS release build process is documented (commands + required local prerequisites).",
-        "The output includes clear instructions for provisioning profiles, signing certificates, and exporting an IPA for App Store Connect.",
-        "A short English release notes text is included in the repo (or build output) and references the submission build version."
+        "`frontend/src/components/X39MatrixLaunchAmbientEffects.tsx` no longer renders any green (e.g., `rgba(0, 255, 0, ...)`) particles; it renders sky-blue/celestial-blue particles instead.",
+        "Red particles remain red.",
+        "Reduced-motion behavior remains unchanged (effects stay disabled when `prefers-reduced-motion: reduce` is set)."
       ],
       "file_operations": [
         {
-          "path": "frontend/docs/store-submission/ios-app-store.md",
-          "operation": "create",
-          "description": "Add English documentation for producing an iOS release archive suitable for App Store Connect submission, including reproducible commands (as applicable to this project), required local prerequisites, and step-by-step signing/provisioning/export instructions a developer can follow to export an IPA (without performing the submission)."
-        },
-        {
-          "path": "frontend/release/versions/ios-release-version.md",
-          "operation": "create",
-          "description": "Document the iOS submission build version (e.g., marketing version + build number) for the release submission build, including an explicit increment note and a reference to the related English release notes file."
-        },
-        {
-          "path": "frontend/release/release-notes.en.md",
+          "path": "frontend/src/components/X39MatrixLaunchAmbientEffects.tsx",
           "operation": "modify",
-          "description": "Extend the existing English release notes to also reference the iOS submission build version documented in frontend/release/versions/ios-release-version.md, keeping the notes consistent for both stores."
-        },
-        {
-          "path": "frontend/README-store-submission.md",
-          "operation": "modify",
-          "description": "Update the submission entry point README to link to the iOS submission guide and summarize how to produce the iOS archive and where a developer should expect to export/find the IPA during the documented process."
-        }
-      ]
-    },
-    {
-      "id": "REQ-9",
-      "summary": "Add a store submission asset pack (icons, feature graphic, screenshots) under frontend/public/assets/generated with required filenames, document mapping to store listing slots, and align web branding to these assets.",
-      "acceptanceCriteria": [
-        "A dedicated folder exists under frontend/public/assets/generated containing the generated store assets with the exact filenames listed in imageRequirements.required.",
-        "The asset pack includes at minimum: app icon(s), feature graphic / promotional graphic, and at least 3 screenshots.",
-        "A short English README is added describing which files map to Google Play Console and App Store Connect upload slots."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/public/assets/generated/app-icon.dim_1024x1024.png",
-          "operation": "create",
-          "description": "Add the generated store asset required by imageRequirements: App icon, triangle-with-eye mark on dark background (app-icon.dim_1024x1024.png)."
-        },
-        {
-          "path": "frontend/public/assets/generated/android-adaptive-foreground.dim_1024x1024.png",
-          "operation": "create",
-          "description": "Add the generated store asset required by imageRequirements: Android adaptive icon foreground, triangle-with-eye mark only with transparent background (android-adaptive-foreground.dim_1024x1024.png)."
-        },
-        {
-          "path": "frontend/public/assets/generated/android-adaptive-background.dim_1024x1024.png",
-          "operation": "create",
-          "description": "Add the generated store asset required by imageRequirements: Android adaptive icon background, subtle dark tech pattern (android-adaptive-background.dim_1024x1024.png)."
-        },
-        {
-          "path": "frontend/public/assets/generated/play-feature-graphic.dim_1024x500.png",
-          "operation": "create",
-          "description": "Add the generated store asset required by imageRequirements: Google Play feature graphic, dark cyber/tech banner with triangle-with-eye mark and minimal title text styling (play-feature-graphic.dim_1024x500.png)."
-        },
-        {
-          "path": "frontend/public/assets/generated/appstore-screenshot-1.dim_1290x2796.png",
-          "operation": "create",
-          "description": "Add the generated store asset required by imageRequirements: App Store screenshot 1, dark cyberpunk UI mock screenshot frame with title area and device frame (appstore-screenshot-1.dim_1290x2796.png)."
-        },
-        {
-          "path": "frontend/public/assets/generated/appstore-screenshot-2.dim_1290x2796.png",
-          "operation": "create",
-          "description": "Add the generated store asset required by imageRequirements: App Store screenshot 2, dark cyberpunk UI mock screenshot frame with title area and device frame (appstore-screenshot-2.dim_1290x2796.png)."
-        },
-        {
-          "path": "frontend/public/assets/generated/appstore-screenshot-3.dim_1290x2796.png",
-          "operation": "create",
-          "description": "Add the generated store asset required by imageRequirements: App Store screenshot 3, dark cyberpunk UI mock screenshot frame with title area and device frame (appstore-screenshot-3.dim_1290x2796.png)."
-        },
-        {
-          "path": "frontend/public/assets/generated/STORE_ASSET_PACK_README.en.md",
-          "operation": "create",
-          "description": "Add a short English README mapping each generated file in frontend/public/assets/generated to the correct upload slots in Google Play Console (launcher icon/adaptive icon/feature graphic/screenshots) and App Store Connect (app icon/screenshots). Use English naming and keep the filenames exactly as listed in imageRequirements.required."
-        },
-        {
-          "path": "frontend/index.html",
-          "operation": "modify",
-          "description": "Align web branding metadata to the new store asset pack by updating the favicon and social preview image references to use frontend/public/assets/generated/app-icon.dim_1024x1024.png (and keep titles/descriptions consistent)."
-        },
-        {
-          "path": "frontend/public/sitemap.xml",
-          "operation": "modify",
-          "description": "Update any referenced branding images (if present) to stay consistent with the new store asset pack, preferring frontend/public/assets/generated/app-icon.dim_1024x1024.png where appropriate."
+          "description": "Change the particle color selection logic so the green particle color (e.g., `rgba(0, 255, 0, ...)`) is replaced with a celestial/sky-blue RGBA value, while leaving the red particle RGBA unchanged; do not alter reduced-motion checks or the effect disable behavior."
         }
       ]
     }

@@ -1,6 +1,6 @@
 # X39 Matrix - Release Notes
 
-## Version 1.0.0 (Build 1) - February 3, 2026
+## Version 1.0.0 (Build 1) - March 15, 2026
 
 **Initial Release - Welcome to X39 Matrix!**
 
@@ -78,13 +78,14 @@ We're committed to continuous improvement. Upcoming features include:
 
 ### 📞 Support & Community
 
-- Website: https://x39matrix.com
+- Website: https://x39matrix.org
 - Documentation: Available in-app
 - Community: Join our Element chat via Matrix Protocol
 
 ---
 
 **Android Version**: 1.0.0 (Version Code: 1)  
-**iOS Version**: 1.0.0 (Build: 1)
+**iOS Version**: 1.0.0 (Build: 1)  
+**Public Launch Date**: March 15, 2026
 
 Thank you for being part of the X39 Matrix community! 🚀

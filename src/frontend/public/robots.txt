@@ -1,6 +1,6 @@
 # X39 Matrix - Robots.txt Configuration
 # Global crawling directives for worldwide search engines
-# Domain: x39matrix.com
+# Domain: x39matrix.org
 # Last Updated: 2026-02-03
 
 # Allow all major search engine bots with strategic priorities
@@ -64,4 +64,4 @@ Allow: /*.svg$
 Allow: /*.webp$
 
 # Sitemap location for global crawling
-Sitemap: https://x39matrix.com/sitemap.xml
+Sitemap: https://x39matrix.org/sitemap.xml

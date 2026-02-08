@@ -150,8 +150,11 @@ export const idlService = IDL.Service({
   'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
   'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
   'getHolding' : IDL.Func([IDL.Nat], [IDL.Opt(Holding)], ['query']),
+  'getLaunchDate' : IDL.Func([], [IDL.Text], ['query']),
   'getProducts' : IDL.Func([], [IDL.Vec(Product)], ['query']),
   'getProposal' : IDL.Func([IDL.Nat], [IDL.Opt(Proposal)], ['query']),
+  'getPublicationState' : IDL.Func([], [IDL.Bool], ['query']),
+  'getReceiverPrincipal' : IDL.Func([], [IDL.Principal], ['query']),
   'getStripeSessionStatus' : IDL.Func([IDL.Text], [StripeSessionStatus], []),
   'getUserHoldings' : IDL.Func([IDL.Principal], [IDL.Vec(Holding)], ['query']),
   'getUserProfile' : IDL.Func(
@@ -165,6 +168,7 @@ export const idlService = IDL.Service({
   'proxyIcpKlines' : IDL.Func([], [IDL.Text], []),
   'proxyIcpPrice' : IDL.Func([], [IDL.Text], []),
   'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+  'setPublicationState' : IDL.Func([IDL.Bool], [], []),
   'setStripeConfiguration' : IDL.Func([StripeConfiguration], [], []),
   'transform' : IDL.Func(
       [TransformationInput],
@@ -318,8 +322,11 @@ export const idlFactory = ({ IDL }) => {
     'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
     'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
     'getHolding' : IDL.Func([IDL.Nat], [IDL.Opt(Holding)], ['query']),
+    'getLaunchDate' : IDL.Func([], [IDL.Text], ['query']),
     'getProducts' : IDL.Func([], [IDL.Vec(Product)], ['query']),
     'getProposal' : IDL.Func([IDL.Nat], [IDL.Opt(Proposal)], ['query']),
+    'getPublicationState' : IDL.Func([], [IDL.Bool], ['query']),
+    'getReceiverPrincipal' : IDL.Func([], [IDL.Principal], ['query']),
     'getStripeSessionStatus' : IDL.Func([IDL.Text], [StripeSessionStatus], []),
     'getUserHoldings' : IDL.Func(
         [IDL.Principal],
@@ -337,6 +344,7 @@ export const idlFactory = ({ IDL }) => {
     'proxyIcpKlines' : IDL.Func([], [IDL.Text], []),
     'proxyIcpPrice' : IDL.Func([], [IDL.Text], []),
     'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+    'setPublicationState' : IDL.Func([IDL.Bool], [], []),
     'setStripeConfiguration' : IDL.Func([StripeConfiguration], [], []),
     'transform' : IDL.Func(
         [TransformationInput],

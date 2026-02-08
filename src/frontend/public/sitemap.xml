@@ -5,18 +5,18 @@
   
   <!-- Homepage - Highest Priority -->
   <url>
-    <loc>https://x39matrix.com/</loc>
+    <loc>https://x39matrix.org/</loc>
     <lastmod>2026-02-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="es" href="https://x39matrix.com/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://x39matrix.com/" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://x39matrix.com/" />
-    <xhtml:link rel="alternate" hreflang="zh" href="https://x39matrix.com/" />
-    <xhtml:link rel="alternate" hreflang="ja" href="https://x39matrix.com/" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://x39matrix.com/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://x39matrix.org/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://x39matrix.org/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://x39matrix.org/" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://x39matrix.org/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://x39matrix.org/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://x39matrix.org/" />
     <image:image>
-      <image:loc>https://x39matrix.com/assets/generated/app-icon.dim_1024x1024.png</image:loc>
+      <image:loc>https://x39matrix.org/assets/generated/app-icon.dim_1024x1024.png</image:loc>
       <image:title>X39 Matrix - Token ICP DeFi</image:title>
       <image:caption>X39 Matrix - Token oficial del Protocolo Matrix descentralizado en el ecosistema ICP</image:caption>
     </image:image>
@@ -24,29 +24,29 @@
 
   <!-- ICP Section -->
   <url>
-    <loc>https://x39matrix.com/#icp-section</loc>
+    <loc>https://x39matrix.org/#icp-section</loc>
     <lastmod>2026-02-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="es" href="https://x39matrix.com/#icp-section" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://x39matrix.org/#icp-section" />
   </url>
 
   <!-- Dark Web Section -->
   <url>
-    <loc>https://x39matrix.com/#darkweb-section</loc>
+    <loc>https://x39matrix.org/#darkweb-section</loc>
     <lastmod>2026-02-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="es" href="https://x39matrix.com/#darkweb-section" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://x39matrix.org/#darkweb-section" />
   </url>
 
   <!-- Graficos Section -->
   <url>
-    <loc>https://x39matrix.com/#graficos</loc>
+    <loc>https://x39matrix.org/#graficos</loc>
     <lastmod>2026-02-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
-    <xhtml:link rel="alternate" hreflang="es" href="https://x39matrix.com/#graficos" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://x39matrix.org/#graficos" />
   </url>
 
 </urlset>

@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react';
 import { useActor } from './useActor';
-import { OFFICIAL_PORTAL_URL, getCurrentOrigin, isSecureContext } from '../utils/urls';
+import { OFFICIAL_PORTAL_URL, SATELLITE_DOMAINS, getCurrentOrigin, isSecureContext } from '../utils/urls';
 
-export type CheckStatus = 'pending' | 'pass' | 'fail';
+export type CheckStatus = 'pending' | 'pass' | 'fail' | 'unknown';
 
 export interface DiagnosticCheck {
   id: string;
@@ -98,9 +98,29 @@ export function useConnectivityDiagnostics() {
       });
     }
 
-    // Check 3: Static Asset Reachability
+    // Check 3: HSTS Detection (best-effort)
     try {
-      const assetUrl = `${OFFICIAL_PORTAL_URL}/assets/generated/x39matrix-favicon.dim_32x32.png`;
+      const hstsResult = await checkHSTS();
+      checks.push({
+        id: 'hsts-status',
+        name: 'HSTS (HTTP Strict Transport Security)',
+        status: hstsResult.status,
+        message: hstsResult.message,
+        details: hstsResult.details,
+      });
+    } catch (error: any) {
+      checks.push({
+        id: 'hsts-status',
+        name: 'HSTS (HTTP Strict Transport Security)',
+        status: 'unknown',
+        message: 'Unable to detect HSTS header',
+        details: error?.message || 'HSTS detection requires server response headers',
+      });
+    }
+
+    // Check 4: Static Asset Reachability
+    try {
+      const assetUrl = `${OFFICIAL_PORTAL_URL}/assets/generated/app-icon.dim_1024x1024.png`;
       const reachable = await checkAssetReachability(assetUrl);
       
       if (reachable) {
@@ -108,7 +128,7 @@ export function useConnectivityDiagnostics() {
           id: 'asset-reachability',
           name: 'Static Asset Access',
           status: 'pass',
-          message: 'Static assets are reachable from official domain',
+          message: 'Generated assets are reachable from official domain',
           details: `Tested: ${assetUrl}`,
         });
       } else {
@@ -116,7 +136,7 @@ export function useConnectivityDiagnostics() {
           id: 'asset-reachability',
           name: 'Static Asset Access',
           status: 'fail',
-          message: 'Failed to load static assets from official domain',
+          message: 'Failed to load generated assets from official domain',
           details: `Asset URL: ${assetUrl}`,
         });
       }
@@ -130,7 +150,7 @@ export function useConnectivityDiagnostics() {
       });
     }
 
-    // Check 4: Backend Health
+    // Check 5: Backend Health
     let backendHealth: BackendHealthInfo | null = null;
     try {
       if (!actor) {
@@ -183,7 +203,8 @@ export function useConnectivityDiagnostics() {
     report += `Timestamp: ${timestamp}\n`;
     report += `Current Origin: ${origin}\n`;
     report += `HTTPS: ${isHttps ? 'Yes' : 'No'}\n`;
-    report += `Official Portal: ${OFFICIAL_PORTAL_URL}\n\n`;
+    report += `Official Portal: ${OFFICIAL_PORTAL_URL}\n`;
+    report += `Satellite Domains: ${SATELLITE_DOMAINS.join(', ')}\n\n`;
     
     report += `=== Diagnostic Checks ===\n`;
     state.checks.forEach(check => {
@@ -201,6 +222,15 @@ export function useConnectivityDiagnostics() {
         report += `Backend Time: ${new Date(Number(state.backendHealth.timestamp) / 1000000).toISOString()}\n`;
       }
     }
+
+    // Add troubleshooting section
+    report += `\n=== Troubleshooting ===\n`;
+    report += `If you see a "default Nginx page" instead of the X39 Matrix application:\n`;
+    report += `1. Verify custom domain is registered in IC Dashboard (Canister Settings → Custom Domains)\n`;
+    report += `2. Check DNS records point to IC boundary nodes (use: dig x39matrix.org)\n`;
+    report += `3. Wait for certificate provisioning (10-30 minutes after domain registration)\n`;
+    report += `4. Clear browser cache and try incognito/private mode\n`;
+    report += `5. Verify canister is deployed (dfx canister --network ic status frontend)\n`;
     
     return report;
   }, [state]);
@@ -210,6 +240,34 @@ export function useConnectivityDiagnostics() {
     runDiagnostics,
     generateReport,
   };
+}
+
+// Helper function to check HSTS header (best-effort)
+async function checkHSTS(): Promise<{ status: CheckStatus; message: string; details?: string }> {
+  try {
+    const response = await fetch(OFFICIAL_PORTAL_URL, { method: 'HEAD' });
+    const hstsHeader = response.headers.get('strict-transport-security');
+    
+    if (hstsHeader) {
+      return {
+        status: 'pass',
+        message: 'HSTS header detected',
+        details: `Header: ${hstsHeader}`,
+      };
+    } else {
+      return {
+        status: 'unknown',
+        message: 'HSTS header not detected in response',
+        details: 'This may be normal if HSTS is enforced at boundary node level',
+      };
+    }
+  } catch (error: any) {
+    return {
+      status: 'unknown',
+      message: 'Unable to check HSTS header',
+      details: error?.message || 'CORS or network restrictions may prevent header inspection',
+    };
+  }
 }
 
 // Helper function to check asset reachability using browser-safe image loading

@@ -10,8 +10,38 @@ import Text "mo:core/Text";
 import Time "mo:core/Time";
 import Nat "mo:core/Nat";
 
+
+
 actor {
   include MixinStorage();
+
+  // Publication state
+  var isPublished : Bool = true;
+
+  // Store configuration and constants in the persistent actor state
+  let launchDate : Text = "March 15, 2026";
+
+  public query func getLaunchDate() : async Text {
+    launchDate;
+  };
+
+  public query ({ caller }) func getReceiverPrincipal() : async Principal {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
+      Runtime.trap("Unauthorized: Only admins can view receiver principal");
+    };
+    Principal.fromText("wb7q4-g65x3-sf2ck-s4pun-6hgpw-634gb-663rg-dymc2-4u2of-t7jir-mqe");
+  };
+
+  public query ({ caller }) func getPublicationState() : async Bool {
+    isPublished;
+  };
+
+  public shared ({ caller }) func setPublicationState(state : Bool) : async () {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
+      Runtime.trap("Unauthorized: Only admins can change publication state");
+    };
+    isPublished := state;
+  };
 
   // Portfolio/Staking/Holdings Types & Logic
   public type Holding = {
@@ -267,6 +297,7 @@ actor {
 
   // Stripe integration state
   var stripeConfiguration : ?Stripe.StripeConfiguration = null;
+  var stripeSessionOwners = Map.empty<Text, Principal>();
 
   // Product management
   public type Product = {
@@ -301,18 +332,18 @@ actor {
 
   let userProfiles = Map.empty<Principal, UserProfile>();
 
-  public query ({ caller }) func getCallerUserProfile() : async ?UserProfile {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
-      Runtime.trap("Unauthorized: Only users can save profiles");
-    };
-    userProfiles.get(caller);
-  };
-
   public query ({ caller }) func getUserProfile(user : Principal) : async ?UserProfile {
     if (caller != user and not AccessControl.isAdmin(accessControlState, caller)) {
       Runtime.trap("Unauthorized: Can only view your own profile");
     };
     userProfiles.get(user);
+  };
+
+  public query ({ caller }) func getCallerUserProfile() : async ?UserProfile {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Only users can view profiles");
+    };
+    userProfiles.get(caller);
   };
 
   public shared ({ caller }) func saveCallerUserProfile(profile : UserProfile) : async () {
@@ -349,7 +380,10 @@ actor {
   };
 
   // Stripe Integration Functions
-  public query func isStripeConfigured() : async Bool {
+  public query ({ caller }) func isStripeConfigured() : async Bool {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
+      Runtime.trap("Unauthorized: Only admins can check Stripe configuration");
+    };
     stripeConfiguration != null;
   };
 
@@ -367,7 +401,20 @@ actor {
     };
   };
 
-  public func getStripeSessionStatus(sessionId : Text) : async Stripe.StripeSessionStatus {
+  public shared ({ caller }) func getStripeSessionStatus(sessionId : Text) : async Stripe.StripeSessionStatus {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Only users can check session status");
+    };
+
+    let sessionOwner = switch (stripeSessionOwners.get(sessionId)) {
+      case (null) { Runtime.trap("Session not found") };
+      case (?owner) { owner };
+    };
+
+    if (sessionOwner != caller and not AccessControl.isAdmin(accessControlState, caller)) {
+      Runtime.trap("Unauthorized: Can only check your own session status");
+    };
+
     await Stripe.getSessionStatus(getStripeConfiguration(), sessionId, transform);
   };
 
@@ -375,7 +422,9 @@ actor {
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
       Runtime.trap("Unauthorized: Only users can create checkout sessions");
     };
-    await Stripe.createCheckoutSession(getStripeConfiguration(), caller, items, successUrl, cancelUrl, transform);
+    let sessionId = await Stripe.createCheckoutSession(getStripeConfiguration(), caller, items, successUrl, cancelUrl, transform);
+    stripeSessionOwners.add(sessionId, caller);
+    sessionId;
   };
 
   public query func transform(input : OutCall.TransformationInput) : async OutCall.TransformationOutput {
@@ -383,8 +432,6 @@ actor {
   };
 
   // --------- ICP Market Proxy Endpoints ---------
-  // These endpoints are publicly accessible to all users (including guests)
-  // to allow the UI to fetch live market data regardless of authentication status
   public func proxyIcpPrice() : async Text {
     await OutCall.httpGetRequest(
       "https://api.binance.com/api/v3/ticker/price?symbol=ICPUSDT",
@@ -406,9 +453,9 @@ actor {
     timestamp : Int;
   };
 
-  public query ({ caller }) func checkBackendHealth() : async BackendHealth {
+  public query func checkBackendHealth() : async BackendHealth {
     {
-      version = "0.1.4";
+      version = "0.2.0";
       timestamp = Time.now();
     };
   };

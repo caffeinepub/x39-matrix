@@ -2,13 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-prepare-an-android-release-submission-build-for-google-play-including-generating-a-play-ready-android-app-bundle-aab-ensuring-the-app-s-package-identifiers-and-versioning-are-set-for-release-and-providing-the-final-build-artifact-path-s-and-release-notes-english",
-      "featureTitle": "Prepare an Android release submission build for Google Play, including generating a Play-ready Android App Bundle (AAB), ensuring the app’s package identifiers and versioning are set for release, and providing the final build artifact path(s) and release notes (English).",
+      "featureId": "feature-update-the-x39-matrix-launch-hero-block-so-that-all-green-colored-accents-are-replaced-with-a-celestial-sky-blue-color-while-keeping-the-existing-red-accents-unchanged-this-includes-but-is-not-limited-to-tailwind-classes-like-text-green-border-green-from-green-gradients-and-any-inline-green-glow-text-shadow-rgba-values-used-inside-frontend-src-components-x39matrixlaunchheroblock-tsx",
+      "featureTitle": "Update the X39 Matrix launch hero block so that all green-colored accents are replaced with a celestial sky blue color, while keeping the existing red accents unchanged. This includes (but is not limited to) Tailwind classes like `text-green-*`, `border-green-*`, `from-green-*` gradients, and any inline green glow/text-shadow RGBA values used inside `frontend/src/components/X39MatrixLaunchHeroBlock.tsx`.",
       "files": [
-        "frontend/README-store-submission.md",
-        "frontend/docs/store-submission/android-google-play.md",
-        "frontend/release/release-notes.en.md",
-        "frontend/release/versions/android-release-version.md"
+        "frontend/src/components/X39MatrixLaunchHeroBlock.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -24,18 +21,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-7"
+        "REQ-16"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-prepare-an-ios-release-submission-build-for-the-apple-app-store-including-producing-a-release-archive-suitable-for-app-store-connect-submission-and-providing-step-by-step-signing-provisioning-instructions-required-for-a-developer-to-export-an-ipa-english",
-      "featureTitle": "Prepare an iOS release submission build for the Apple App Store, including producing a release archive suitable for App Store Connect submission and providing step-by-step signing/provisioning instructions required for a developer to export an IPA (English).",
+      "featureId": "feature-update-the-launch-ambient-effects-code-rain-so-that-any-green-particle-color-is-replaced-with-a-celestial-sky-blue-color-keeping-the-red-particles-unchanged-in-frontend-src-components-x39matrixlaunchambienteffects-tsx",
+      "featureTitle": "Update the launch ambient effects code-rain so that any green particle color is replaced with a celestial sky blue color, keeping the red particles unchanged, in `frontend/src/components/X39MatrixLaunchAmbientEffects.tsx`.",
       "files": [
-        "frontend/README-store-submission.md",
-        "frontend/docs/store-submission/ios-app-store.md",
-        "frontend/release/release-notes.en.md",
-        "frontend/release/versions/ios-release-version.md"
+        "frontend/src/components/X39MatrixLaunchAmbientEffects.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -51,32 +45,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-8"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-an-app-store-play-store-submission-asset-pack-to-the-repository-that-includes-required-icons-and-store-listing-visuals-at-standard-sizes-and-ensure-the-web-app-s-branding-is-consistent-with-these-assets-english-naming-and-documentation",
-      "featureTitle": "Add an App Store / Play Store submission asset pack to the repository that includes required icons and store listing visuals at standard sizes, and ensure the web app’s branding is consistent with these assets (English naming and documentation).",
-      "files": [
-        "frontend/index.html",
-        "frontend/public/sitemap.xml"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "http-outcalls@3.0.0",
-        "qr-code@1.0.0",
-        "camera@1.0.0",
-        "stripe@3.0.0",
-        "authorization@3.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-9"
+        "REQ-17"
       ],
       "confidence": "high"
     }

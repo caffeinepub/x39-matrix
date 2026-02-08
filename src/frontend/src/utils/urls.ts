@@ -1,13 +1,20 @@
 /**
  * URL utilities for domain-safe operations on custom domains
- * Ensures all URLs are origin-agnostic and work correctly on https://x39matrix.com
+ * Ensures all URLs are origin-agnostic and work correctly on https://x39matrix.org
  */
 
 /**
- * Canonical official portal URL
+ * Canonical official portal URL (lowercase for consistency)
  * Use this constant for all UI references to the official domain
  */
-export const OFFICIAL_PORTAL_URL = 'https://x39matrix.com';
+export const OFFICIAL_PORTAL_URL = 'https://x39matrix.org';
+
+/**
+ * Satellite domain hostnames (for redirect logic)
+ * Includes x39dark.com, x39matrix.com, and x39.org
+ * These domains should redirect to the canonical domain
+ */
+export const SATELLITE_DOMAINS = ['x39dark.com', 'x39matrix.com', 'x39.org'];
 
 /**
  * Get the current origin (protocol + host)
@@ -80,4 +87,15 @@ export function buildCanonicalAssetUrl(assetPath: string): string {
  */
 export function isOnOfficialDomain(): boolean {
   return getCurrentOrigin() === OFFICIAL_PORTAL_URL;
+}
+
+/**
+ * Check if current hostname is a satellite domain
+ */
+export function isSatelliteDomain(): boolean {
+  if (typeof window === 'undefined') return false;
+  const currentHostname = window.location.hostname.toLowerCase();
+  return SATELLITE_DOMAINS.some(
+    domain => currentHostname === domain || currentHostname.endsWith(`.${domain}`)
+  );
 }

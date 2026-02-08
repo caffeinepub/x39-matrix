@@ -1,89 +1,69 @@
 {
   "kind": "build_request",
-  "title": "Prepare official Google Play and Apple App Store submission builds",
+  "title": "Change X39 Matrix launch section green accents to celestial sky blue",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-7",
-      "text": "Prepare an Android release submission build for Google Play, including generating a Play-ready Android App Bundle (AAB), ensuring the app’s package identifiers and versioning are set for release, and providing the final build artifact path(s) and release notes (English).",
+      "id": "REQ-16",
+      "text": "Update the X39 Matrix launch hero block so that all green-colored accents are replaced with a celestial sky blue color, while keeping the existing red accents unchanged. This includes (but is not limited to) Tailwind classes like `text-green-*`, `border-green-*`, `from-green-*` gradients, and any inline green glow/text-shadow RGBA values used inside `frontend/src/components/X39MatrixLaunchHeroBlock.tsx`.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-3",
-          "msg-4"
+          "msg-1"
         ],
         "quotes": [
-          "Would you like me to prepare the official Play Store and App Store submission builds next?",
-          "Si"
+          "La parte que sale verde la puedes cambiar por el color azul celestial."
         ]
       },
       "acceptanceCriteria": [
-        "A Play Store submission artifact (AAB) is produced via the project’s build tooling with a reproducible command.",
-        "Release versioning (version name + version code) is incremented and documented for the submission build.",
-        "A short English release notes text is included in the repo (or build output) and references the submission build version.",
-        "The build output includes clear instructions for where to find the AAB and how to upload it to Google Play Console."
+        "In `frontend/src/components/X39MatrixLaunchHeroBlock.tsx`, no visible UI element in the launch hero uses green as the accent color; the corresponding accent color is a sky-blue/celestial-blue tone instead.",
+        "Red accents (e.g., `red-500` treatments) remain present and visually consistent with the existing design.",
+        "Glow/shadow effects previously using green RGBA values are updated to matching sky-blue/celestial-blue RGBA values (no green glow remains).",
+        "The CTA gradient start color is updated from green to sky blue, while still blending into red on the other side (no green gradient stop remains).",
+        "The supporting cards that currently use green borders/icons/headings are updated to sky-blue equivalents, keeping the middle red card unchanged."
       ]
     },
     {
-      "id": "REQ-8",
-      "text": "Prepare an iOS release submission build for the Apple App Store, including producing a release archive suitable for App Store Connect submission and providing step-by-step signing/provisioning instructions required for a developer to export an IPA (English).",
+      "id": "REQ-17",
+      "text": "Update the launch ambient effects code-rain so that any green particle color is replaced with a celestial sky blue color, keeping the red particles unchanged, in `frontend/src/components/X39MatrixLaunchAmbientEffects.tsx`.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-3",
-          "msg-4"
+          "msg-1"
         ],
         "quotes": [
-          "Would you like me to prepare the official Play Store and App Store submission builds next?",
-          "Si"
+          "La parte que sale verde la puedes cambiar por el color azul celestial."
         ]
       },
       "acceptanceCriteria": [
-        "A reproducible iOS release build process is documented (commands + required local prerequisites).",
-        "The output includes clear instructions for provisioning profiles, signing certificates, and exporting an IPA for App Store Connect.",
-        "A short English release notes text is included in the repo (or build output) and references the submission build version."
-      ]
-    },
-    {
-      "id": "REQ-9",
-      "text": "Add an App Store / Play Store submission asset pack to the repository that includes required icons and store listing visuals at standard sizes, and ensure the web app’s branding is consistent with these assets (English naming and documentation).",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-3",
-          "msg-4"
-        ],
-        "quotes": [
-          "Would you like me to prepare the official Play Store and App Store submission builds next?",
-          "Si"
-        ]
-      },
-      "acceptanceCriteria": [
-        "A dedicated folder exists under frontend/public/assets/generated containing the generated store assets with the exact filenames listed in imageRequirements.required.",
-        "The asset pack includes at minimum: app icon(s), feature graphic / promotional graphic, and at least 3 screenshots.",
-        "A short English README is added describing which files map to Google Play Console and App Store Connect upload slots."
+        "`frontend/src/components/X39MatrixLaunchAmbientEffects.tsx` no longer renders any green (e.g., `rgba(0, 255, 0, ...)`) particles; it renders sky-blue/celestial-blue particles instead.",
+        "Red particles remain red.",
+        "Reduced-motion behavior remains unchanged (effects stay disabled when `prefers-reduced-motion: reduce` is set)."
       ]
     }
   ],
   "constraints": [
-    "Do not edit files under frontend/immutablePaths (including frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useActor.ts, and frontend/src/main.tsx). Compose around them instead.",
-    "Respect the existing single-canister backend architecture; no new backend services."
+    "Use English for any user-facing text.",
+    "Do not edit any files under the immutable frontend paths listed in SYSTEM_CONTEXT.",
+    "Keep the existing launch hero copy and layout behavior unchanged; only adjust the accent color styling from green to celestial sky blue."
   ],
   "nonGoals": [
-    "Do not perform the actual submission in Google Play Console or App Store Connect (only produce submission-ready builds and instructions).",
-    "Do not add third-party authentication providers (only Internet Identity is supported).",
-    "Do not implement new token purchase/claim/staking features as part of this request."
+    "Do not change the configured launch date, countdown logic, or post-launch messaging behavior.",
+    "Do not introduce new sections, new CTAs, or new navigation behavior.",
+    "Do not generate or modify image assets as part of this color change request."
   ],
   "imageRequirements": {
-    "required": [
-      "App icon, triangle-with-eye mark on dark background (app-icon.dim_1024x1024.png)",
-      "Android adaptive icon foreground, triangle-with-eye mark only with transparent background (android-adaptive-foreground.dim_1024x1024.png)",
-      "Android adaptive icon background, subtle dark tech pattern (android-adaptive-background.dim_1024x1024.png)",
-      "Google Play feature graphic, dark cyber/tech banner with triangle-with-eye mark and minimal title text styling (play-feature-graphic.dim_1024x500.png)",
-      "App Store screenshot 1, dark cyberpunk UI mock screenshot frame with title area and device frame (appstore-screenshot-1.dim_1290x2796.png)",
-      "App Store screenshot 2, dark cyberpunk UI mock screenshot frame with title area and device frame (appstore-screenshot-2.dim_1290x2796.png)",
-      "App Store screenshot 3, dark cyberpunk UI mock screenshot frame with title area and device frame (appstore-screenshot-3.dim_1290x2796.png)"
-    ],
+    "required": [],
     "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }

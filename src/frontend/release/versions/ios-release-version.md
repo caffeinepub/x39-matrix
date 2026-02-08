@@ -4,7 +4,7 @@
 
 **Marketing Version**: 1.0.0  
 **Build Number**: 1  
-**Release Date**: February 3, 2026
+**Public Launch Date**: March 15, 2026
 
 ## Version Increment Notes
 
@@ -19,9 +19,9 @@ See detailed release notes in: `frontend/release/release-notes.en.md`
 
 ## Version History
 
-| Build Number | Marketing Version | Release Date | Notes |
-|--------------|-------------------|--------------|-------|
-| 1 | 1.0.0 | 2026-02-03 | Initial App Store release |
+| Build Number | Marketing Version | Public Launch Date | Notes |
+|--------------|-------------------|-------------------|-------|
+| 1 | 1.0.0 | 2026-03-15 | Initial App Store release |
 
 ## Next Version
 

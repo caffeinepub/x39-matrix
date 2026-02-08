@@ -4,7 +4,7 @@
 
 **Version Name**: 1.0.0  
 **Version Code**: 1  
-**Release Date**: February 3, 2026
+**Public Launch Date**: March 15, 2026
 
 ## Version Increment Notes
 
@@ -19,9 +19,9 @@ See detailed release notes in: `frontend/release/release-notes.en.md`
 
 ## Version History
 
-| Version Code | Version Name | Release Date | Notes |
-|--------------|--------------|--------------|-------|
-| 1 | 1.0.0 | 2026-02-03 | Initial Google Play Store release |
+| Version Code | Version Name | Public Launch Date | Notes |
+|--------------|--------------|-------------------|-------|
+| 1 | 1.0.0 | 2026-03-15 | Initial Google Play Store release |
 
 ## Next Version
 

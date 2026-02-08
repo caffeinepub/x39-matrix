@@ -4,6 +4,9 @@ This document provides a quick reference for building and submitting X39 Matrix 
 
 ## 📦 Quick Start
 
-### Android (Google Play Store)
+### Production Release Build (Verifiable)
 
-**Build Command:**
+For complete end-to-end release workflows that produce signed Android AAB and iOS App Store-ready archive/IPA:
+
+**Android Release AAB:**
+

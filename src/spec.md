@@ -1,11 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Prepare submission-ready Android (Google Play) and iOS (Apple App Store) release builds, plus a store asset pack with documented upload guidance.
+**Goal:** Replace all green accent styling in the X39 Matrix launch section with a celestial sky blue while keeping existing red accents unchanged.
 
 **Planned changes:**
-- Generate a Play Store–ready Android App Bundle (AAB) with reproducible build command(s), release package identifiers, and updated version name/code; provide artifact path(s) and short English release notes.
-- Document and produce an iOS release archive suitable for App Store Connect submission, including step-by-step signing/provisioning instructions to export an IPA; include short English release notes.
-- Add a repository “submission asset pack” under `frontend/public/assets/generated` containing required store visuals (icon(s), feature/promo graphic, and at least 3 screenshots) with exact filenames, plus an English README mapping assets to Google Play Console / App Store Connect fields.
+- Update `frontend/src/components/X39MatrixLaunchHeroBlock.tsx` to swap all green Tailwind accent classes (text/border/gradient stops) and any green glow/text-shadow RGBA values to celestial sky blue equivalents, preserving layout and copy.
+- Update the launch CTA gradient so the start color is celestial sky blue and still blends into red (no green gradient stops remain).
+- Update supporting cards in the hero so any green borders/icons/headings become celestial sky blue, keeping the middle red card unchanged.
+- Update `frontend/src/components/X39MatrixLaunchAmbientEffects.tsx` so any green code-rain/particle colors are replaced with celestial sky blue while red particles remain red, preserving reduced-motion behavior.
 
-**User-visible outcome:** The project can be built into Play Store (AAB) and App Store (archive/IPA export-ready) submission artifacts with clear versioned release notes and a ready-to-upload store listing asset pack.
+**User-visible outcome:** The launch hero and its ambient effects no longer show green accents; they use a celestial sky blue accent alongside the existing red styling, with no other behavior or layout changes.

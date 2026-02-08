@@ -1,7 +1,76 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 32,
-  "summary": "Project scope has expanded from the x39Matrix token-centric ICP portal to include a full rebrand/launch under x39matrix.com (triangle-with-eye as the official token logo everywhere), improved global domain/DNS/SSL reliability, public-facing airdrop/claim + wallet capture UX, and a planned NNS-style x39Matrix staking/governance “portfolio” experience with multilingual UI and companion Android/iOS app distribution plans.",
+  "projectStateVersion": 146,
+  "summary": "Project has expanded from x39Matrix.org minimal rebrand into a full X39Matrix token portal: canonical domain intended to be x39matrix.org (with x39dark.com as satellite 301 redirect), prominent triangular logo branding, multilingual messaging, airdrop/claim UX with wallet selector + manual address entry, token launch messaging/scheduling (now targeting March 15, 2026 with legal disclaimer), optional NNS-like staking/governance surfaces and market analytics panels; ongoing major blocker is custom-domain DNS/SSL resolution for x39matrix.org.",
+  "architectural_notes": [
+    "Frontend is a React SPA (TypeScript) styled with Tailwind CSS + custom cyberpunk animation utilities (neon glow, triangle pulse, mist float) and uses lucide-react icons extensively.",
+    "Uses @tanstack/react-query for data fetching/caching; actor creation is identity-aware and triggers dependent query invalidation/refetch on identity changes.",
+    "Authentication uses DFINITY Internet Identity via @dfinity/auth-client, exposed through a React context provider (login/logout, persisted identity, 30-day TTL).",
+    "ICP canister interaction follows the actor pattern: an anonymous actor is used when unauthenticated; an authenticated actor is created with identity and runs an initialization step (initializeAccessControl).",
+    "3D rendering is used in multiple places: a Three.js canvas background (HolographicHero) and a React Three Fiber mini-game (X39ICPGame).",
+    "QR utilities rely on dynamically loaded external CDN scripts (qrcodejs for generation and jsQR for scanning) with retry/fallback logic.",
+    "Backend is a single Motoko actor composed from modules: authorization/access-control, stripe integration, HTTP outcall helper, and blob-storage mixin; authorization is role-based (#admin/#user/#guest).",
+    "Backend HTTP calls to Stripe use IC management canister http_request with a transform function to strip headers, and attach cycles explicitly per request.",
+    "A shadcn/ui-style component library scaffold has been added (via build-template), providing reusable UI primitives and associated frontend tooling/configuration.",
+    "Repository now includes a build-template for standardized ICP deployments (Dockerfile, deploy.sh, canister.yaml files, workspace/package setup) and build utility scripts (prune-unused-images, resize-images)."
+  ],
+  "known_issues": [
+    "ICPPaymentGate describes automatic unlocking after payment, but no payment verification/unlock mechanism is implemented in the frontend (and no matching backend logic is present in the provided code).",
+    "Several UI panels use mock/generated data (TokenAnalyticsPanel, PerformanceMetricsDashboard, DailyNewsUpdates, token counters), indicating missing real backend integrations.",
+    "Hard-coded reliance on Binance public APIs may fail in some environments due to rate limits, regional blocks, or CORS/network restrictions.",
+    "AccessControl assigns the first non-anonymous principal calling initializeAccessControl() as admin; there is no recovery/rotation mechanism if that principal is lost or never initializes.",
+    "Blob storage module requires the CAFFFEINE_STORAGE_CASHIER_PRINCIPAL environment variable; canister traps if missing.",
+    "Custom domain (x39matrix.com / x39.org) intermittently fails to resolve to the ICP canister and may show a default Nginx page, indicating DNS/SSL/canister domain-mapping misconfiguration or incomplete propagation.",
+    "Countdown/launch-timer logic has been unstable and was requested to be removed or replaced to avoid credibility issues.",
+    "x39matrix.com domain access reported as failing/not opening; indicates ongoing DNS/SSL/custom-domain-to-canister mapping issues similar to prior x39dark.com problems.",
+    "Deployment failures/guard blocks occurred during publish attempts; draft expirations repeatedly interrupted releases.",
+    "Requested prominent launch/countdown block on x39dark.com may conflict with the canonical-domain plan (x39matrix.org primary with x39dark.com 301 redirect), requiring a clarified redirect/content strategy."
+  ],
+  "isFixRequest": false,
+  "generatedImages": [
+    {
+      "filename": "frontend/public/assets/generated/android-adaptive-background.dim_1024x1024.png",
+      "description": "Generated Android adaptive icon background layer for store submission.",
+      "targetWidth": 1024,
+      "targetHeight": 1024
+    },
+    {
+      "filename": "frontend/public/assets/generated/android-adaptive-foreground.dim_1024x1024.png",
+      "description": "Generated Android adaptive icon foreground layer for store submission.",
+      "targetWidth": 1024,
+      "targetHeight": 1024
+    },
+    {
+      "filename": "frontend/public/assets/generated/app-icon.dim_1024x1024.png",
+      "description": "Generated primary app icon (store-ready).",
+      "targetWidth": 1024,
+      "targetHeight": 1024
+    },
+    {
+      "filename": "frontend/public/assets/generated/appstore-screenshot-1.dim_1290x2796.png",
+      "description": "Generated iOS App Store screenshot #1.",
+      "targetWidth": 1290,
+      "targetHeight": 2796
+    },
+    {
+      "filename": "frontend/public/assets/generated/appstore-screenshot-2.dim_1290x2796.png",
+      "description": "Generated iOS App Store screenshot #2.",
+      "targetWidth": 1290,
+      "targetHeight": 2796
+    },
+    {
+      "filename": "frontend/public/assets/generated/appstore-screenshot-3.dim_1290x2796.png",
+      "description": "Generated iOS App Store screenshot #3.",
+      "targetWidth": 1290,
+      "targetHeight": 2796
+    },
+    {
+      "filename": "frontend/public/assets/generated/play-feature-graphic.dim_1024x500.png",
+      "description": "Generated Google Play feature graphic.",
+      "targetWidth": 1024,
+      "targetHeight": 500
+    }
+  ],
   "existing_features": [
     {
       "id": "IF-1",
@@ -486,43 +555,232 @@
       "version": 1
     },
     {
-      "id": "feature-prepare-an-android-release-submission-build-for-google-play-including-generating-a-play-ready-android-app-bundle-aab-ensuring-the-app-s-package-identifiers-and-versioning-are-set-for-release-and-providing-the-final-build-artifact-path-s-and-release-notes-english",
-      "title": "Prepare an Android release submission build for Google Play, including generating a Play-ready Android App Bundle (AAB), ensuring the app’s package identifiers and versioning are set for release, and providing the final build artifact path(s) and release notes (English).",
+      "id": "IF-44",
+      "title": "Cross-platform distribution and store-promotion UI sections",
+      "synonyms": [
+        "CrossPlatformDistributionSection",
+        "CrossPlatformPromotionalBanner"
+      ],
+      "description": "Added dedicated UI components to promote cross-platform distribution (Android/iOS) and provide a promotional banner/section for app distribution messaging alongside the existing Android download promotion.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-45",
+      "title": "App store submission documentation and release/version tracking",
+      "synonyms": [
+        "store submission docs",
+        "release notes",
+        "version files"
+      ],
+      "description": "Repository now includes store-submission documentation for Android (Google Play) and iOS (App Store), plus release notes and per-platform release version tracking files under frontend/release/ and frontend/docs/store-submission/.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-46",
+      "title": "Generated app-store marketing asset pack (icons, screenshots, feature graphic)",
+      "synonyms": [
+        "STORE_ASSET_PACK",
+        "generated store assets"
+      ],
+      "description": "Generated a set of store-ready marketing assets (app icon, Android adaptive icon layers, iOS App Store screenshots, Play feature graphic) under frontend/public/assets/generated with an accompanying README.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-47",
+      "title": "New arcade mini-game: Golumanji",
+      "synonyms": [
+        "GolumanjiGame"
+      ],
+      "description": "Added a new standalone game component (GolumanjiGame) integrated into the frontend component set (implementation details not yet reflected in existing feature list).",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-48",
+      "title": "Domain redirect + SEO canonical hardening for x39matrix.org",
+      "synonyms": [
+        "useDomainRedirect",
+        "canonical domain enforcement",
+        "robots/sitemap update"
+      ],
+      "description": "Frontend includes domain redirect/enforcement logic (via useDomainRedirect) and updated SEO/metadata artifacts (index.html, robots.txt, sitemap.xml, and related release docs) aligned to the finalized canonical domain strategy (x39matrix.org as primary, x39dark.com as satellite redirect).",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-49",
+      "title": "Multilingual homepage primary message/copy (language selector)",
+      "synonyms": [
+        "i18n hero copy",
+        "LanguageContext",
+        "multilingual selector"
+      ],
+      "description": "Primary homepage/hero messaging is now driven by a language context + localized copy source (e.g., homeHeroCopy) to support multilingual display of the main message (at least ES/EN/JP/ZH/KR) using the existing translation approach.",
       "reqIds": [
-        "REQ-7"
+        "REQ-6"
       ],
       "version": 1
     },
     {
-      "id": "feature-prepare-an-ios-release-submission-build-for-the-apple-app-store-including-producing-a-release-archive-suitable-for-app-store-connect-submission-and-providing-step-by-step-signing-provisioning-instructions-required-for-a-developer-to-export-an-ipa-english",
-      "title": "Prepare an iOS release submission build for the Apple App Store, including producing a release archive suitable for App Store Connect submission and providing step-by-step signing/provisioning instructions required for a developer to export an IPA (English).",
+      "id": "IF-50",
+      "title": "X39 token announcement + launch schedule sections",
+      "synonyms": [
+        "X39TokenAnnouncementBlock",
+        "X39TokenLaunchScheduleSection",
+        "launch messaging"
+      ],
+      "description": "Frontend includes dedicated components for X39 token announcement messaging and a launch schedule/timeline section, driven by centralized launch configuration (e.g., launchDate/launchPayment) to control pre-/post-launch UX.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-51",
+      "title": "Legal disclaimer section (markdown-driven)",
+      "synonyms": [
+        "LegalDisclaimerSection",
+        "legalDisclaimer.en.md"
+      ],
+      "description": "Frontend includes a styled legal disclaimer section that renders from a markdown content source and is integrated into the overall landing/portal experience.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-52",
+      "title": "Dual token presentation section",
+      "synonyms": [
+        "DualTokenPresentationSection"
+      ],
+      "description": "Frontend includes a dedicated presentation section for positioning/contrasting ICP and X39 Matrix token concepts in a unified cyberpunk-styled layout.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-53",
+      "title": "Domain DNS verification view for ICP custom-domain troubleshooting",
+      "synonyms": [
+        "DomainDnsVerificationView",
+        "DNS/SSL verification UI",
+        "custom domain diagnostics"
+      ],
+      "description": "Frontend includes a dedicated DomainDnsVerificationView to help validate/guide DNS and custom-domain mapping for the canister, supporting the web-first global availability goal and reducing confusion when domains resolve to default nginx/test pages.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-54",
+      "title": "Connectivity status banner for surfacing network/ICP access state",
+      "synonyms": [
+        "ConnectivityStatusBanner",
+        "network status banner"
+      ],
+      "description": "Frontend includes a persistent/inline ConnectivityStatusBanner component to surface ICP/network reachability state and user guidance, complementing the existing connectivity diagnostics experience.",
+      "reqIds": [],
+      "version": 1
+    },
+    {
+      "id": "IF-55",
+      "title": "Go-live publication state with admin toggle (publication-gated content)",
+      "synonyms": [
+        "publication state",
+        "AdminGoLiveToggle",
+        "usePublicationState"
+      ],
+      "description": "Implements a publish/go-live mechanism so that publication-gated sections (e.g., March 15 launch info + legal disclaimer placement/visibility) are shown when an authenticated admin triggers go-live, using frontend publication hooks/components and corresponding backend support.",
       "reqIds": [
         "REQ-8"
       ],
       "version": 1
     },
     {
-      "id": "feature-add-an-app-store-play-store-submission-asset-pack-to-the-repository-that-includes-required-icons-and-store-listing-visuals-at-standard-sizes-and-ensure-the-web-app-s-branding-is-consistent-with-these-assets-english-naming-and-documentation",
-      "title": "Add an App Store / Play Store submission asset pack to the repository that includes required icons and store listing visuals at standard sizes, and ensure the web app’s branding is consistent with these assets (English naming and documentation).",
+      "id": "IF-56",
+      "title": "Release status tracker includes Caffeine $10,000 prize objective",
+      "synonyms": [
+        "release-status-tracker",
+        "Caffeine prize checklist"
+      ],
+      "description": "Release tracking documentation now explicitly includes the “Caffeine $10,000 prize” objective as a checklist/status entry for launch/release handoff tracking.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-new-prominently-featured-launch-block-on-the-homepage-top-of-page-above-existing-content-for-the-x39-matrix-token-launch-with-a-dark-futuristic-eccentric-look-tied-to-the-year-of-the-horse-concept-energy-momentum-success-prosperity-new-projects-the-block-must-be-fully-responsive-mobile-desktop-and-visually-distinct-from-the-existing-homepage-hero",
+      "title": "Add a new, prominently featured launch block on the homepage (top-of-page, above existing content) for the “X39 Matrix” token launch, with a dark, futuristic, eccentric look tied to the “Year of the Horse” concept (energy, momentum, success, prosperity, new projects). The block must be fully responsive (mobile + desktop) and visually distinct from the existing homepage hero.",
       "reqIds": [
         "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-requested-launch-hero-visuals-a-deep-black-background-with-a-subtle-digital-texture-plus-light-matrix-like-energy-streaks-in-neon-green-and-neon-red-a-central-right-side-hero-visual-of-a-horse-made-of-light-code-galloping-forward-speed-freedom-progress-include-lightweight-performance-optimized-ambient-effects-subtle-code-rain-particles-with-graceful-degradation-and-respecting-prefers-reduced-motion",
+      "title": "Implement the requested launch hero visuals: a deep-black background with a subtle digital texture plus light “Matrix-like energy” streaks in neon green and neon red; a central/right-side hero visual of a “horse made of light/code” galloping forward (speed/freedom/progress). Include lightweight, performance-optimized ambient effects (subtle code-rain + particles) with graceful degradation and respecting `prefers-reduced-motion`.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-giant-real-time-countdown-timer-to-the-launch-date-using-the-existing-authoritative-launch-date-configuration-march-15-2026-present-it-as-a-day-of-prosperity-momentum-and-a-new-beginning-the-countdown-must-handle-post-launch-state-show-a-clear-launched-now-live-style-message-instead-of-negative-time",
+      "title": "Add a giant real-time countdown timer to the launch date using the existing authoritative launch date configuration (March 15, 2026). Present it as a “day of prosperity, momentum, and a new beginning”. The countdown must handle post-launch state (show a clear “Launched”/“Now Live” style message instead of negative time).",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-use-the-user-provided-hero-copy-as-the-primary-message-translated-to-english-while-keeping-the-structure-and-forceful-tone-display-it-in-a-futuristic-legible-typography-with-white-text-and-neon-green-red-accents-on-a-dark-background-english-hero-copy-to-use-layout-may-vary-meaning-should-remain-intact-headline-march-15-x39-matrix-is-born-the-force-that-gallops-into-the-future-supporting-in-the-year-of-the-horse-symbol-of-energy-freedom-and-forward-momentum-x39-matrix-rises-as-a-new-era-of-digital-prosperity-body-the-horse-does-not-stop-it-runs-into-the-unknown-driven-by-the-vision-of-a-borderless-future-where-decentralization-clears-the-path-to-abundance-body-this-march-15-join-the-gallop-of-progress-where-every-block-in-the-matrix-network-is-a-step-forward-faster-stronger-freer-signature-lines-x39-dark-presents-x39-matrix-the-project-that-takes-the-reins-of-change",
+      "title": "Use the user-provided hero copy as the primary message, translated to English while keeping the structure and forceful tone. Display it in a futuristic, legible typography with white text and neon green/red accents on a dark background.\n\nEnglish hero copy to use (layout may vary, meaning should remain intact):\n- Headline: “March 15 — X39 Matrix is born, the force that gallops into the future.”\n- Supporting: “In the Year of the Horse — symbol of energy, freedom, and forward momentum — X39 Matrix rises as a new era of digital prosperity.”\n- Body: “The horse does not stop. It runs into the unknown, driven by the vision of a borderless future where decentralization clears the path to abundance.”\n- Body: “This March 15, join the gallop of progress — where every block in the Matrix network is a step forward: faster, stronger, freer.”\n- Signature lines: “X39 Dark presents X39 Matrix:” + “The project that takes the reins of change.”",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-highly-visible-cta-button-in-the-hero-with-label-join-the-gallop-secondary-optional-label-variant-allowed-enter-x39-matrix-the-cta-must-be-prominent-neon-glow-treatment-and-must-trigger-a-clear-action-smooth-scroll-to-an-existing-relevant-section-e-g-token-registration-airdrop-portfolio-without-breaking-current-navigation",
+      "title": "Add a highly visible CTA button in the hero with label “JOIN THE GALLOP” (secondary optional label variant allowed: “ENTER X39 MATRIX”). The CTA must be prominent (neon/glow treatment) and must trigger a clear action: smooth-scroll to an existing relevant section (e.g., token registration/airdrop/portfolio) without breaking current navigation.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-under-the-hero-add-three-brief-supporting-blocks-cards-with-the-following-english-headings-and-short-explanatory-text-1-year-of-the-horse-year-of-momentum-horse-in-chinese-culture-symbolizes-forward-movement-success-opportunity-2-march-15-a-new-cycle-march-as-renewal-new-projects-prosperity-3-x39-matrix-decentralized-prosperity-opening-a-new-path-of-financial-freedom-and-expansion-the-blocks-must-match-the-hero-s-dark-futuristic-style-and-remain-readable-on-mobile",
+      "title": "Under the hero, add three brief supporting blocks/cards with the following English headings and short explanatory text:\n1) “Year of the Horse = Year of Momentum” (horse in Chinese culture symbolizes forward movement, success, opportunity)\n2) “March 15 = A New Cycle” (March as renewal, new projects, prosperity)\n3) “X39 Matrix = Decentralized Prosperity” (opening a new path of financial freedom and expansion)\nThe blocks must match the hero’s dark futuristic style and remain readable on mobile.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-required-generated-image-assets-for-the-new-launch-block-as-static-files-under-frontend-public-assets-generated-and-reference-them-directly-from-the-frontend-do-not-serve-images-through-the-backend",
+      "title": "Integrate required generated image assets for the new launch block as static files under `frontend/public/assets/generated` and reference them directly from the frontend (do not serve images through the backend).",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-x39-matrix-launch-hero-block-so-that-all-green-colored-accents-are-replaced-with-a-celestial-sky-blue-color-while-keeping-the-existing-red-accents-unchanged-this-includes-but-is-not-limited-to-tailwind-classes-like-text-green-border-green-from-green-gradients-and-any-inline-green-glow-text-shadow-rgba-values-used-inside-frontend-src-components-x39matrixlaunchheroblock-tsx",
+      "title": "Update the X39 Matrix launch hero block so that all green-colored accents are replaced with a celestial sky blue color, while keeping the existing red accents unchanged. This includes (but is not limited to) Tailwind classes like `text-green-*`, `border-green-*`, `from-green-*` gradients, and any inline green glow/text-shadow RGBA values used inside `frontend/src/components/X39MatrixLaunchHeroBlock.tsx`.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-launch-ambient-effects-code-rain-so-that-any-green-particle-color-is-replaced-with-a-celestial-sky-blue-color-keeping-the-red-particles-unchanged-in-frontend-src-components-x39matrixlaunchambienteffects-tsx",
+      "title": "Update the launch ambient effects code-rain so that any green particle color is replaced with a celestial sky blue color, keeping the red particles unchanged, in `frontend/src/components/X39MatrixLaunchAmbientEffects.tsx`.",
+      "reqIds": [
+        "REQ-17"
       ],
       "version": 1
     }
   ],
   "new_feature_requests": [
-    {
-      "id": "AR-1",
-      "summary": "Rebrand site to x39matrix.com (update branding/title/canonicals) and set up domain mapping + HTTPS; optional 301 redirect from x39dark.com",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-5",
-      "summary": "Create Android mobile app focused only on x39Matrix token + airdrop + wallet-buy info (separate from web)",
-      "reqIds": [],
-      "status": "pending"
-    },
     {
       "id": "AR-6",
       "summary": "Add user registration (name-only) to claim free x39Matrix tokens (airdrop) and store per-user state (claimed status, wallet address)",
@@ -582,135 +840,134 @@
       "status": "pending"
     },
     {
-      "id": "AR-16",
-      "summary": "Add name-only user registration with unique display names plus a community comments area (welcome message + ability to comment on the project)",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
       "id": "AR-17",
-      "summary": "Implement a public airdrop claim mechanic tied to registration (e.g., up to 20 tokens per registered user) with wallet selection + manual address entry during claim",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-18",
-      "summary": "Standardize x39Matrix token branding assets: reuse the original triangle-with-eye logo as the official x39Matrix token logo across header, favicon, and all token references",
+      "summary": "Prepare and execute a broad promotion/marketing distribution plan for x39Matrix (cross-posting/announcements across major channels), aligned with the web launch and brand assets (triangle logo).",
       "reqIds": [],
       "status": "pending"
     },
     {
       "id": "AR-19",
-      "summary": "Build an NNS-style x39Matrix staking + governance portfolio experience (Internet Identity login, staking/lockups, governance proposals/voting) matching NNS blue portfolio UI",
+      "summary": "Build web-first X39Matrix NNS-like staking + governance portal (portfolio shell) with Internet Identity login and multilingual selector (ES/EN/DE/JP/ZH/KR as requested).",
       "reqIds": [],
       "status": "pending"
     },
     {
       "id": "AR-20",
-      "summary": "Add multilingual UI selector and translations (at least ES/EN/JP/ZH/KR; optionally DE) for the new x39Matrix portal/modules",
+      "summary": "Airdrop claim flow: on clicking “Claim/Reclamar”, show wallet selector/search, allow manual wallet address entry, validate, and persist per-user claim state (limit e.g., max 20 tokens per registered user) without exposing team allocations publicly.",
       "reqIds": [],
       "status": "pending"
     },
     {
       "id": "AR-21",
-      "summary": "Create companion native mobile apps for x39Matrix (Android + iOS) aligned with the web UX, with download distribution plan (Play Store/App Store builds and/or APK)",
+      "summary": "Add ‘premium/news/metrics’ style market panels for ICP/X39Matrix (price, market cap, performance, volume/inflow/outflow) with controlled behavior pre-launch (show zeros until launch) and optional hourly/30s refresh where reliable.",
       "reqIds": [],
       "status": "pending"
     },
     {
       "id": "AR-22",
-      "summary": "Add/adjust live market panels: ICP official logo + price/market metrics sourced from Binance with regular refresh (e.g., every 30s) and consistent header layout",
+      "summary": "Add Element/Matrix community chat deep link for x39Matrix (matrix.to room link) integrated into the portal layout without breaking responsive design.",
       "reqIds": [],
       "status": "pending"
-    }
-  ],
-  "architecturalNotes": [
-    "Frontend is a React SPA (TypeScript) styled with Tailwind CSS + custom cyberpunk animation utilities (neon glow, triangle pulse, mist float) and uses lucide-react icons extensively.",
-    "Uses @tanstack/react-query for data fetching/caching; actor creation is identity-aware and triggers dependent query invalidation/refetch on identity changes.",
-    "Authentication uses DFINITY Internet Identity via @dfinity/auth-client, exposed through a React context provider (login/logout, persisted identity, 30-day TTL).",
-    "ICP canister interaction follows the actor pattern: an anonymous actor is used when unauthenticated; an authenticated actor is created with identity and runs an initialization step (initializeAccessControl).",
-    "3D rendering is used in multiple places: a Three.js canvas background (HolographicHero) and a React Three Fiber mini-game (X39ICPGame).",
-    "QR utilities rely on dynamically loaded external CDN scripts (qrcodejs for generation and jsQR for scanning) with retry/fallback logic.",
-    "Backend is a single Motoko actor composed from modules: authorization/access-control, stripe integration, HTTP outcall helper, and blob-storage mixin; authorization is role-based (#admin/#user/#guest).",
-    "Backend HTTP calls to Stripe use IC management canister http_request with a transform function to strip headers, and attach cycles explicitly per request.",
-    "A shadcn/ui-style component library scaffold has been added (via build-template), providing reusable UI primitives and associated frontend tooling/configuration.",
-    "Repository now includes a build-template for standardized ICP deployments (Dockerfile, deploy.sh, canister.yaml files, workspace/package setup) and build utility scripts (prune-unused-images, resize-images).",
-    "Frontend linting now includes custom ESLint rules specific to project patterns (e.g., enforcing InternetIdentityProvider usage and avoiding BigInt in React Query keys).",
-    "Project undergoing domain/brand migration from x39dark.com to x39matrix.com; requires ICP canister custom-domain mapping and DNS/SSL setup for global availability.",
-    "x39Matrix token marketing UI uses a single official triangular ‘eye’ logo as the token mark across all placements (header/token blocks/favicon).",
-    "Airdrop claim UX includes wallet selection and manual wallet address entry by the user; avoid displaying any private/team allocation details publicly.",
-    "Backend modules and build-template dependencies were updated to newer component versions (authorization v3.0.0, stripe v3.0.0, http-outcalls v3.0.0, blob-storage v4.0.0, core-infrastructure v1.0.2).",
-    "Product direction now includes token utility surfaces beyond marketing: registration/airdrop claims, wallet linking, exchange price integration (MEXC), and an NNS-like staking/governance module for x39Matrix.",
-    "Frontend now includes an NNS-like module area with portfolio shell/navigation plus separate stake/holdings and governance feature modules.",
-    "Holdings and governance data access are implemented via dedicated React Query hooks (useHoldings/useProposals) to integrate with the existing identity-aware actor/query invalidation patterns.",
-    "Authentication UX is extended with a dedicated login button component (components/auth/X39LoginButton) for gating the new modules behind Internet Identity.",
-    "Added a frontend connectivity diagnostics hook/component to surface network/ICP access troubleshooting guidance to users.",
-    "Planned expansion: deliver an NNS-style x39Matrix staking/governance portfolio UX gated by Internet Identity, targeting web plus native Android/iOS app packaging.",
-    "Planned UX: claim/airdrop flow should prompt wallet type selection and manual wallet address entry before completing registration/claim.",
-    "Branding requirement: triangle-with-eye artwork used previously (\"Oráculo de Davos\") is the canonical x39Matrix token logo and must be reused consistently (header/favicon/token blocks)."
-  ],
-  "knownIssues": [
-    "ICPPaymentGate describes automatic unlocking after payment, but no payment verification/unlock mechanism is implemented in the frontend (and no matching backend logic is present in the provided code).",
-    "Several UI panels use mock/generated data (TokenAnalyticsPanel, PerformanceMetricsDashboard, DailyNewsUpdates, token counters), indicating missing real backend integrations.",
-    "Hard-coded reliance on Binance public APIs may fail in some environments due to rate limits, regional blocks, or CORS/network restrictions.",
-    "AccessControl assigns the first non-anonymous principal calling initializeAccessControl() as admin; there is no recovery/rotation mechanism if that principal is lost or never initializes.",
-    "Blob storage module requires the CAFFFEINE_STORAGE_CASHIER_PRINCIPAL environment variable; canister traps if missing.",
-    "Custom domain (x39matrix.com / x39.org) intermittently fails to resolve to the ICP canister and may show a default Nginx page, indicating DNS/SSL/canister domain-mapping misconfiguration or incomplete propagation.",
-    "Countdown/launch-timer logic has been unstable and was requested to be removed or replaced to avoid credibility issues.",
-    "x39matrix.com domain access reported as failing/not opening; indicates ongoing DNS/SSL/custom-domain-to-canister mapping issues similar to prior x39dark.com problems.",
-    "Users report x39matrix.com / x39Matrix.com not opening in browsers; indicates ongoing DNS/SSL/custom-domain-to-canister mapping problems beyond existing intermittent resolution issues.",
-    "Frequent deploy/publish failures and draft expirations interrupt continuity; deployment process appears unreliable and may block changes from reaching production."
-  ],
-  "isFixRequest": true,
-  "imageRequirements": "## Required Images\n- App icon, triangle-with-eye mark on dark background (app-icon.dim_1024x1024.png)\n- Android adaptive icon foreground, triangle-with-eye mark only with transparent background (android-adaptive-foreground.dim_1024x1024.png)\n- Android adaptive icon background, subtle dark tech pattern (android-adaptive-background.dim_1024x1024.png)\n- Google Play feature graphic, dark cyber/tech banner with triangle-with-eye mark and minimal title text styling (play-feature-graphic.dim_1024x500.png)\n- App Store screenshot 1, dark cyberpunk UI mock screenshot frame with title area and device frame (appstore-screenshot-1.dim_1290x2796.png)\n- App Store screenshot 2, dark cyberpunk UI mock screenshot frame with title area and device frame (appstore-screenshot-2.dim_1290x2796.png)\n- App Store screenshot 3, dark cyberpunk UI mock screenshot frame with title area and device frame (appstore-screenshot-3.dim_1290x2796.png)",
-  "generatedImages": [
-    {
-      "filename": "app-icon.dim_1024x1024.png",
-      "description": "App icon, triangle-with-eye mark on dark background",
-      "targetWidth": 1024,
-      "targetHeight": 1024
     },
     {
-      "filename": "android-adaptive-foreground.dim_1024x1024.png",
-      "description": "Android adaptive icon foreground, triangle-with-eye mark only with transparent background",
-      "targetWidth": 1024,
-      "targetHeight": 1024
+      "id": "AR-23",
+      "summary": "Add a futuristic Web3 ‘holographic roadmap/timeline’ section (Matrix/cyberpunk styled, interactive) to present the x39Matrix launch plan and promotion phases on the website.",
+      "reqIds": [],
+      "status": "pending"
     },
     {
-      "filename": "android-adaptive-background.dim_1024x1024.png",
-      "description": "Android adaptive icon background, subtle dark tech pattern",
-      "targetWidth": 1024,
-      "targetHeight": 1024
+      "id": "AR-24",
+      "summary": "Launch x39Matrix token on ICP (ICRC-1 style) and integrate official triangle/eye token logo + metadata, with public launch messaging and countdown/announcement placement on the site.",
+      "reqIds": [],
+      "status": "pending"
     },
     {
-      "filename": "play-feature-graphic.dim_1024x500.png",
-      "description": "Google Play feature graphic, dark cyber/tech banner with triangle-with-eye mark and minimal title text styling",
-      "targetWidth": 1024,
-      "targetHeight": 500
+      "id": "AR-25",
+      "summary": "Airdrop/claim distribution: registration + one-claim-per-user with wallet selector/search and manual wallet address entry; configurable max tokens per user; show public claimed counter without exposing private/team allocations.",
+      "reqIds": [],
+      "status": "pending"
     },
     {
-      "filename": "appstore-screenshot-1.dim_1290x2796.png",
-      "description": "App Store screenshot 1, dark cyberpunk UI mock screenshot frame with title area and device frame",
-      "targetWidth": 1290,
-      "targetHeight": 2796
+      "id": "AR-26",
+      "summary": "Add user registration (unique username, no password) plus basic community interaction (welcome message + comments) inside the portal.",
+      "reqIds": [],
+      "status": "pending"
     },
     {
-      "filename": "appstore-screenshot-2.dim_1290x2796.png",
-      "description": "App Store screenshot 2, dark cyberpunk UI mock screenshot frame with title area and device frame",
-      "targetWidth": 1290,
-      "targetHeight": 2796
+      "id": "AR-27",
+      "summary": "Reintroduce mobile app deliverables: build Android + iOS apps (store-ready artifacts) for the X39Matrix staking/governance experience and/or X39Matrix portal, plus download entrypoint from the website.",
+      "reqIds": [],
+      "status": "pending"
     },
     {
-      "filename": "appstore-screenshot-3.dim_1290x2796.png",
-      "description": "App Store screenshot 3, dark cyberpunk UI mock screenshot frame with title area and device frame",
-      "targetWidth": 1290,
-      "targetHeight": 2796
+      "id": "AR-28",
+      "summary": "Add market/technical-analysis panel for ICP/X39Matrix (charts + RSI + multi-timeframe 15m/1h/1d) and configure refresh cadence (e.g., hourly/30s) with pre-launch behavior (zeros until launch).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-30",
+      "summary": "Privately allocate 1,000,000 X39Matrix tokens to wallet ID 12336782b355affa622ce84bb88925da172161ab6bf363cc0b18dabc5d69de6c, ensuring this allocation is not displayed publicly in the portal/UI.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-31",
+      "summary": "Finalize canonical domain as x39matrix.org with global HTTPS availability, and enforce 301 redirect from x39dark.com → x39matrix.org (DNS/SSL + canister custom-domain mapping + verification).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-32",
+      "summary": "Add multilingual support (at least ES/EN/JP/ZH/KR) for the primary x39Matrix.org messaging and key portal UI content (no invasive edits to immutable hook files).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-33",
+      "summary": "Implement X39Matrix token launch messaging + scheduling: show approved legal disclaimer and launch info timed for March 15, 2026 (site content reflects date and is verifiable).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-34",
+      "summary": "Airdrop promotion UX: show public promo supply (e.g., 200,000 tokens) and allow per-user claim (max 20 tokens) via name-only registration (no password), with claim requiring wallet selection + manual wallet address entry and persistence.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-35",
+      "summary": "Add market/analytics surfaces for ICP/X39Matrix: ICP official logo + price/rendimiento from Binance on a controlled refresh cadence, plus optional technical-analysis charts (RSI 15m/1h/1d) and other panels gated by pre-launch behavior (zeros until launch).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-36",
+      "summary": "Build an Internet Identity–gated NNS-like staking/governance experience branded for X39Matrix (portfolio shell, stake/holdings, proposals/voting), intended to be available as web app and optionally as Android/iOS apps.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-37",
+      "summary": "Integrate an Element/Matrix community link (matrix.to/#x39-matrix:matrix.org) placed under the Android/app section without breaking layout.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-38",
+      "summary": "Add a featured X39 Matrix launch hero section on x39dark.com homepage: dark futuristic Matrix energy (green/red), “horse made of light/code” galloping visual, giant countdown to March 15 launch, strong CTA button, and three supporting copy blocks (Year of the Horse / March 15 new cycle / decentralized prosperity), fully responsive and performance-optimized.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-39",
+      "summary": "Update the launch section styling: change the currently green-colored area/accents to a sky blue (“azul celestial”) color.",
+      "reqIds": [],
+      "status": "pending"
     }
   ],
   "gameProjectType": "none",
   "projectName": "X39 Matrix",
   "clarification_mode": "instant",
-  "clarification_rounds": 0,
-  "requiresBackendChanges": false,
-  "requiresFrontendChanges": true
+  "clarification_rounds": 0
 }

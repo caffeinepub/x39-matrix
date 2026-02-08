@@ -116,8 +116,11 @@ export interface backendInterface {
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
     getHolding(id: bigint): Promise<Holding | null>;
+    getLaunchDate(): Promise<string>;
     getProducts(): Promise<Array<Product>>;
     getProposal(id: bigint): Promise<Proposal | null>;
+    getPublicationState(): Promise<boolean>;
+    getReceiverPrincipal(): Promise<Principal>;
     getStripeSessionStatus(sessionId: string): Promise<StripeSessionStatus>;
     getUserHoldings(principal: Principal): Promise<Array<Holding>>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
@@ -127,6 +130,7 @@ export interface backendInterface {
     proxyIcpKlines(): Promise<string>;
     proxyIcpPrice(): Promise<string>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
+    setPublicationState(state: boolean): Promise<void>;
     setStripeConfiguration(config: StripeConfiguration): Promise<void>;
     transform(input: TransformationInput): Promise<TransformationOutput>;
     unlockHolding(id: bigint): Promise<void>;
