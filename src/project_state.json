@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 148,
+  "projectStateVersion": 150,
   "summary": "Project has expanded from x39Matrix.org minimal rebrand into a full X39Matrix token portal: canonical domain intended to be x39matrix.org (with x39dark.com as satellite 301 redirect), prominent triangular logo branding, multilingual messaging, airdrop/claim UX with wallet selector + manual address entry, token launch messaging/scheduling (now targeting March 15, 2026 with legal disclaimer), optional NNS-like staking/governance surfaces and market analytics panels; ongoing major blocker is custom-domain DNS/SSL resolution for x39matrix.org.",
   "architectural_notes": [
     "Frontend is a React SPA (TypeScript) styled with Tailwind CSS + custom cyberpunk animation utilities (neon glow, triangle pulse, mist float) and uses lucide-react icons extensively.",
@@ -26,8 +26,8 @@
     "Deployment failures/guard blocks occurred during publish attempts; draft expirations repeatedly interrupted releases.",
     "Requested prominent launch/countdown block on x39dark.com may conflict with the canonical-domain plan (x39matrix.org primary with x39dark.com 301 redirect), requiring a clarified redirect/content strategy."
   ],
-  "isFixRequest": true,
-  "imageRequirements": "## Required Images\n- Dark digital texture background, subtle matrix-style (x39-launch-bg.dim_1920x1080.png)\n- Galloping horse made of light/code on transparent or dark background (x39-code-horse.dim_1400x1400.png)",
+  "isFixRequest": false,
+  "imageRequirements": "## Edit Images\n- Add clearly visible glowing red eyes and integrate subtle falling “X39” background motif into the horse artwork (x39-code-horse.dim_1400x1400.png > x39-code-horse-red-eyes.dim_1400x1400.png)",
   "generatedImages": [
     {
       "filename": "frontend/public/assets/generated/android-adaptive-background.dim_1024x1024.png",
@@ -819,6 +819,22 @@
         "REQ-22"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-add-a-subtle-falling-x39-background-effect-behind-the-horse-visual-in-the-x39-matrix-launch-hero-block-matching-the-intro-s-matrix-style-drop-vibe-as-seen-in-introscreen-without-reducing-readability-of-the-hero-copy-or-causing-performance-regressions",
+      "title": "Add a subtle falling “X39” background effect behind the horse visual in the X39 Matrix launch hero block, matching the intro’s Matrix-style drop vibe (as seen in IntroScreen), without reducing readability of the hero copy or causing performance regressions.",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-launch-horse-hero-image-so-the-horse-has-clearly-visible-glowing-red-eyes-consistent-with-the-existing-red-accent-palette-used-throughout-the-launch-hero",
+      "title": "Update the launch horse hero image so the horse has clearly visible glowing red eyes, consistent with the existing red accent palette used throughout the launch hero.",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -1015,6 +1031,12 @@
     {
       "id": "AR-41",
       "summary": "Fix all outstanding issues/regressions so the site functions correctly end-to-end as expected (including completing any missing calculations/logic required for correct behavior).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-42",
+      "summary": "Update the launch horse hero image/visual: add a falling “x39” background effect similar to the page intro (Matrix-style drop) and ensure the horse has clearly visible red eyes.",
       "reqIds": [],
       "status": "pending"
     }

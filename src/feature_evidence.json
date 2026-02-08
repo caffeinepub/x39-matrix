@@ -2,13 +2,11 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-apply-the-celestial-sky-blue-accent-color-consistently-across-the-entire-frontend-ui-all-sections-widgets-and-utility-classes-replacing-remaining-green-themed-accents-while-keeping-all-red-accents-unchanged",
-      "featureTitle": "Apply the celestial sky-blue accent color consistently across the entire frontend UI (all sections, widgets, and utility classes), replacing remaining green-themed accents while keeping all red accents unchanged.",
+      "featureId": "feature-add-a-subtle-falling-x39-background-effect-behind-the-horse-visual-in-the-x39-matrix-launch-hero-block-matching-the-intro-s-matrix-style-drop-vibe-as-seen-in-introscreen-without-reducing-readability-of-the-hero-copy-or-causing-performance-regressions",
+      "featureTitle": "Add a subtle falling “X39” background effect behind the horse visual in the X39 Matrix launch hero block, matching the intro’s Matrix-style drop vibe (as seen in IntroScreen), without reducing readability of the hero copy or causing performance regressions.",
       "files": [
-        "frontend/src/components/GraficosSection.tsx",
-        "frontend/src/components/LiveICPPrice.tsx",
-        "frontend/src/components/TokenAnalyticsPanel.tsx",
-        "frontend/src/index.css"
+        "frontend/src/components/X39HorseX39RainBackdrop.tsx",
+        "frontend/src/components/X39MatrixLaunchHeroBlock.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -24,39 +22,13 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-18"
+        "REQ-23"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-fix-all-calculation-logic-issues-that-can-lead-to-incorrect-ui-output-unstable-visuals-nan-infinity-values-or-broken-rendering-ensure-all-math-based-ui-countdown-charts-projections-and-derived-metrics-behaves-correctly-across-edge-cases",
-      "featureTitle": "Fix all calculation/logic issues that can lead to incorrect UI output, unstable visuals, NaN/Infinity values, or broken rendering; ensure all math-based UI (countdown, charts, projections, and derived metrics) behaves correctly across edge cases.",
-      "files": [
-        "frontend/src/components/GraficosSection.tsx",
-        "frontend/src/hooks/useLaunchCountdown.ts",
-        "frontend/src/services/icpMarketData.ts"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "http-outcalls@3.0.0",
-        "qr-code@1.0.0",
-        "camera@1.0.0",
-        "stripe@3.0.0",
-        "authorization@3.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-19"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-resolve-any-missing-static-asset-regressions-so-the-launch-hero-renders-exactly-as-intended-in-production-including-background-texture-and-the-horse-made-of-light-code-image-using-only-static-assets-under-frontend-public-assets-generated-no-backend-image-serving",
-      "featureTitle": "Resolve any missing/static-asset regressions so the launch hero renders exactly as intended in production, including background texture and the “horse made of light/code” image, using only static assets under `frontend/public/assets/generated` (no backend image serving).",
+      "featureId": "feature-update-the-launch-horse-hero-image-so-the-horse-has-clearly-visible-glowing-red-eyes-consistent-with-the-existing-red-accent-palette-used-throughout-the-launch-hero",
+      "featureTitle": "Update the launch horse hero image so the horse has clearly visible glowing red eyes, consistent with the existing red accent palette used throughout the launch hero.",
       "files": [
         "frontend/src/components/X39MatrixLaunchHeroBlock.tsx"
       ],
@@ -74,58 +46,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-20"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-ensure-all-user-facing-strings-touched-by-these-fixes-are-in-english-and-integrated-with-the-existing-translation-approach-use-languagecontext-keys-or-consistent-english-literals-where-appropriate-without-editing-any-files-under-frontend-src-hooks-useinternetidentity-ts-x-frontend-src-hooks-useactor-ts-frontend-src-main-tsx-or-anything-inside-frontend-src-components-ui",
-      "featureTitle": "Ensure all user-facing strings touched by these fixes are in English and integrated with the existing translation approach (use `LanguageContext` keys or consistent English literals where appropriate) without editing any files under `frontend/src/hooks/useInternetIdentity.ts(x)`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`, or anything inside `frontend/src/components/ui`.",
-      "files": [
-        "frontend/src/components/GraficosSection.tsx",
-        "frontend/src/components/TokenAnalyticsPanel.tsx"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "http-outcalls@3.0.0",
-        "qr-code@1.0.0",
-        "camera@1.0.0",
-        "stripe@3.0.0",
-        "authorization@3.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-21"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-perform-an-end-to-end-regression-pass-and-fix-any-remaining-issues-uncovered-runtime-errors-broken-navigation-scroll-targets-layout-regressions-on-mobile-desktop-so-the-portal-works-reliably-as-currently-designed",
-      "featureTitle": "Perform an end-to-end regression pass and fix any remaining issues uncovered (runtime errors, broken navigation/scroll targets, layout regressions on mobile/desktop) so the portal works reliably as currently designed.",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/GraficosSection.tsx",
-        "frontend/src/components/X39MatrixLaunchHeroBlock.tsx"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "http-outcalls@3.0.0",
-        "qr-code@1.0.0",
-        "camera@1.0.0",
-        "stripe@3.0.0",
-        "authorization@3.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-22"
+        "REQ-24"
       ],
       "confidence": "high"
     }

@@ -1,89 +1,39 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-08T22:51:52.704Z",
+  "generatedAt": "2026-02-08T22:59:19.838Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 5,
-    "implemented": 5,
+    "total": 2,
+    "implemented": 2,
     "items": [
       {
-        "id": "REQ-18",
-        "summary": "Apply the celestial sky-blue accent color consistently across the entire frontend UI (all sections, widgets, and utility classes), replacing remaining green-themed accents while keeping all red accents unchanged.",
+        "id": "REQ-23",
+        "summary": "Add a subtle falling “X39” background effect behind the horse visual in the X39 Matrix launch hero block, matching the intro’s Matrix-style drop vibe (as seen in IntroScreen), without reducing readability of the hero copy or causing performance regressions.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/index.css",
-          "frontend/src/components/LiveICPPrice.tsx",
-          "frontend/src/components/GraficosSection.tsx",
-          "frontend/src/components/TokenAnalyticsPanel.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/index.css",
-          "frontend/src/components/LiveICPPrice.tsx",
-          "frontend/src/components/GraficosSection.tsx",
-          "frontend/src/components/TokenAnalyticsPanel.tsx"
-        ]
-      },
-      {
-        "id": "REQ-19",
-        "summary": "Fix all calculation/logic issues that can lead to incorrect UI output, unstable visuals, NaN/Infinity values, or broken rendering; ensure all math-based UI (countdown, charts, projections, and derived metrics) behaves correctly across edge cases.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/hooks/useLaunchCountdown.ts",
-          "frontend/src/components/GraficosSection.tsx",
-          "frontend/src/services/icpMarketData.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/hooks/useLaunchCountdown.ts",
-          "frontend/src/components/GraficosSection.tsx",
-          "frontend/src/services/icpMarketData.ts"
-        ]
-      },
-      {
-        "id": "REQ-20",
-        "summary": "Resolve any missing/static-asset regressions so the launch hero renders exactly as intended in production, including background texture and the “horse made of light/code” image, using only static assets under `frontend/public/assets/generated` (no backend image serving).",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/public/assets/generated/x39-launch-bg.dim_1920x1080.png",
-          "frontend/public/assets/generated/x39-code-horse.dim_1400x1400.png",
+          "frontend/src/components/X39HorseX39RainBackdrop.tsx",
           "frontend/src/components/X39MatrixLaunchHeroBlock.tsx"
         ],
         "matchedFiles": [
-          "frontend/public/assets/generated/x39-launch-bg.dim_1920x1080.png",
-          "frontend/public/assets/generated/x39-code-horse.dim_1400x1400.png",
+          "frontend/src/components/X39HorseX39RainBackdrop.tsx",
           "frontend/src/components/X39MatrixLaunchHeroBlock.tsx"
         ]
       },
       {
-        "id": "REQ-21",
-        "summary": "Ensure all user-facing strings touched by these fixes are in English and integrated with the existing translation approach (use `LanguageContext` keys or consistent English literals where appropriate) without editing any files under `frontend/src/hooks/useInternetIdentity.ts(x)`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`, or anything inside `frontend/src/components/ui`.",
+        "id": "REQ-24",
+        "summary": "Update the launch horse hero image so the horse has clearly visible glowing red eyes, consistent with the existing red accent palette used throughout the launch hero.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/LanguageContext.tsx",
-          "frontend/src/components/GraficosSection.tsx",
-          "frontend/src/components/TokenAnalyticsPanel.tsx"
+          "frontend/public/assets/generated/x39-code-horse-red-eyes.dim_1400x1400.png",
+          "frontend/src/components/X39MatrixLaunchHeroBlock.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/GraficosSection.tsx",
-          "frontend/src/components/TokenAnalyticsPanel.tsx"
-        ]
-      },
-      {
-        "id": "REQ-22",
-        "summary": "Perform an end-to-end regression pass and fix any remaining issues uncovered (runtime errors, broken navigation/scroll targets, layout regressions on mobile/desktop) so the portal works reliably as currently designed.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/App.tsx",
-          "frontend/src/components/X39MatrixLaunchHeroBlock.tsx",
-          "frontend/src/components/GraficosSection.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/App.tsx",
-          "frontend/src/components/X39MatrixLaunchHeroBlock.tsx",
-          "frontend/src/components/GraficosSection.tsx"
+          "frontend/public/assets/generated/x39-code-horse-red-eyes.dim_1400x1400.png",
+          "frontend/src/components/X39MatrixLaunchHeroBlock.tsx"
         ]
       }
     ]
@@ -93,16 +43,9 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/public/assets/generated/x39-code-horse.dim_1400x1400.png",
-    "frontend/public/assets/generated/x39-launch-bg.dim_1920x1080.png",
-    "frontend/src/App.tsx",
-    "frontend/src/components/GraficosSection.tsx",
-    "frontend/src/components/LiveICPPrice.tsx",
-    "frontend/src/components/TokenAnalyticsPanel.tsx",
+    "frontend/public/assets/generated/x39-code-horse-red-eyes.dim_1400x1400.png",
+    "frontend/src/components/X39HorseX39RainBackdrop.tsx",
     "frontend/src/components/X39MatrixLaunchHeroBlock.tsx",
-    "frontend/src/hooks/useLaunchCountdown.ts",
-    "frontend/src/index.css",
-    "frontend/src/services/icpMarketData.ts",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

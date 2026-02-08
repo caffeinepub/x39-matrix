@@ -1,128 +1,62 @@
 {
   "kind": "build_request",
-  "title": "Fix regressions, complete calculations, and apply celestial sky-blue palette site-wide",
+  "title": "Enhance X39 launch horse visual: falling X39 background + red eyes",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-18",
-      "text": "Apply the celestial sky-blue accent color consistently across the entire frontend UI (all sections, widgets, and utility classes), replacing remaining green-themed accents while keeping all red accents unchanged.",
+      "id": "REQ-23",
+      "text": "Add a subtle falling “X39” background effect behind the horse visual in the X39 Matrix launch hero block, matching the intro’s Matrix-style drop vibe (as seen in IntroScreen), without reducing readability of the hero copy or causing performance regressions.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-3"
+          "msg-4"
         ],
         "quotes": [
-          "Todo quedó publicado correctamente. ¿Quieres que también actualice el resto de la paleta para que combine con el azul celestial?",
-          "Si y soluciona TODOS los problemas y que funcione tal como he visto y realiza TODOS los  cálculos que tengas qué hacer"
+          "En la imagen del caballo que se vea de fondo en caída x39 como cuándo inicia la pagina"
         ]
       },
       "acceptanceCriteria": [
-        "A search through the frontend codebase shows no remaining brand/decoration Tailwind green accent usage (e.g., text-green-*, border-green-*, from-green-*, via-green-*, to-green-*, shadow/rgba green glows) in the launch/hero/theme UI; where a green is used for semantic status, it is either replaced with sky-blue or explicitly justified as semantic and visually aligned with the new palette.",
-        "Global CSS utilities that currently create green neon/glow effects (e.g., .neon-text-green) are updated to a sky-blue equivalent and all consumers are updated accordingly.",
-        "Components that currently render green gradients for positive indicators (e.g., progress bars) are updated to use sky-blue so the app has a single consistent accent color family (sky-blue + red)."
+        "In the right-side hero visual area (horse column) there is a visible but subtle falling “X39” (or “X” + “39”) rain effect behind the horse image.",
+        "The effect is visually similar in style to the intro text-rain (IntroScreen) but tuned to be lighter/less distracting than the intro.",
+        "The effect respects prefers-reduced-motion (disabled or rendered as a static non-animated fallback when reduced motion is enabled).",
+        "The effect does not block pointer events and does not interfere with layout on mobile or desktop.",
+        "No NaN/Infinity/render-loop issues occur; animation is cleaned up on unmount (no leaked timers/raf)."
       ]
     },
     {
-      "id": "REQ-19",
-      "text": "Fix all calculation/logic issues that can lead to incorrect UI output, unstable visuals, NaN/Infinity values, or broken rendering; ensure all math-based UI (countdown, charts, projections, and derived metrics) behaves correctly across edge cases.",
+      "id": "REQ-24",
+      "text": "Update the launch horse hero image so the horse has clearly visible glowing red eyes, consistent with the existing red accent palette used throughout the launch hero.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-3"
+          "msg-4"
         ],
         "quotes": [
-          "soluciona TODOS los problemas y que funcione tal como he visto y realiza TODOS los  cálculos que tengas qué hacer"
+          "y Los ojos rojos"
         ]
       },
       "acceptanceCriteria": [
-        "Launch countdown never shows negative values and reliably switches to a clear post-launch state (e.g., “NOW LIVE”) when the launch time is reached.",
-        "Charting UI never renders NaN/Infinity-based styles (e.g., bar heights) even when the price range is 0 or when there is insufficient data; it must display a safe fallback UI state instead of breaking layout.",
-        "RSI and signal generation never crashes due to missing/short datasets; when not enough candles exist, RSI is shown as a safe neutral value and signals list behaves predictably.",
-        "All derived strings (projection text, error messages, labels) are stable (no undefined, no broken formatting) under slow networks and API failures."
-      ]
-    },
-    {
-      "id": "REQ-20",
-      "text": "Resolve any missing/static-asset regressions so the launch hero renders exactly as intended in production, including background texture and the “horse made of light/code” image, using only static assets under `frontend/public/assets/generated` (no backend image serving).",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-3"
-        ],
-        "quotes": [
-          "soluciona TODOS los problemas y que funcione tal como he visto"
-        ]
-      },
-      "acceptanceCriteria": [
-        "The launch hero background texture image loads successfully (no 404) and displays with the intended opacity over the black background.",
-        "The code-horse image loads successfully (no 404) and displays with the intended glow/drop-shadow effects.",
-        "No runtime console errors related to missing `/assets/generated/*` launch images during normal navigation and hard refresh."
-      ]
-    },
-    {
-      "id": "REQ-21",
-      "text": "Ensure all user-facing strings touched by these fixes are in English and integrated with the existing translation approach (use `LanguageContext` keys or consistent English literals where appropriate) without editing any files under `frontend/src/hooks/useInternetIdentity.ts(x)`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`, or anything inside `frontend/src/components/ui`.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-3"
-        ],
-        "quotes": [
-          "Use English for any user-facing text in the build request.",
-          "...que funcione tal como he visto..."
-        ]
-      },
-      "acceptanceCriteria": [
-        "Any newly introduced/modified UI text as part of these fixes is English-first and does not introduce new Spanish-only hardcoded strings.",
-        "No changes are made to immutable frontend paths listed in SYSTEM_CONTEXT.",
-        "Existing translation keys continue to work and the app builds successfully."
-      ]
-    },
-    {
-      "id": "REQ-22",
-      "text": "Perform an end-to-end regression pass and fix any remaining issues uncovered (runtime errors, broken navigation/scroll targets, layout regressions on mobile/desktop) so the portal works reliably as currently designed.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-3"
-        ],
-        "quotes": [
-          "soluciona TODOS los problemas y que funcione tal como he visto"
-        ]
-      },
-      "acceptanceCriteria": [
-        "No uncaught exceptions in the browser console during a standard run-through: load homepage, interact with launch hero CTA (smooth scroll), open/close chart panel, and view key sections.",
-        "Mobile and desktop layouts remain responsive with no overlapping text, clipped CTAs, or unreadable contrast introduced by the palette changes.",
-        "`npm` build/lint completes successfully (no TypeScript errors introduced by the fixes)."
+        "The horse graphic used by X39MatrixLaunchHeroBlock shows distinctly visible red glowing eyes at typical viewport sizes (mobile and desktop).",
+        "Red eyes remain visible over the existing glow/drop-shadow treatments and do not appear washed out by filters.",
+        "The updated image is served as a static asset from frontend/public/assets/generated and referenced directly by the frontend (no backend image serving)."
       ]
     }
   ],
   "constraints": [
-    "Do not modify any files listed as immutable in SYSTEM_CONTEXT (notably `frontend/src/hooks/useInternetIdentity.ts(x)`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`, and `frontend/src/components/ui/*`).",
-    "Keep existing red accents unchanged while replacing green brand accents with celestial sky-blue.",
-    "Do not serve images through the backend; reference static images directly from `frontend/public/assets/generated`.",
-    "Respect `prefers-reduced-motion` behavior for ambient effects (do not reintroduce motion for users who opted out)."
+    "Do not edit any files under: frontend/src/hooks/useInternetIdentity.ts(x), frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or anything inside frontend/src/components/ui.",
+    "Keep all changes within the existing React + Tailwind architecture and ensure responsive behavior remains intact.",
+    "All visual assets must be referenced as static files under frontend/public/assets/generated (no backend image serving).",
+    "Maintain the current sky-blue accent theme and keep red accents unchanged."
   ],
   "nonGoals": [
-    "Implementing on-chain payment verification/unlock flows for ICP payments (currently described but not implemented).",
-    "Adding new features beyond stabilization, palette unification, and calculation correctness.",
-    "Custom-domain DNS/SSL/canister mapping changes (infrastructure-level work outside app code)."
+    "Do not change the launch date, countdown behavior, or hero copy content beyond what is necessary to implement the requested visuals.",
+    "Do not add new navigation items or new sections for this request.",
+    "Do not implement new backend functionality for this request."
   ],
   "imageRequirements": {
-    "required": [
-      "Dark digital texture background, subtle matrix-style (x39-launch-bg.dim_1920x1080.png)",
-      "Galloping horse made of light/code on transparent or dark background (x39-code-horse.dim_1400x1400.png)"
-    ],
-    "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
+    "required": [],
+    "edits": [
+      "Add clearly visible glowing red eyes and integrate subtle falling “X39” background motif into the horse artwork (x39-code-horse.dim_1400x1400.png > x39-code-horse-red-eyes.dim_1400x1400.png)"
+    ]
   }
 }

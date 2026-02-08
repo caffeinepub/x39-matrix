@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLaunchCountdown } from '../hooks/useLaunchCountdown';
 import { X39MatrixLaunchAmbientEffects } from './X39MatrixLaunchAmbientEffects';
+import { X39HorseX39RainBackdrop } from './X39HorseX39RainBackdrop';
 import { Button } from './ui/button';
 import { Zap, TrendingUp, Coins } from 'lucide-react';
 
@@ -149,15 +150,18 @@ export function X39MatrixLaunchHeroBlock() {
 
           {/* Right Column - Horse of Code Visual */}
           <div className="flex justify-center items-center">
-            <div className="relative">
+            <div className="relative w-full max-w-md lg:max-w-lg xl:max-w-xl" style={{ minHeight: '400px', aspectRatio: '1/1' }}>
+              {/* X39 Rain Backdrop - Behind everything */}
+              <X39HorseX39RainBackdrop />
+              
               {/* Glow effect behind horse */}
               <div className="absolute inset-0 bg-gradient-radial from-sky-500/30 via-red-500/20 to-transparent blur-3xl animate-glow-pulse" />
               
-              {/* Horse Image */}
+              {/* Horse Image with Red Eyes */}
               <img
-                src="/assets/generated/x39-code-horse.dim_1400x1400.png"
+                src="/assets/generated/x39-code-horse-red-eyes.dim_1400x1400.png"
                 alt="Horse of Code - Symbol of Speed and Freedom"
-                className="relative z-10 w-full max-w-md lg:max-w-lg xl:max-w-xl object-contain animate-float"
+                className="relative z-10 w-full h-full object-contain animate-float"
                 style={{
                   filter: 'drop-shadow(0 0 40px rgba(56, 189, 248, 0.6)) drop-shadow(0 0 60px rgba(239, 68, 68, 0.4))',
                 }}

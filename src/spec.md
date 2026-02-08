@@ -1,13 +1,10 @@
 # Specification
 
 ## Summary
-**Goal:** Stabilize the frontend by fixing regressions and calculation issues, and apply a consistent celestial sky-blue accent palette site-wide while keeping red accents unchanged.
+**Goal:** Enhance the X39 Matrix launch hero by adding a subtle Matrix-style falling “X39” background effect behind the horse visual and updating the horse artwork to have clearly visible glowing red eyes.
 
 **Planned changes:**
-- Replace remaining green-themed accent styling (Tailwind classes, gradients, glow/neon utilities) with celestial sky-blue across all UI sections and widgets, preserving existing red accents.
-- Fix math/logic edge cases to prevent negative countdown values, NaN/Infinity-driven rendering, and unstable derived metrics/strings in countdown, charts, projections, RSI, and signals.
-- Repair launch hero static asset references so the background texture and code-horse render reliably from `frontend/public/assets/generated` with intended opacity/glow and no 404s.
-- Ensure any user-facing text modified as part of these fixes is English and follows the existing translation approach, without changing files in the immutable paths.
-- Run a regression pass to resolve remaining runtime errors, navigation/scroll issues, and responsive layout regressions; ensure build/lint succeeds.
+- Add a lightweight “X39” text-rain background layer behind the horse in the right-side hero visual area, styled to match the IntroScreen vibe but less distracting, and respecting prefers-reduced-motion.
+- Update the horse hero image asset to include distinct glowing red eyes and swap the hero to reference the updated static asset from `frontend/public/assets/generated`.
 
-**User-visible outcome:** The portal renders reliably with a unified sky-blue + red accent theme, correct and stable countdown/chart/metric displays (no NaN/Infinity/negative states), and a fully working launch hero with all intended visuals loading in production.
+**User-visible outcome:** The launch hero shows a horse with clearly glowing red eyes and a subtle falling “X39” background effect behind it, without hurting readability, responsiveness, or performance.
