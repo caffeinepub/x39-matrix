@@ -1,12 +1,13 @@
 # Specification
 
 ## Summary
-**Goal:** Replace all green accent styling in the X39 Matrix launch section with a celestial sky blue while keeping existing red accents unchanged.
+**Goal:** Stabilize the frontend by fixing regressions and calculation issues, and apply a consistent celestial sky-blue accent palette site-wide while keeping red accents unchanged.
 
 **Planned changes:**
-- Update `frontend/src/components/X39MatrixLaunchHeroBlock.tsx` to swap all green Tailwind accent classes (text/border/gradient stops) and any green glow/text-shadow RGBA values to celestial sky blue equivalents, preserving layout and copy.
-- Update the launch CTA gradient so the start color is celestial sky blue and still blends into red (no green gradient stops remain).
-- Update supporting cards in the hero so any green borders/icons/headings become celestial sky blue, keeping the middle red card unchanged.
-- Update `frontend/src/components/X39MatrixLaunchAmbientEffects.tsx` so any green code-rain/particle colors are replaced with celestial sky blue while red particles remain red, preserving reduced-motion behavior.
+- Replace remaining green-themed accent styling (Tailwind classes, gradients, glow/neon utilities) with celestial sky-blue across all UI sections and widgets, preserving existing red accents.
+- Fix math/logic edge cases to prevent negative countdown values, NaN/Infinity-driven rendering, and unstable derived metrics/strings in countdown, charts, projections, RSI, and signals.
+- Repair launch hero static asset references so the background texture and code-horse render reliably from `frontend/public/assets/generated` with intended opacity/glow and no 404s.
+- Ensure any user-facing text modified as part of these fixes is English and follows the existing translation approach, without changing files in the immutable paths.
+- Run a regression pass to resolve remaining runtime errors, navigation/scroll issues, and responsive layout regressions; ensure build/lint succeeds.
 
-**User-visible outcome:** The launch hero and its ambient effects no longer show green accents; they use a celestial sky blue accent alongside the existing red styling, with no other behavior or layout changes.
+**User-visible outcome:** The portal renders reliably with a unified sky-blue + red accent theme, correct and stable countdown/chart/metric displays (no NaN/Infinity/negative states), and a fully working launch hero with all intended visuals loading in production.

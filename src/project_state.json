@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 146,
+  "projectStateVersion": 148,
   "summary": "Project has expanded from x39Matrix.org minimal rebrand into a full X39Matrix token portal: canonical domain intended to be x39matrix.org (with x39dark.com as satellite 301 redirect), prominent triangular logo branding, multilingual messaging, airdrop/claim UX with wallet selector + manual address entry, token launch messaging/scheduling (now targeting March 15, 2026 with legal disclaimer), optional NNS-like staking/governance surfaces and market analytics panels; ongoing major blocker is custom-domain DNS/SSL resolution for x39matrix.org.",
   "architectural_notes": [
     "Frontend is a React SPA (TypeScript) styled with Tailwind CSS + custom cyberpunk animation utilities (neon glow, triangle pulse, mist float) and uses lucide-react icons extensively.",
@@ -26,7 +26,8 @@
     "Deployment failures/guard blocks occurred during publish attempts; draft expirations repeatedly interrupted releases.",
     "Requested prominent launch/countdown block on x39dark.com may conflict with the canonical-domain plan (x39matrix.org primary with x39dark.com 301 redirect), requiring a clarified redirect/content strategy."
   ],
-  "isFixRequest": false,
+  "isFixRequest": true,
+  "imageRequirements": "## Required Images\n- Dark digital texture background, subtle matrix-style (x39-launch-bg.dim_1920x1080.png)\n- Galloping horse made of light/code on transparent or dark background (x39-code-horse.dim_1400x1400.png)",
   "generatedImages": [
     {
       "filename": "frontend/public/assets/generated/android-adaptive-background.dim_1024x1024.png",
@@ -778,6 +779,46 @@
         "REQ-17"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-apply-the-celestial-sky-blue-accent-color-consistently-across-the-entire-frontend-ui-all-sections-widgets-and-utility-classes-replacing-remaining-green-themed-accents-while-keeping-all-red-accents-unchanged",
+      "title": "Apply the celestial sky-blue accent color consistently across the entire frontend UI (all sections, widgets, and utility classes), replacing remaining green-themed accents while keeping all red accents unchanged.",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-all-calculation-logic-issues-that-can-lead-to-incorrect-ui-output-unstable-visuals-nan-infinity-values-or-broken-rendering-ensure-all-math-based-ui-countdown-charts-projections-and-derived-metrics-behaves-correctly-across-edge-cases",
+      "title": "Fix all calculation/logic issues that can lead to incorrect UI output, unstable visuals, NaN/Infinity values, or broken rendering; ensure all math-based UI (countdown, charts, projections, and derived metrics) behaves correctly across edge cases.",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-resolve-any-missing-static-asset-regressions-so-the-launch-hero-renders-exactly-as-intended-in-production-including-background-texture-and-the-horse-made-of-light-code-image-using-only-static-assets-under-frontend-public-assets-generated-no-backend-image-serving",
+      "title": "Resolve any missing/static-asset regressions so the launch hero renders exactly as intended in production, including background texture and the “horse made of light/code” image, using only static assets under `frontend/public/assets/generated` (no backend image serving).",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-all-user-facing-strings-touched-by-these-fixes-are-in-english-and-integrated-with-the-existing-translation-approach-use-languagecontext-keys-or-consistent-english-literals-where-appropriate-without-editing-any-files-under-frontend-src-hooks-useinternetidentity-ts-x-frontend-src-hooks-useactor-ts-frontend-src-main-tsx-or-anything-inside-frontend-src-components-ui",
+      "title": "Ensure all user-facing strings touched by these fixes are in English and integrated with the existing translation approach (use `LanguageContext` keys or consistent English literals where appropriate) without editing any files under `frontend/src/hooks/useInternetIdentity.ts(x)`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`, or anything inside `frontend/src/components/ui`.",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-perform-an-end-to-end-regression-pass-and-fix-any-remaining-issues-uncovered-runtime-errors-broken-navigation-scroll-targets-layout-regressions-on-mobile-desktop-so-the-portal-works-reliably-as-currently-designed",
+      "title": "Perform an end-to-end regression pass and fix any remaining issues uncovered (runtime errors, broken navigation/scroll targets, layout regressions on mobile/desktop) so the portal works reliably as currently designed.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -962,6 +1003,18 @@
     {
       "id": "AR-39",
       "summary": "Update the launch section styling: change the currently green-colored area/accents to a sky blue (“azul celestial”) color.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-40",
+      "summary": "Update the remaining site color palette so all relevant accents/styles consistently match the new celestial sky blue theme (while preserving intended red accents).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-41",
+      "summary": "Fix all outstanding issues/regressions so the site functions correctly end-to-end as expected (including completing any missing calculations/logic required for correct behavior).",
       "reqIds": [],
       "status": "pending"
     }

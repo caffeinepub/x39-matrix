@@ -122,14 +122,14 @@ export function LiveICPPrice() {
             </div>
           </div>
 
-          {/* Animated Progress Bar */}
+          {/* Animated Progress Bar - Sky Blue for positive, Red for negative */}
           <div className="w-full max-w-[300px] h-1.5 bg-black/60 rounded-full overflow-hidden border border-red-500/30">
             <div 
-              className={`h-full transition-all duration-500 ${isPositive ? 'bg-gradient-to-r from-green-500 to-green-400' : 'bg-gradient-to-r from-red-500 to-red-400'}`}
+              className={`h-full transition-all duration-500 ${isPositive ? 'bg-gradient-to-r from-sky-400 to-sky-500' : 'bg-gradient-to-r from-red-500 to-red-400'}`}
               style={{ 
                 width: `${progressPercentage}%`,
                 boxShadow: isPositive 
-                  ? '0 0 10px rgba(0, 255, 0, 0.6)' 
+                  ? '0 0 10px rgba(56, 189, 248, 0.6)' 
                   : '0 0 10px rgba(255, 0, 0, 0.6)'
               }}
             />

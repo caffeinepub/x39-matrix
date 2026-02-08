@@ -38,10 +38,11 @@ export function useLaunchCountdown(): CountdownState {
         return;
       }
 
-      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+      // Clamp all values to safe non-negative integers
+      const days = Math.max(0, Math.floor(difference / (1000 * 60 * 60 * 24)));
+      const hours = Math.max(0, Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+      const minutes = Math.max(0, Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)));
+      const seconds = Math.max(0, Math.floor((difference % (1000 * 60)) / 1000));
 
       setCountdown({
         days,
@@ -49,7 +50,7 @@ export function useLaunchCountdown(): CountdownState {
         minutes,
         seconds,
         isLaunched: false,
-        totalSeconds: Math.floor(difference / 1000),
+        totalSeconds: Math.max(0, Math.floor(difference / 1000)),
       });
     };
 

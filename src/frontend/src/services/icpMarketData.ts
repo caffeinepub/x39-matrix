@@ -26,6 +26,14 @@ export interface ICPKlineData {
 }
 
 /**
+ * Validate and normalize a parsed number to ensure it's finite
+ */
+function safeParseFloat(value: any, fallback: number = 0): number {
+  const parsed = parseFloat(value);
+  return isFinite(parsed) ? parsed : fallback;
+}
+
+/**
  * Fetch with timeout support
  */
 async function fetchWithTimeout(url: string, timeoutMs: number): Promise<Response> {
@@ -60,8 +68,13 @@ export async function fetchICPPrice(actor?: backendInterface | null): Promise<IC
     }
 
     const data = await response.json();
-    const price = parseFloat(data.lastPrice);
-    const change24h = parseFloat(data.priceChangePercent);
+    const price = safeParseFloat(data.lastPrice, 0);
+    const change24h = safeParseFloat(data.priceChangePercent, 0);
+    
+    // Validate that we got real data
+    if (price === 0) {
+      throw new Error('Invalid price data received');
+    }
     
     // Calculate approximate market cap (ICP has ~500M circulating supply)
     const circulatingSupply = 500000000;
@@ -84,8 +97,13 @@ export async function fetchICPPrice(actor?: backendInterface | null): Promise<IC
       const proxyResult = await actor.proxyIcpPrice();
       const data = JSON.parse(proxyResult);
       
-      const price = parseFloat(data.lastPrice);
-      const change24h = parseFloat(data.priceChangePercent);
+      const price = safeParseFloat(data.lastPrice, 0);
+      const change24h = safeParseFloat(data.priceChangePercent, 0);
+      
+      if (price === 0) {
+        throw new Error('Invalid price data from proxy');
+      }
+      
       const circulatingSupply = 500000000;
       const marketCap = price * circulatingSupply;
       
@@ -127,13 +145,18 @@ export async function fetchICPKlines(
     }
 
     const data = await response.json();
+    
+    if (!Array.isArray(data) || data.length === 0) {
+      throw new Error('Invalid klines data received');
+    }
+    
     return data.map((kline: any[]) => ({
       time: kline[0],
-      open: parseFloat(kline[1]),
-      high: parseFloat(kline[2]),
-      low: parseFloat(kline[3]),
-      close: parseFloat(kline[4]),
-      volume: parseFloat(kline[5]),
+      open: safeParseFloat(kline[1], 0),
+      high: safeParseFloat(kline[2], 0),
+      low: safeParseFloat(kline[3], 0),
+      close: safeParseFloat(kline[4], 0),
+      volume: safeParseFloat(kline[5], 0),
     }));
   } catch (error) {
     console.warn('Direct Binance API failed for klines, trying backend proxy:', error);
@@ -146,13 +169,17 @@ export async function fetchICPKlines(
       const proxyResult = await actor.proxyIcpKlines();
       const data = JSON.parse(proxyResult);
       
+      if (!Array.isArray(data) || data.length === 0) {
+        throw new Error('Invalid klines data from proxy');
+      }
+      
       return data.map((kline: any[]) => ({
         time: kline[0],
-        open: parseFloat(kline[1]),
-        high: parseFloat(kline[2]),
-        low: parseFloat(kline[3]),
-        close: parseFloat(kline[4]),
-        volume: parseFloat(kline[5]),
+        open: safeParseFloat(kline[1], 0),
+        high: safeParseFloat(kline[2], 0),
+        low: safeParseFloat(kline[3], 0),
+        close: safeParseFloat(kline[4], 0),
+        volume: safeParseFloat(kline[5], 0),
       }));
     } catch (proxyError) {
       console.error('Backend proxy also failed for klines:', proxyError);

@@ -10,7 +10,9 @@ export function X39MatrixLaunchHeroBlock() {
   const scrollToTokenRegistration = () => {
     const element = document.getElementById('token-registration');
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      // Respect prefers-reduced-motion
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      element.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     }
   };
 
