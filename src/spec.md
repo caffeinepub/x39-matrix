@@ -1,10 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Enhance the X39 Matrix launch hero by adding a subtle Matrix-style falling “X39” background effect behind the horse visual and updating the horse artwork to have clearly visible glowing red eyes.
+**Goal:** Make the top navigation header’s neon-red triangle code-rain effect feel more aggressive and elegant while keeping the header clean, readable, and performance-safe.
 
 **Planned changes:**
-- Add a lightweight “X39” text-rain background layer behind the horse in the right-side hero visual area, styled to match the IntroScreen vibe but less distracting, and respecting prefers-reduced-motion.
-- Update the horse hero image asset to include distinct glowing red eyes and swap the hero to reference the updated static asset from `frontend/public/assets/generated`.
+- Refine `frontend/src/components/header/HeaderTriangleCodeRain.tsx` to increase perceived intensity (higher density/speed/variation) while keeping triangles crisp and stroke-forward with controlled glow.
+- Add more dynamic, non-uniform motion (e.g., multiple speed bands plus subtle drift/jitter/rotation variance) and ensure stability across resize with proper cleanup on unmount.
+- Update the header’s base background treatment to a true deep black with subtle supporting texture/lines, preserving safe-area padding and existing header layout/readability.
 
-**User-visible outcome:** The launch hero shows a horse with clearly glowing red eyes and a subtle falling “X39” background effect behind it, without hurting readability, responsiveness, or performance.
+**User-visible outcome:** The header-only triangle rain looks noticeably more intense and refined, without obscuring the logo, brand text, or navigation items, and remains smooth and accessibility-friendly (including reduced-motion behavior).

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 150,
+  "projectStateVersion": 158,
   "summary": "Project has expanded from x39Matrix.org minimal rebrand into a full X39Matrix token portal: canonical domain intended to be x39matrix.org (with x39dark.com as satellite 301 redirect), prominent triangular logo branding, multilingual messaging, airdrop/claim UX with wallet selector + manual address entry, token launch messaging/scheduling (now targeting March 15, 2026 with legal disclaimer), optional NNS-like staking/governance surfaces and market analytics panels; ongoing major blocker is custom-domain DNS/SSL resolution for x39matrix.org.",
   "architectural_notes": [
     "Frontend is a React SPA (TypeScript) styled with Tailwind CSS + custom cyberpunk animation utilities (neon glow, triangle pulse, mist float) and uses lucide-react icons extensively.",
@@ -27,7 +27,6 @@
     "Requested prominent launch/countdown block on x39dark.com may conflict with the canonical-domain plan (x39matrix.org primary with x39dark.com 301 redirect), requiring a clarified redirect/content strategy."
   ],
   "isFixRequest": false,
-  "imageRequirements": "## Edit Images\n- Add clearly visible glowing red eyes and integrate subtle falling “X39” background motif into the horse artwork (x39-code-horse.dim_1400x1400.png > x39-code-horse-red-eyes.dim_1400x1400.png)",
   "generatedImages": [
     {
       "filename": "frontend/public/assets/generated/android-adaptive-background.dim_1024x1024.png",
@@ -835,6 +834,86 @@
         "REQ-24"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-standardize-all-user-facing-branding-text-so-the-project-name-is-written-as-x39-matrix-capital-m-and-never-as-matriz-where-the-stylized-wordmark-is-intentionally-used-e-g-the-header-logo-text-keep-it-as-x39matrix-exactly-camelcase-with-a-lowercase-leading-x-and-ensure-this-choice-is-consistent-across-the-ui",
+      "title": "Standardize all user-facing branding text so the project name is written as “X39 Matrix” (capital M) and never as “matriz”. Where the stylized wordmark is intentionally used (e.g., the header logo text), keep it as “x39Matrix” exactly (camelCase with a lowercase leading x), and ensure this choice is consistent across the UI.",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-translation-dictionary-and-any-remaining-localized-strings-so-that-any-spanish-or-other-language-strings-referencing-the-brand-use-matrix-not-matriz-matriz-and-ensure-any-newly-touched-user-facing-strings-remain-in-english-where-those-ui-sections-are-intended-to-be-english",
+      "title": "Update the translation dictionary and any remaining localized strings so that any Spanish (or other language) strings referencing the brand use “Matrix” (not “Matriz/matriz”), and ensure any newly touched user-facing strings remain in English where those UI sections are intended to be English.",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-fixed-top-navigation-header-layout-so-the-brand-header-logo-x39matrix-text-is-never-visually-cut-off-or-partially-hidden-on-any-viewport-mobile-desktop-including-devices-with-safe-area-notches-and-when-browser-ui-bars-collapse-expand",
+      "title": "Fix the fixed top navigation header layout so the brand header (logo + “x39Matrix” text) is never visually cut off or partially hidden on any viewport (mobile/desktop), including devices with safe-area/notches and when browser UI bars collapse/expand.",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-intro-screen-title-x39-matrix-is-fully-readable-and-not-cropped-on-small-screens-adjust-typography-line-height-margins-and-any-container-overflow-interactions-so-the-full-heading-renders-consistently",
+      "title": "Ensure the intro screen title (“X39 MATRIX”) is fully readable and not cropped on small screens; adjust typography/line-height/margins and any container overflow interactions so the full heading renders consistently.",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-fixed-top-navigation-header-the-nav-in-frontend-src-app-tsx-to-be-visually-more-prominent-with-a-deeper-matrix-black-background-treatment-while-keeping-all-existing-layout-safe-area-behavior-and-navigation-interactions-intact",
+      "title": "Update the fixed top navigation header (the <nav> in `frontend/src/App.tsx`) to be visually more prominent with a deeper “Matrix black” background treatment while keeping all existing layout, safe-area behavior, and navigation interactions intact.",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-intense-neon-red-ff0000-code-rain-effect-composed-of-many-small-triangle-particles-matching-the-project-s-triangular-motif-rendered-inside-the-top-navigation-header-area-only-banner-header-without-reducing-readability-of-the-header-logo-brand-text-or-menu-items",
+      "title": "Add an intense neon-red (#FF0000) “code rain” effect composed of many small triangle particles (matching the project’s triangular motif) rendered inside the top navigation header area only (banner/header), without reducing readability of the header logo/brand text or menu items.",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-new-header-triangle-rain-effect-is-performance-safe-and-accessibility-friendly-respect-prefers-reduced-motion-static-or-significantly-reduced-animation-avoid-excessive-cpu-usage-and-prevent-memory-leaks-on-re-renders-unmount",
+      "title": "Ensure the new header triangle-rain effect is performance-safe and accessibility-friendly: respect `prefers-reduced-motion` (static or significantly reduced animation), avoid excessive CPU usage, and prevent memory leaks on re-renders/unmount.",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-top-navigation-header-s-red-triangle-code-rain-effect-to-feel-more-aggressive-while-also-more-elegant-increase-perceived-intensity-density-speed-variation-but-keep-a-refined-readable-look-that-never-obscures-the-brand-logo-text-or-menu-items",
+      "title": "Update the top navigation header’s red triangle code-rain effect to feel more aggressive while also more elegant: increase perceived intensity (density/speed/variation) but keep a refined, readable look that never obscures the brand logo/text or menu items.",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-refine-frontend-src-components-header-headertrianglecoderain-tsx-to-implement-an-aggressive-elegant-neon-red-ff0000-triangle-rain-style-use-a-pure-black-aesthetic-stronger-edge-defined-triangles-stroke-forward-and-more-dynamic-motion-irregular-fall-speeds-and-subtle-rotation-jitter-while-keeping-the-animation-performance-safe-and-stable",
+      "title": "Refine `frontend/src/components/header/HeaderTriangleCodeRain.tsx` to implement an “aggressive + elegant” neon-red (#FF0000) triangle-rain style: use a pure-black aesthetic, stronger edge-defined triangles (stroke-forward), and more dynamic motion (irregular fall speeds and subtle rotation/jitter) while keeping the animation performance-safe and stable.",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-the-header-background-treatment-more-elegant-and-more-aggressive-by-switching-the-header-s-base-to-a-true-deep-black-no-visible-gradient-banding-with-subtle-texture-lines-that-support-not-compete-with-the-triangle-rain-keeping-existing-safe-area-behavior-and-layout-intact",
+      "title": "Make the header background treatment more elegant and more aggressive by switching the header’s base to a true deep black (no visible gradient banding), with subtle texture/lines that support (not compete with) the triangle rain, keeping existing safe-area behavior and layout intact.",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -1037,6 +1116,18 @@
     {
       "id": "AR-42",
       "summary": "Update the launch horse hero image/visual: add a falling “x39” background effect similar to the page intro (Matrix-style drop) and ensure the horse has clearly visible red eyes.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-43",
+      "summary": "Correct branding/copy so the project name is presented as “X39 Matrix” (capital M, not “matriz”), and ensure published site/link messaging reflects the X39Matrix brand (not x39dark as the primary identity).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-44",
+      "summary": "Revise the top header/banner to be more visually prominent: apply a black Matrix-style background and add an intense neon-red (#FF0000) “code rain” effect composed of small red triangles (matching the main triangular logo) within the banner area.",
       "reqIds": [],
       "status": "pending"
     }

@@ -2,11 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-add-a-subtle-falling-x39-background-effect-behind-the-horse-visual-in-the-x39-matrix-launch-hero-block-matching-the-intro-s-matrix-style-drop-vibe-as-seen-in-introscreen-without-reducing-readability-of-the-hero-copy-or-causing-performance-regressions",
-      "featureTitle": "Add a subtle falling “X39” background effect behind the horse visual in the X39 Matrix launch hero block, matching the intro’s Matrix-style drop vibe (as seen in IntroScreen), without reducing readability of the hero copy or causing performance regressions.",
+      "featureId": "feature-update-the-top-navigation-header-s-red-triangle-code-rain-effect-to-feel-more-aggressive-while-also-more-elegant-increase-perceived-intensity-density-speed-variation-but-keep-a-refined-readable-look-that-never-obscures-the-brand-logo-text-or-menu-items",
+      "featureTitle": "Update the top navigation header’s red triangle code-rain effect to feel more aggressive while also more elegant: increase perceived intensity (density/speed/variation) but keep a refined, readable look that never obscures the brand logo/text or menu items.",
       "files": [
-        "frontend/src/components/X39HorseX39RainBackdrop.tsx",
-        "frontend/src/components/X39MatrixLaunchHeroBlock.tsx"
+        "frontend/src/components/header/HeaderTriangleCodeRain.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -22,15 +21,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-23"
+        "REQ-32"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-update-the-launch-horse-hero-image-so-the-horse-has-clearly-visible-glowing-red-eyes-consistent-with-the-existing-red-accent-palette-used-throughout-the-launch-hero",
-      "featureTitle": "Update the launch horse hero image so the horse has clearly visible glowing red eyes, consistent with the existing red accent palette used throughout the launch hero.",
+      "featureId": "feature-refine-frontend-src-components-header-headertrianglecoderain-tsx-to-implement-an-aggressive-elegant-neon-red-ff0000-triangle-rain-style-use-a-pure-black-aesthetic-stronger-edge-defined-triangles-stroke-forward-and-more-dynamic-motion-irregular-fall-speeds-and-subtle-rotation-jitter-while-keeping-the-animation-performance-safe-and-stable",
+      "featureTitle": "Refine `frontend/src/components/header/HeaderTriangleCodeRain.tsx` to implement an “aggressive + elegant” neon-red (#FF0000) triangle-rain style: use a pure-black aesthetic, stronger edge-defined triangles (stroke-forward), and more dynamic motion (irregular fall speeds and subtle rotation/jitter) while keeping the animation performance-safe and stable.",
       "files": [
-        "frontend/src/components/X39MatrixLaunchHeroBlock.tsx"
+        "frontend/src/components/header/HeaderTriangleCodeRain.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -46,7 +45,31 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-24"
+        "REQ-33"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-make-the-header-background-treatment-more-elegant-and-more-aggressive-by-switching-the-header-s-base-to-a-true-deep-black-no-visible-gradient-banding-with-subtle-texture-lines-that-support-not-compete-with-the-triangle-rain-keeping-existing-safe-area-behavior-and-layout-intact",
+      "featureTitle": "Make the header background treatment more elegant and more aggressive by switching the header’s base to a true deep black (no visible gradient banding), with subtle texture/lines that support (not compete with) the triangle rain, keeping existing safe-area behavior and layout intact.",
+      "files": [
+        "frontend/src/index.css"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "http-outcalls@3.0.0",
+        "qr-code@1.0.0",
+        "camera@1.0.0",
+        "stripe@3.0.0",
+        "authorization@3.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-34"
       ],
       "confidence": "high"
     }

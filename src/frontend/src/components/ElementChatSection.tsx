@@ -15,7 +15,7 @@ export function ElementChatSection() {
           <button
             onClick={handleChatClick}
             className="group relative inline-flex items-center gap-3 px-8 py-4 bg-[#1A1A1A] border-2 border-[#FF0000] rounded-lg transition-all duration-300 hover:border-[#FF0000] hover:shadow-[0_0_20px_rgba(255,0,0,0.5)] focus:outline-none focus:ring-2 focus:ring-[#FF0000] focus:ring-offset-2 focus:ring-offset-black"
-            aria-label="Abrir chat privado en Element (MATRIX)"
+            aria-label="Abrir chat privado en Element (Matrix)"
           >
             {/* Faint red-neon glow effect */}
             <div className="absolute inset-0 rounded-lg bg-[#FF0000]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -25,7 +25,7 @@ export function ElementChatSection() {
             
             {/* Text */}
             <span className="text-lg md:text-xl font-orbitron font-bold text-[#FF0000] relative z-10 glow-text-red group-hover:text-white transition-colors duration-300">
-              Chat Privado en Element (MATRIX)
+              Chat Privado en Element (Matrix)
             </span>
             
             {/* Metallic finish overlay */}

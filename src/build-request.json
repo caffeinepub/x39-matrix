@@ -1,62 +1,88 @@
 {
   "kind": "build_request",
-  "title": "Enhance X39 launch horse visual: falling X39 background + red eyes",
+  "title": "Make the header triangle code-rain effect more aggressive and elegant",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-23",
-      "text": "Add a subtle falling “X39” background effect behind the horse visual in the X39 Matrix launch hero block, matching the intro’s Matrix-style drop vibe (as seen in IntroScreen), without reducing readability of the hero copy or causing performance regressions.",
+      "id": "REQ-32",
+      "text": "Update the top navigation header’s red triangle code-rain effect to feel more aggressive while also more elegant: increase perceived intensity (density/speed/variation) but keep a refined, readable look that never obscures the brand logo/text or menu items.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-4"
         ],
         "quotes": [
-          "En la imagen del caballo que se vea de fondo en caída x39 como cuándo inicia la pagina"
+          "Más agresivo y elegante"
         ]
       },
       "acceptanceCriteria": [
-        "In the right-side hero visual area (horse column) there is a visible but subtle falling “X39” (or “X” + “39”) rain effect behind the horse image.",
-        "The effect is visually similar in style to the intro text-rain (IntroScreen) but tuned to be lighter/less distracting than the intro.",
-        "The effect respects prefers-reduced-motion (disabled or rendered as a static non-animated fallback when reduced motion is enabled).",
-        "The effect does not block pointer events and does not interfere with layout on mobile or desktop.",
-        "No NaN/Infinity/render-loop issues occur; animation is cleaned up on unmount (no leaked timers/raf)."
+        "In the header area only, the triangle rain reads as noticeably more intense than the current implementation (higher density and/or faster motion with more variation), while still looking clean (not muddy/overfilled).",
+        "The brand area (logo + “x39Matrix” + subtext) and all nav items remain fully readable at all times; the effect must not visually overpower or cover them.",
+        "The effect remains confined to the header region (does not bleed into main content)."
       ]
     },
     {
-      "id": "REQ-24",
-      "text": "Update the launch horse hero image so the horse has clearly visible glowing red eyes, consistent with the existing red accent palette used throughout the launch hero.",
+      "id": "REQ-33",
+      "text": "Refine `frontend/src/components/header/HeaderTriangleCodeRain.tsx` to implement an “aggressive + elegant” neon-red (#FF0000) triangle-rain style: use a pure-black aesthetic, stronger edge-defined triangles (stroke-forward), and more dynamic motion (irregular fall speeds and subtle rotation/jitter) while keeping the animation performance-safe and stable.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-4"
         ],
         "quotes": [
-          "y Los ojos rojos"
+          "Más agresivo y elegante"
         ]
       },
       "acceptanceCriteria": [
-        "The horse graphic used by X39MatrixLaunchHeroBlock shows distinctly visible red glowing eyes at typical viewport sizes (mobile and desktop).",
-        "Red eyes remain visible over the existing glow/drop-shadow treatments and do not appear washed out by filters.",
-        "The updated image is served as a static asset from frontend/public/assets/generated and referenced directly by the frontend (no backend image serving)."
+        "Triangles appear primarily as sharp, edge-defined glyphs (stroke-forward), with controlled glow so the shapes stay crisp rather than becoming large blurry blobs.",
+        "Motion has visible variation (not uniform): at least two distinct movement behaviors are observable (e.g., different speed bands and/or slight drift/jitter/rotation variance).",
+        "No runtime errors; no NaN/Infinity issues; no canvas rendering artifacts after resize.",
+        "`prefers-reduced-motion: reduce` results in a static (or significantly reduced) rendering without continuous animation, consistent with the current accessibility behavior.",
+        "No memory leaks: the animation loop and any observers are cleaned up correctly on unmount and do not multiply on re-render."
+      ]
+    },
+    {
+      "id": "REQ-34",
+      "text": "Make the header background treatment more elegant and more aggressive by switching the header’s base to a true deep black (no visible gradient banding), with subtle texture/lines that support (not compete with) the triangle rain, keeping existing safe-area behavior and layout intact.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Más agresivo y elegante"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The header background reads as deep black at a glance (no obvious multi-stop gradient), with only subtle texture accents.",
+        "Header safe-area padding (`safe-top`) and fixed positioning remain correct across mobile/desktop viewports.",
+        "No regressions to header layout: logo and text are not clipped/cropped on any viewport size."
       ]
     }
   ],
   "constraints": [
-    "Do not edit any files under: frontend/src/hooks/useInternetIdentity.ts(x), frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or anything inside frontend/src/components/ui.",
-    "Keep all changes within the existing React + Tailwind architecture and ensure responsive behavior remains intact.",
-    "All visual assets must be referenced as static files under frontend/public/assets/generated (no backend image serving).",
-    "Maintain the current sky-blue accent theme and keep red accents unchanged."
+    "Do not edit any files under `frontend/src/components/ui` (shadcn/ui components are read-only).",
+    "Do not edit immutable hook/bootstrap files: `frontend/src/hooks/useInternetIdentity.ts(x)`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`.",
+    "Keep the effect accessibility-friendly and performance-safe; respect `prefers-reduced-motion`.",
+    "Keep all user-facing text in English (if any text is touched as part of these changes)."
   ],
   "nonGoals": [
-    "Do not change the launch date, countdown behavior, or hero copy content beyond what is necessary to implement the requested visuals.",
-    "Do not add new navigation items or new sections for this request.",
-    "Do not implement new backend functionality for this request."
+    "Do not add new site sections or change navigation structure.",
+    "Do not introduce any backend changes for this request.",
+    "Do not add third-party animation libraries; keep the implementation within the existing React/Canvas approach."
   ],
   "imageRequirements": {
     "required": [],
-    "edits": [
-      "Add clearly visible glowing red eyes and integrate subtle falling “X39” background motif into the horse artwork (x39-code-horse.dim_1400x1400.png > x39-code-horse-red-eyes.dim_1400x1400.png)"
-    ]
+    "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }
