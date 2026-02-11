@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-type Language = 'es' | 'en' | 'de' | 'zh' | 'ja';
+type Language = 'es' | 'en' | 'ja' | 'zh' | 'ko';
 
 interface LanguageContextType {
   language: Language;
@@ -8,208 +8,160 @@ interface LanguageContextType {
   t: (key: string) => string;
 }
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
-
-const translations: Record<Language, Record<string, any>> = {
+const translations: Record<Language, Record<string, string>> = {
   es: {
-    nav: {
-      icp: 'ICP',
-      darkWeb: 'Dark Web',
-      mobileApp: 'App Móvil',
-    },
-    hero: {
-      title: 'X39 Dark',
-      subtitle: 'Noticias reales de la Dark Web y Crypto',
-    },
-    icpNinjaIntegrationGuide: {
-      title: 'Guía de Integración ICP Ninja',
-      technicalInfo: {
-        title: 'Información Técnica',
-        tokenName: 'Nombre del Token',
-        tokenSymbol: 'Símbolo del Token',
-        tokenIcon: 'Icono del Token',
-        triangleEyeSymbol: 'Símbolo del triángulo-ojo como icono oficial del Token X39 Matrix',
-      },
-    },
-    x39TokenAnnouncement: {
-      title: 'Anuncio del Token X39',
-      allianceStatement: 'El Token X39 tiene alianzas con ICP y sus socios.',
-      internetComputer: 'Internet Computer',
-      matrixToken: 'Token Matrix',
-      loading: 'Cargando...',
-      platformAvailability: 'Disponible en las siguientes plataformas:',
-    },
-    footer: {
-      contact: 'Contacto: suporte@x39.com',
-      copyright: '© 2025. Construido con amor usando',
-    },
+    'hero.title': 'X39 Matrix',
+    'hero.subtitle': 'El Protocolo Matrix del Futuro',
+    'hero.description': 'Bienvenido a X39 Matrix - La nueva generación de tecnología descentralizada',
+    'nav.home': 'Inicio',
+    'nav.icp': 'ICP',
+    'nav.darkweb': 'Dark Web',
+    'nav.graphics': 'Gráficos',
+    'nav.portfolio': 'Portfolio',
+    'footer.builtWith': 'Construido con',
+    'footer.love': 'amor',
+    'footer.using': 'usando',
+    'diagnostics.title': 'Global Availability / Domain Status',
+    'diagnostics.overview': 'Overview',
+    'diagnostics.domainDns': 'Domain & DNS Verification',
+    'diagnostics.runDiagnostics': 'Run Diagnostics',
+    'diagnostics.copyReport': 'Copy Report',
+    'diagnostics.copied': 'Copied!',
+    'diagnostics.close': 'Close',
+    'diagnostics.cutoverStatus': 'Cutover Status',
+    'diagnostics.currentOrigin': 'Current Origin',
+    'diagnostics.domainConfig': 'Domain Configuration',
+    'diagnostics.backendHealth': 'Backend Health',
+    'diagnostics.detailedChecks': 'Detailed Verification Checks',
+    'diagnostics.operatorGuidance': 'Operator Guidance',
+    'diagnostics.documentation': 'Documentation',
+    'diagnostics.copyCutoverReport': 'Copy Cutover Report',
   },
   en: {
-    nav: {
-      icp: 'ICP',
-      darkWeb: 'Dark Web',
-      mobileApp: 'Mobile App',
-    },
-    hero: {
-      title: 'X39 Dark',
-      subtitle: 'Real news from the Dark Web and Crypto',
-    },
-    icpNinjaIntegrationGuide: {
-      title: 'ICP Ninja Integration Guide',
-      technicalInfo: {
-        title: 'Technical Information',
-        tokenName: 'Token Name',
-        tokenSymbol: 'Token Symbol',
-        tokenIcon: 'Token Icon',
-        triangleEyeSymbol: 'Triangle-eye symbol as official X39 Matrix Token icon',
-      },
-    },
-    x39TokenAnnouncement: {
-      title: 'X39 Token Announcement',
-      allianceStatement: 'The X39 Token has alliances with ICP and its partners.',
-      internetComputer: 'Internet Computer',
-      matrixToken: 'Matrix Token',
-      loading: 'Loading...',
-      platformAvailability: 'Available on the following platforms:',
-    },
-    footer: {
-      contact: 'Contact: suporte@x39.com',
-      copyright: '© 2025. Built with love using',
-    },
-  },
-  de: {
-    nav: {
-      icp: 'ICP',
-      darkWeb: 'Dark Web',
-      mobileApp: 'Mobile App',
-    },
-    hero: {
-      title: 'X39 Dark',
-      subtitle: 'Echte Nachrichten aus dem Dark Web und Krypto',
-    },
-    icpNinjaIntegrationGuide: {
-      title: 'ICP Ninja Integrationsleitfaden',
-      technicalInfo: {
-        title: 'Technische Informationen',
-        tokenName: 'Token-Name',
-        tokenSymbol: 'Token-Symbol',
-        tokenIcon: 'Token-Symbol',
-        triangleEyeSymbol: 'Dreieck-Auge-Symbol als offizielles X39 Matrix Token-Symbol',
-      },
-    },
-    x39TokenAnnouncement: {
-      title: 'X39 Token-Ankündigung',
-      allianceStatement: 'Der X39 Token hat Allianzen mit ICP und seinen Partnern.',
-      internetComputer: 'Internet Computer',
-      matrixToken: 'Matrix-Token',
-      loading: 'Wird geladen...',
-      platformAvailability: 'Verfügbar auf folgenden Plattformen:',
-    },
-    footer: {
-      contact: 'Kontakt: suporte@x39.com',
-      copyright: '© 2025. Mit Liebe gebaut mit',
-    },
-  },
-  zh: {
-    nav: {
-      icp: 'ICP',
-      darkWeb: '暗网',
-      mobileApp: '移动应用',
-    },
-    hero: {
-      title: 'X39 Dark',
-      subtitle: '来自暗网和加密货币的真实新闻',
-    },
-    icpNinjaIntegrationGuide: {
-      title: 'ICP Ninja 集成指南',
-      technicalInfo: {
-        title: '技术信息',
-        tokenName: '令牌名称',
-        tokenSymbol: '令牌符号',
-        tokenIcon: '令牌图标',
-        triangleEyeSymbol: '三角眼符号作为官方X39 Matrix Token图标',
-      },
-    },
-    x39TokenAnnouncement: {
-      title: 'X39令牌公告',
-      allianceStatement: 'X39令牌与ICP及其合作伙伴建立了联盟。',
-      internetComputer: '互联网计算机',
-      matrixToken: 'Matrix令牌',
-      loading: '加载中...',
-      platformAvailability: '在以下平台上可用：',
-    },
-    footer: {
-      contact: '联系方式：suporte@x39.com',
-      copyright: '© 2025. 用爱构建，使用',
-    },
+    'hero.title': 'X39 Matrix',
+    'hero.subtitle': 'The Matrix Protocol of the Future',
+    'hero.description': 'Welcome to X39 Matrix - The next generation of decentralized technology',
+    'nav.home': 'Home',
+    'nav.icp': 'ICP',
+    'nav.darkweb': 'Dark Web',
+    'nav.graphics': 'Graphics',
+    'nav.portfolio': 'Portfolio',
+    'footer.builtWith': 'Built with',
+    'footer.love': 'love',
+    'footer.using': 'using',
+    'diagnostics.title': 'Global Availability / Domain Status',
+    'diagnostics.overview': 'Overview',
+    'diagnostics.domainDns': 'Domain & DNS Verification',
+    'diagnostics.runDiagnostics': 'Run Diagnostics',
+    'diagnostics.copyReport': 'Copy Report',
+    'diagnostics.copied': 'Copied!',
+    'diagnostics.close': 'Close',
+    'diagnostics.cutoverStatus': 'Cutover Status',
+    'diagnostics.currentOrigin': 'Current Origin',
+    'diagnostics.domainConfig': 'Domain Configuration',
+    'diagnostics.backendHealth': 'Backend Health',
+    'diagnostics.detailedChecks': 'Detailed Verification Checks',
+    'diagnostics.operatorGuidance': 'Operator Guidance',
+    'diagnostics.documentation': 'Documentation',
+    'diagnostics.copyCutoverReport': 'Copy Cutover Report',
   },
   ja: {
-    nav: {
-      icp: 'ICP',
-      darkWeb: 'ダークウェブ',
-      mobileApp: 'モバイルアプリ',
-    },
-    hero: {
-      title: 'X39 Dark',
-      subtitle: 'ダークウェブと暗号通貨からの本物のニュース',
-    },
-    icpNinjaIntegrationGuide: {
-      title: 'ICP Ninja統合ガイド',
-      technicalInfo: {
-        title: '技術情報',
-        tokenName: 'トークン名',
-        tokenSymbol: 'トークンシンボル',
-        tokenIcon: 'トークンアイコン',
-        triangleEyeSymbol: '公式X39 Matrix Tokenアイコンとしてのトライアングルアイシンボル',
-      },
-    },
-    x39TokenAnnouncement: {
-      title: 'X39トークン発表',
-      allianceStatement: 'X39トークンはICPとそのパートナーと提携しています。',
-      internetComputer: 'インターネットコンピュータ',
-      matrixToken: 'Matrixトークン',
-      loading: '読み込み中...',
-      platformAvailability: '以下のプラットフォームで利用可能：',
-    },
-    footer: {
-      contact: '連絡先：suporte@x39.com',
-      copyright: '© 2025. 愛を込めて構築、使用',
-    },
+    'hero.title': 'X39 Matrix',
+    'hero.subtitle': '未来のマトリックスプロトコル',
+    'hero.description': 'X39 Matrixへようこそ - 次世代の分散型技術',
+    'nav.home': 'ホーム',
+    'nav.icp': 'ICP',
+    'nav.darkweb': 'ダークウェブ',
+    'nav.graphics': 'グラフィックス',
+    'nav.portfolio': 'ポートフォリオ',
+    'footer.builtWith': 'Built with',
+    'footer.love': 'love',
+    'footer.using': 'using',
+    'diagnostics.title': 'Global Availability / Domain Status',
+    'diagnostics.overview': 'Overview',
+    'diagnostics.domainDns': 'Domain & DNS Verification',
+    'diagnostics.runDiagnostics': 'Run Diagnostics',
+    'diagnostics.copyReport': 'Copy Report',
+    'diagnostics.copied': 'Copied!',
+    'diagnostics.close': 'Close',
+    'diagnostics.cutoverStatus': 'Cutover Status',
+    'diagnostics.currentOrigin': 'Current Origin',
+    'diagnostics.domainConfig': 'Domain Configuration',
+    'diagnostics.backendHealth': 'Backend Health',
+    'diagnostics.detailedChecks': 'Detailed Verification Checks',
+    'diagnostics.operatorGuidance': 'Operator Guidance',
+    'diagnostics.documentation': 'Documentation',
+    'diagnostics.copyCutoverReport': 'Copy Cutover Report',
+  },
+  zh: {
+    'hero.title': 'X39 Matrix',
+    'hero.subtitle': '未来的矩阵协议',
+    'hero.description': '欢迎来到X39 Matrix - 下一代去中心化技术',
+    'nav.home': '首页',
+    'nav.icp': 'ICP',
+    'nav.darkweb': '暗网',
+    'nav.graphics': '图形',
+    'nav.portfolio': '投资组合',
+    'footer.builtWith': 'Built with',
+    'footer.love': 'love',
+    'footer.using': 'using',
+    'diagnostics.title': 'Global Availability / Domain Status',
+    'diagnostics.overview': 'Overview',
+    'diagnostics.domainDns': 'Domain & DNS Verification',
+    'diagnostics.runDiagnostics': 'Run Diagnostics',
+    'diagnostics.copyReport': 'Copy Report',
+    'diagnostics.copied': 'Copied!',
+    'diagnostics.close': 'Close',
+    'diagnostics.cutoverStatus': 'Cutover Status',
+    'diagnostics.currentOrigin': 'Current Origin',
+    'diagnostics.domainConfig': 'Domain Configuration',
+    'diagnostics.backendHealth': 'Backend Health',
+    'diagnostics.detailedChecks': 'Detailed Verification Checks',
+    'diagnostics.operatorGuidance': 'Operator Guidance',
+    'diagnostics.documentation': 'Documentation',
+    'diagnostics.copyCutoverReport': 'Copy Cutover Report',
+  },
+  ko: {
+    'hero.title': 'X39 Matrix',
+    'hero.subtitle': '미래의 매트릭스 프로토콜',
+    'hero.description': 'X39 Matrix에 오신 것을 환영합니다 - 차세대 탈중앙화 기술',
+    'nav.home': '홈',
+    'nav.icp': 'ICP',
+    'nav.darkweb': '다크웹',
+    'nav.graphics': '그래픽',
+    'nav.portfolio': '포트폴리오',
+    'footer.builtWith': 'Built with',
+    'footer.love': 'love',
+    'footer.using': 'using',
+    'diagnostics.title': 'Global Availability / Domain Status',
+    'diagnostics.overview': 'Overview',
+    'diagnostics.domainDns': 'Domain & DNS Verification',
+    'diagnostics.runDiagnostics': 'Run Diagnostics',
+    'diagnostics.copyReport': 'Copy Report',
+    'diagnostics.copied': 'Copied!',
+    'diagnostics.close': 'Close',
+    'diagnostics.cutoverStatus': 'Cutover Status',
+    'diagnostics.currentOrigin': 'Current Origin',
+    'diagnostics.domainConfig': 'Domain Configuration',
+    'diagnostics.backendHealth': 'Backend Health',
+    'diagnostics.detailedChecks': 'Detailed Verification Checks',
+    'diagnostics.operatorGuidance': 'Operator Guidance',
+    'diagnostics.documentation': 'Documentation',
+    'diagnostics.copyCutoverReport': 'Copy Cutover Report',
   },
 };
+
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>('es');
 
-  useEffect(() => {
-    const savedLanguage = localStorage.getItem('language') as Language;
-    if (savedLanguage && translations[savedLanguage]) {
-      setLanguage(savedLanguage);
-    }
-  }, []);
-
-  const handleSetLanguage = (lang: Language) => {
-    setLanguage(lang);
-    localStorage.setItem('language', lang);
-  };
-
   const t = (key: string): string => {
-    const keys = key.split('.');
-    let value: any = translations[language];
-    
-    for (const k of keys) {
-      if (value && typeof value === 'object' && k in value) {
-        value = value[k];
-      } else {
-        return key;
-      }
-    }
-    
-    return typeof value === 'string' ? value : key;
+    return translations[language][key] || key;
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );

@@ -1,88 +1,77 @@
 {
   "kind": "build_request",
-  "title": "Make the header triangle code-rain effect more aggressive and elegant",
+  "title": "Connect and verify custom domain https://www.x39matrix.com with ICP canister + redirect/diagnostics updates",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-32",
-      "text": "Update the top navigation header’s red triangle code-rain effect to feel more aggressive while also more elegant: increase perceived intensity (density/speed/variation) but keep a refined, readable look that never obscures the brand logo/text or menu items.",
+      "id": "REQ-38",
+      "text": "Update the domain strategy and release documentation to include an operator-ready procedure for mapping and verifying the satellite domain `x39matrix.com` and its `www` host (`www.x39matrix.com`) against the existing deployed Internet Computer frontend canister, aligned with the canonical-domain strategy (canonical remains `https://x39matrix.org`).",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-4"
         ],
         "quotes": [
-          "Más agresivo y elegante"
+          "Estoy listo para vincular con  Https://www.x39matrix.com"
         ]
       },
       "acceptanceCriteria": [
-        "In the header area only, the triangle rain reads as noticeably more intense than the current implementation (higher density and/or faster motion with more variation), while still looking clean (not muddy/overfilled).",
-        "The brand area (logo + “x39Matrix” + subtext) and all nav items remain fully readable at all times; the effect must not visually overpower or cover them.",
-        "The effect remains confined to the header region (does not bleed into main content)."
+        "`frontend/docs/release/domain-strategy-and-hardening.en.md` explicitly covers `x39matrix.com` and `www.x39matrix.com` mapping/verification steps (DNS records, IC Dashboard custom domain registration, and expected outcomes).",
+        "`frontend/docs/release/go-live-runbook-2026-03-15.en.md` includes a clear section for adding/verifying `x39matrix.com` + `www.x39matrix.com` as satellite domains, including how redirects should behave to the canonical domain while preserving path/query/hash.",
+        "`frontend/docs/release/launch-verification-checklist.en.md` includes explicit post-cutover checks that `https://www.x39matrix.com` reaches the deployed app and then redirects to `https://x39matrix.org` (or otherwise behaves per the documented redirect strategy).",
+        "All newly added documentation text is in English."
       ]
     },
     {
-      "id": "REQ-33",
-      "text": "Refine `frontend/src/components/header/HeaderTriangleCodeRain.tsx` to implement an “aggressive + elegant” neon-red (#FF0000) triangle-rain style: use a pure-black aesthetic, stronger edge-defined triangles (stroke-forward), and more dynamic motion (irregular fall speeds and subtle rotation/jitter) while keeping the animation performance-safe and stable.",
+      "id": "REQ-39",
+      "text": "Enhance the in-app Domain & DNS verification UX so an operator can validate `https://www.x39matrix.com` specifically (in addition to the canonical domain), including clear English guidance for the most common failure modes (DNS target mismatch, default Nginx page symptom, TLS provisioning delay, missing IC Dashboard custom-domain registration).",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-4"
         ],
         "quotes": [
-          "Más agresivo y elegante"
+          "Estoy listo para vincular con  Https://www.x39matrix.com"
         ]
       },
       "acceptanceCriteria": [
-        "Triangles appear primarily as sharp, edge-defined glyphs (stroke-forward), with controlled glow so the shapes stay crisp rather than becoming large blurry blobs.",
-        "Motion has visible variation (not uniform): at least two distinct movement behaviors are observable (e.g., different speed bands and/or slight drift/jitter/rotation variance).",
-        "No runtime errors; no NaN/Infinity issues; no canvas rendering artifacts after resize.",
-        "`prefers-reduced-motion: reduce` results in a static (or significantly reduced) rendering without continuous animation, consistent with the current accessibility behavior.",
-        "No memory leaks: the animation loop and any observers are cleaned up correctly on unmount and do not multiply on re-render."
+        "When accessed from `https://www.x39matrix.com`, the diagnostics UI provides guidance that is correct for a satellite domain (i.e., it should not misleadingly instruct the operator to “stay on the canonical domain” as the only resolution if the operator’s goal is to verify the satellite-domain mapping/redirect).",
+        "The diagnostics report/output includes the current origin and clearly enumerates that `x39matrix.com` is a satellite domain and that `www.x39matrix.com` is expected to redirect to `https://x39matrix.org` while preserving deep links.",
+        "All new/modified user-facing strings introduced by this change are in English and follow the existing translation approach (do not edit immutable hook files or any file under `frontend/src/components/ui`)."
       ]
     },
     {
-      "id": "REQ-34",
-      "text": "Make the header background treatment more elegant and more aggressive by switching the header’s base to a true deep black (no visible gradient banding), with subtle texture/lines that support (not compete with) the triangle rain, keeping existing safe-area behavior and layout intact.",
+      "id": "REQ-40",
+      "text": "Update connectivity/domain diagnostics logic to add satellite-domain-aware checks for `x39matrix.com`/`www.x39matrix.com`, so the diagnostics can distinguish between (a) correct satellite mapping + redirect expectation and (b) broken mapping (e.g., default Nginx page, wrong DNS targets) and present actionable next steps.",
       "target": "frontend",
       "source": {
         "messageIds": [
           "msg-4"
         ],
         "quotes": [
-          "Más agresivo y elegante"
+          "Estoy listo para vincular con  Https://www.x39matrix.com"
         ]
       },
       "acceptanceCriteria": [
-        "The header background reads as deep black at a glance (no obvious multi-stop gradient), with only subtle texture accents.",
-        "Header safe-area padding (`safe-top`) and fixed positioning remain correct across mobile/desktop viewports.",
-        "No regressions to header layout: logo and text are not clipped/cropped on any viewport size."
+        "Diagnostics checks include explicit satellite-domain handling for `x39matrix.com` and `www.x39matrix.com` (recognize them as satellites; detect/report when running on them).",
+        "If the app is reached via `www.x39matrix.com`, diagnostics can communicate whether the current behavior matches the documented redirect strategy (client-side best-effort redirect to `https://x39matrix.org` preserving path/query/hash).",
+        "No redirect loops are introduced; deep links (path/query/hash) remain preserved by redirect behavior.",
+        "No changes are made to immutable paths: `frontend/src/hooks/useInternetIdentity.ts(x)`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`, or anything inside `frontend/src/components/ui`."
       ]
     }
   ],
   "constraints": [
-    "Do not edit any files under `frontend/src/components/ui` (shadcn/ui components are read-only).",
-    "Do not edit immutable hook/bootstrap files: `frontend/src/hooks/useInternetIdentity.ts(x)`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`.",
-    "Keep the effect accessibility-friendly and performance-safe; respect `prefers-reduced-motion`.",
-    "Keep all user-facing text in English (if any text is touched as part of these changes)."
+    "Frontend must not modify any files under immutable paths listed in SYSTEM_CONTEXT (especially `frontend/src/hooks/useInternetIdentity.ts(x)`, `frontend/src/hooks/useActor.ts`, `frontend/src/main.tsx`, and anything in `frontend/src/components/ui`).",
+    "Keep canonical domain as `https://x39matrix.org` and treat `x39matrix.com`/`www.x39matrix.com` as satellite domains unless the user explicitly requests changing the canonical domain.",
+    "All new or modified user-facing text must be English."
   ],
   "nonGoals": [
-    "Do not add new site sections or change navigation structure.",
-    "Do not introduce any backend changes for this request.",
-    "Do not add third-party animation libraries; keep the implementation within the existing React/Canvas approach."
+    "Implementing third-party DNS provider automation or APIs (e.g., Namecheap/Cloudflare API integrations).",
+    "Building a marketing/promotion distribution plan.",
+    "Changing backend canister logic or adding new backend endpoints for domain connection."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
   }
 }

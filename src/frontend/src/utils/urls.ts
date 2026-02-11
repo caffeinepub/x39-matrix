@@ -12,7 +12,7 @@ export const OFFICIAL_PORTAL_URL = 'https://x39matrix.org';
 /**
  * Satellite domain hostnames (for redirect logic)
  * Includes x39dark.com, x39matrix.com, and x39.org
- * These domains should redirect to the canonical domain
+ * These domains (including www variants) should redirect to the canonical domain
  */
 export const SATELLITE_DOMAINS = ['x39dark.com', 'x39matrix.com', 'x39.org'];
 
@@ -90,12 +90,37 @@ export function isOnOfficialDomain(): boolean {
 }
 
 /**
- * Check if current hostname is a satellite domain
+ * Check if current hostname is a satellite domain (including www variants)
  */
 export function isSatelliteDomain(): boolean {
   if (typeof window === 'undefined') return false;
   const currentHostname = window.location.hostname.toLowerCase();
   return SATELLITE_DOMAINS.some(
-    domain => currentHostname === domain || currentHostname.endsWith(`.${domain}`)
+    domain => currentHostname === domain || currentHostname === `www.${domain}`
   );
+}
+
+/**
+ * Get the satellite domain classification for the current hostname
+ * Returns the base satellite domain name or null if not a satellite
+ */
+export function getSatelliteDomainName(): string | null {
+  if (typeof window === 'undefined') return null;
+  const currentHostname = window.location.hostname.toLowerCase();
+  
+  for (const domain of SATELLITE_DOMAINS) {
+    if (currentHostname === domain || currentHostname === `www.${domain}`) {
+      return domain;
+    }
+  }
+  
+  return null;
+}
+
+/**
+ * Check if current hostname is a www variant (of any domain)
+ */
+export function isWwwVariant(): boolean {
+  if (typeof window === 'undefined') return false;
+  return window.location.hostname.toLowerCase().startsWith('www.');
 }

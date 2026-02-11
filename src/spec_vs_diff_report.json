@@ -1,87 +1,77 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-09T00:55:19.031Z",
-  "summary": "Diff updates the HeaderTriangleCodeRain particle system toward higher density/variation and adds a new pure-black header utility class with subtle scanline texture in global CSS. However, due to truncation and lack of evidence of header integration/layering, several acceptance-criteria items (readability guarantees, confinement, reduced-motion behavior, and cleanup) cannot be confirmed. The diff also introduces multiple unrelated global styling/animation utilities and metadata file changes not requested by the BuildRequest.",
+  "generatedAt": "2026-02-11T12:22:41.093Z",
+  "summary": "Diff implements satellite-domain detection/reporting and a client-side redirect hook toward the canonical domain, plus diagnostics UI refactoring. However, the required release documentation updates are not shown, and some requested operator guidance details (common failure modes) are not clearly evidenced in the provided diff excerpt. The diff also introduces unrelated or unrequested elements (multi-language strings, extra satellite domains, and guidance about Cloudflare/server-side redirects).",
   "missing_requirements": [
     {
-      "id": "REQ-32",
-      "requirement": "Ensure the header triangle rain remains confined to the header region, does not bleed into main content, and never obscures the brand/logo/menu readability.",
-      "reason": "The diff shows particle intensity changes inside the canvas component, but provides no evidence of z-index/layering, masking/clipping, or other integration details that guarantee the effect stays behind header text and confined to the header only.",
+      "id": "REQ-38",
+      "requirement": "Update release documentation to include operator-ready procedure for mapping/verifying satellite domains x39matrix.com and www.x39matrix.com, aligned with canonical https://x39matrix.org (including DNS records, IC Dashboard custom domain registration, redirect expectations, and post-cutover checklist).",
+      "reason": "No changes are shown to any of the required documentation files under frontend/docs/release/; only frontend source and state/summary files were modified.",
       "evidence": [
-        "frontend/src/components/header/HeaderTriangleCodeRain.tsx (truncated)"
+        "frontend/docs/release/domain-strategy-and-hardening.en.md (not modified in diff summary)",
+        "frontend/docs/release/go-live-runbook-2026-03-15.en.md (not modified in diff summary)",
+        "frontend/docs/release/launch-verification-checklist.en.md (not modified in diff summary)"
       ]
     },
     {
-      "id": "REQ-33",
-      "requirement": "Respect `prefers-reduced-motion: reduce` by rendering static or significantly reduced rendering without continuous animation.",
-      "reason": "The code checks `matchMedia('(prefers-reduced-motion: reduce)')`, but the animation loop behavior is truncated, so it cannot be verified that animation is disabled/reduced when reduced motion is enabled.",
+      "id": "REQ-39",
+      "requirement": "Diagnostics UX provides clear English guidance for common failure modes (DNS target mismatch, default Nginx page symptom, TLS provisioning delay, missing IC Dashboard custom-domain registration) when validating https://www.x39matrix.com.",
+      "reason": "TLS delay and DNS-target guidance are partially evidenced, but the diff excerpt does not show guidance for the 'default Nginx page' symptom or 'missing IC Dashboard custom-domain registration' as explicit operator guidance in the UI/report.",
       "evidence": [
-        "frontend/src/components/header/HeaderTriangleCodeRain.tsx (truncated)"
+        "frontend/src/hooks/useConnectivityDiagnostics.ts",
+        "frontend/src/components/DomainDnsVerificationView.tsx (truncated)"
       ]
     },
     {
-      "id": "REQ-33",
-      "requirement": "No memory leaks: animation loop and observers cleaned up correctly on unmount and do not multiply on re-render.",
-      "reason": "Refs for `animationFrameRef` and `resizeObserverRef` exist, but the effect cleanup is not shown due to truncation, so it cannot be confirmed that `cancelAnimationFrame` and `ResizeObserver.disconnect()` (or equivalent) occur on unmount.",
+      "id": "REQ-40",
+      "requirement": "Satellite-domain-aware diagnostics checks for x39matrix.com/www.x39matrix.com that can distinguish correct satellite mapping + redirect expectation vs broken mapping (e.g., default Nginx page, wrong DNS targets) and present actionable next steps.",
+      "reason": "Satellite detection and redirect expectation messaging are evidenced, but the diff excerpt does not show any explicit check/detection for the 'default Nginx page' scenario or concrete differentiation logic beyond domain/origin and HTTPS status (other checks may exist but are not evidenced in the truncated summary).",
       "evidence": [
-        "frontend/src/components/header/HeaderTriangleCodeRain.tsx (truncated)"
-      ]
-    },
-    {
-      "id": "REQ-33",
-      "requirement": "No canvas rendering artifacts after resize; stable resize handling.",
-      "reason": "There is an `updateCanvasSize` and `ResizeObserver` ref, but the resize observer setup and resize-handling logic in the animation loop are not visible in the truncated diff, so artifact-free resize behavior cannot be confirmed.",
-      "evidence": [
-        "frontend/src/components/header/HeaderTriangleCodeRain.tsx (truncated)"
-      ]
-    },
-    {
-      "id": "REQ-34",
-      "requirement": "Switch the header’s base to a true deep black with subtle texture/lines while keeping safe-area behavior and header layout intact.",
-      "reason": "A `.header-matrix-black` class with pure black background and subtle scanlines is added globally, but the diff provides no evidence that the header component actually uses this class or that safe-area/fixed positioning/layout behavior remains intact as required.",
-      "evidence": [
-        "frontend/src/index.css (truncated)"
+        "frontend/src/hooks/useConnectivityDiagnostics.ts (truncated)",
+        "frontend/src/components/DomainDnsVerificationView.tsx (truncated)"
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "Global OKLCH color system variable overhaul (light/dark tokens) including changing dark-mode primary to neon red, plus many unrelated theme tokens.",
-      "reason": "BuildRequest focuses on header triangle rain and header background treatment; it does not request a broad redesign of global color tokens.",
+      "description": "Introduced/expanded multilingual UI translation content (Spanish/Japanese/Chinese/etc.) in LanguageContext, adding many non-English user-facing strings.",
+      "reason": "BuildRequest requires all new/modified user-facing text introduced by these changes to be English; it did not request adding or expanding multi-language translations.",
       "evidence": [
-        "frontend/src/index.css (truncated)"
+        "frontend/src/components/LanguageContext.tsx"
       ]
     },
     {
-      "description": "Added general-purpose neon text classes (`.neon-text-red`, `.neon-text-sky-blue`) and multiple global keyframe animations (`glow-pulse`, `triangle-pulse`) and utility classes (`animate-*`).",
-      "reason": "Not explicitly requested; requirements are specifically about the header triangle rain rendering and header base background treatment.",
+      "description": "Added a new client-side domain redirect hook (useDomainRedirect) to redirect satellite domains and www variants to the canonical domain while preserving path/query/hash.",
+      "reason": "BuildRequest focuses on diagnostics/verification UX and documentation; it does not explicitly request implementing redirect logic as a new hook (though diagnostics should *communicate* expected redirect behavior).",
       "evidence": [
-        "frontend/src/index.css (truncated)"
+        "frontend/src/hooks/useDomainRedirect.ts"
       ]
     },
     {
-      "description": "Added various responsive text sizing utilities and other global utilities (mentioned in summaries) beyond the header background/effect scope.",
-      "reason": "Not part of REQ-32/33/34; introduces additional styling surface area unrelated to the requested header effect/background change.",
+      "description": "Expanded satellite domain list beyond the requested x39matrix.com/www.x39matrix.com to include x39dark.com and x39.org.",
+      "reason": "BuildRequest specifically calls out x39matrix.com and www.x39matrix.com as the satellite domains to document/verify; adding other satellites is not requested.",
       "evidence": [
-        "frontend/src/index.css (truncated)",
-        "frontend-file-summaries.txt (truncated)"
+        "frontend/src/utils/urls.ts"
       ]
     },
     {
-      "description": "Modified repository metadata/summary files (`frontend-file-summaries.txt`, `project_state.json`).",
-      "reason": "Not requested by the BuildRequest; these changes do not implement the specified header visual behavior.",
+      "description": "Operator guidance text suggests configuring redirects at 'DNS level (e.g., Cloudflare)' and 'server-side 301 redirects'.",
+      "reason": "BuildRequest non-goals explicitly exclude third-party DNS provider automation/APIs; while this is only guidance (not automation), Cloudflare-specific direction and server-side redirect implementation advice were not requested as part of the required UX changes.",
       "evidence": [
-        "frontend-file-summaries.txt (truncated)",
-        "project_state.json (truncated)"
+        "frontend/src/components/DomainDnsVerificationView.tsx (truncated)"
       ]
     }
   ],
-  "confidence": 0.68,
+  "confidence": 0.72,
   "changed_files": [
     "frontend-file-summaries.txt",
-    "frontend/src/components/header/HeaderTriangleCodeRain.tsx",
-    "frontend/src/index.css",
+    "frontend/src/components/ConnectivityDiagnostics.tsx",
+    "frontend/src/components/DomainDnsVerificationView.tsx",
+    "frontend/src/components/LanguageContext.tsx",
+    "frontend/src/hooks/useConnectivityDiagnostics.ts",
+    "frontend/src/hooks/useDomainRedirect.ts",
+    "frontend/src/utils/urls.ts",
     "project_state.json"
   ]
 }

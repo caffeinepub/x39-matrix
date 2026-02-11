@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { IntroScreen } from './components/IntroScreen';
 import { HolographicHero } from './components/HolographicHero';
+import { X39MatrixLaunchHeroBlock } from './components/X39MatrixLaunchHeroBlock';
 import { LiveICPPrice } from './components/LiveICPPrice';
 import { TrochoDriveElement } from './components/TrochoDriveElement';
 import { TokenAnalyticsPanel } from './components/TokenAnalyticsPanel';
 import { PerformanceMetricsDashboard } from './components/PerformanceMetricsDashboard';
 import { CrossPlatformPromotionalBanner } from './components/CrossPlatformPromotionalBanner';
-import { CrossPlatformDistributionSection } from './components/CrossPlatformDistributionSection';
 import { X39TokenPromotionalAirdropSection } from './components/X39TokenPromotionalAirdropSection';
 import { X39TokenRegistrationSection } from './components/X39TokenRegistrationSection';
 import { ElementChatSection } from './components/ElementChatSection';
@@ -16,12 +16,23 @@ import { PremiumICPSections } from './components/PremiumICPSections';
 import { GraficosSection } from './components/GraficosSection';
 import { InformacionVariadaSection } from './components/InformacionVariadaSection';
 import { RedditPromoSection } from './components/RedditPromoSection';
-import { AndroidMobileAppSection } from './components/AndroidMobileAppSection';
+import { LegalDisclaimerSection } from './components/legal/LegalDisclaimerSection';
+import { DailyNewsUpdates } from './components/DailyNewsUpdates';
 import { LanguageProvider } from './components/LanguageContext';
-import { AndroidDownloadButton } from './components/AndroidDownloadButton';
 import { ConnectivityDiagnostics } from './components/ConnectivityDiagnostics';
+import { ConnectivityStatusBanner } from './components/ConnectivityStatusBanner';
+import { LaunchDryRun } from './components/LaunchDryRun';
+import { March15LaunchInfoSection } from './components/March15LaunchInfoSection';
 import { X39PortfolioShell } from './components/portfolio/X39PortfolioShell';
-import { Menu, X, Globe, Award, Activity } from 'lucide-react';
+import { AdminGoLiveToggle } from './components/admin/AdminGoLiveToggle';
+import { AudioControl } from './components/AudioControl';
+import { OfficialWebsiteLinkCard } from './components/OfficialWebsiteLinkCard';
+import { HeaderTriangleCodeRain } from './components/header/HeaderTriangleCodeRain';
+import { useDomainRedirect } from './hooks/useDomainRedirect';
+import { useBackgroundAudio } from './hooks/useBackgroundAudio';
+import { OFFICIAL_PORTAL_URL } from './utils/urls';
+import { homeHeroCopy } from './content/homeHeroCopy';
+import { Menu, X, Globe, Activity, FileText, Rocket } from 'lucide-react';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,23 +44,44 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+  // Domain redirect hook - runs early to redirect satellite domains
+  useDomainRedirect();
+
   const [showIntro, setShowIntro] = useState(true);
+  const [introComplete, setIntroComplete] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState('es');
   const [showDiagnostics, setShowDiagnostics] = useState(false);
+  const [showLaunchDryRun, setShowLaunchDryRun] = useState(false);
 
-  // Check for diagnostics URL parameter
+  // Background audio hook - auto-plays after intro if not muted
+  const backgroundAudio = useBackgroundAudio(
+    '/assets/audio/chopin-nocturne-no-9.mp3',
+    introComplete
+  );
+
+  // Check for diagnostics and dry-run URL parameters
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.get('diagnostics') === '1') {
       setShowDiagnostics(true);
     }
+    if (params.get('dry-run') === '1') {
+      setShowLaunchDryRun(true);
+    }
   }, []);
+
+  const handleIntroComplete = () => {
+    setShowIntro(false);
+    setIntroComplete(true);
+  };
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      // Respect prefers-reduced-motion
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      element.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
       setMobileMenuOpen(false);
     }
   };
@@ -70,7 +102,7 @@ function App() {
   ];
 
   if (showIntro) {
-    return <IntroScreen onComplete={() => setShowIntro(false)} />;
+    return <IntroScreen onComplete={handleIntroComplete} />;
   }
 
   return (
@@ -89,88 +121,109 @@ function App() {
             }}
           />
 
-          {/* Navigation Bar */}
-          <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-red-500/30">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex flex-col items-center justify-between py-4">
-                {/* Official x39Matrix Header Logo - Competition Ready */}
-                <div className="flex flex-col items-center mb-3">
+          {/* Connectivity Status Banner - appears when diagnostics fail */}
+          <ConnectivityStatusBanner onOpenDiagnostics={() => setShowDiagnostics(true)} />
+
+          {/* Navigation Bar - Fixed with safe-area support and Matrix-black background */}
+          <nav className="fixed top-0 left-0 right-0 z-50 header-matrix-black border-b border-red-500/30 safe-top overflow-hidden">
+            {/* Header Triangle Code Rain - Intense neon red effect */}
+            <HeaderTriangleCodeRain />
+
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative" style={{ zIndex: 10 }}>
+              <div className="flex flex-col items-center justify-between py-3 sm:py-4">
+                {/* Official x39Matrix Header Logo - Optimized for mobile */}
+                <div className="flex flex-col items-center mb-2 sm:mb-3 no-clip-glow">
                   <div className="relative">
                     {/* Enhanced pulsating glow animation */}
-                    <div className="absolute inset-0 -m-3 bg-red-500/30 rounded-full blur-2xl animate-glow-pulse pointer-events-none" />
+                    <div className="absolute inset-0 -m-2 sm:-m-3 bg-red-500/30 rounded-full blur-xl sm:blur-2xl animate-glow-pulse pointer-events-none" />
                     
-                    {/* Official x39Matrix Logo with holographic effects */}
+                    {/* Official x39Matrix Logo with holographic effects - Responsive sizing */}
                     <img 
                       src="/assets/generated/triangle-holographic-3d.dim_400x400.png" 
-                      alt="x39Matrix Official Logo - Caffeine AI Builds" 
-                      className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 object-contain animate-triangle-pulse relative z-10"
+                      alt="x39Matrix Official Logo" 
+                      className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 object-contain animate-triangle-pulse relative z-10"
                       style={{
-                        filter: 'drop-shadow(0 0 20px rgba(255, 0, 0, 0.9)) drop-shadow(0 0 40px rgba(0, 100, 255, 0.6))'
+                        filter: 'drop-shadow(0 0 15px rgba(255, 0, 0, 0.9)) drop-shadow(0 0 30px rgba(0, 100, 255, 0.6))'
                       }}
                     />
                   </div>
                   
-                  {/* Brand Text - x39Matrix with Competition Badge */}
-                  <div className="flex items-center gap-2 mt-2">
-                    <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-red-500 neon-text-red font-orbitron tracking-wider text-center"
-                      style={{
-                        textShadow: '0 0 25px rgba(255, 0, 0, 0.9), 0 0 50px rgba(255, 0, 0, 0.7)',
-                      }}>
-                      x39Matrix
-                    </h1>
-                    <Award className="w-6 h-6 text-yellow-500 animate-pulse" />
-                  </div>
+                  {/* Brand Text - x39Matrix - Responsive sizing */}
+                  <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-red-500 neon-text-red font-orbitron tracking-wider text-center mt-1 sm:mt-2 no-clip-glow"
+                    style={{
+                      textShadow: '0 0 20px rgba(255, 0, 0, 0.9), 0 0 40px rgba(255, 0, 0, 0.7)',
+                      lineHeight: '1.3',
+                    }}>
+                    x39Matrix
+                  </h1>
                   
-                  {/* Subtext - ICP blockchain token + Competition */}
-                  <p className="text-sm sm:text-base md:text-lg font-semibold text-center mt-1 font-orbitron tracking-wide"
+                  {/* Subtext - Protocol positioning - Responsive sizing */}
+                  <p className="text-xs sm:text-sm md:text-base lg:text-lg font-semibold text-center mt-0.5 sm:mt-1 font-orbitron tracking-wide no-clip-glow"
                     style={{
                       color: '#C0C0C0',
-                      textShadow: '0 0 12px rgba(0, 150, 255, 0.7), 0 0 24px rgba(0, 150, 255, 0.5)',
+                      textShadow: '0 0 10px rgba(0, 150, 255, 0.7), 0 0 20px rgba(0, 150, 255, 0.5)',
+                      lineHeight: '1.3',
                     }}>
-                    ICP blockchain token | Caffeine AI Builds
+                    Protocol Layer | Token Utilities
                   </p>
                 </div>
 
                 {/* Navigation Menu */}
                 <div className="flex items-center justify-between w-full">
                   {/* Desktop Navigation */}
-                  <div className="hidden md:flex items-center space-x-8 mx-auto">
+                  <div className="hidden md:flex items-center space-x-6 lg:space-x-8 mx-auto">
                     <button
                       onClick={() => scrollToSection('portfolio-section')}
-                      className="text-gray-300 hover:text-red-500 transition-colors font-orbitron"
+                      className="text-gray-300 hover:text-red-500 transition-colors font-orbitron text-sm lg:text-base relative z-10"
                     >
                       Portfolio
                     </button>
                     <button
                       onClick={navigateToGovernance}
-                      className="text-gray-300 hover:text-red-500 transition-colors font-orbitron"
+                      className="text-gray-300 hover:text-red-500 transition-colors font-orbitron text-sm lg:text-base relative z-10"
                     >
                       Governance
                     </button>
                     <button
-                      onClick={() => scrollToSection('distribution-section')}
-                      className="text-gray-300 hover:text-red-500 transition-colors font-orbitron"
+                      onClick={() => scrollToSection('daily-news')}
+                      className="text-gray-300 hover:text-red-500 transition-colors font-orbitron text-sm lg:text-base relative z-10"
                     >
-                      Apps
+                      News
                     </button>
                     <button
                       onClick={() => scrollToSection('icp-section')}
-                      className="text-gray-300 hover:text-red-500 transition-colors font-orbitron"
+                      className="text-gray-300 hover:text-red-500 transition-colors font-orbitron text-sm lg:text-base relative z-10"
                     >
                       ICP
                     </button>
                     <button
                       onClick={() => scrollToSection('darkweb-section')}
-                      className="text-gray-300 hover:text-red-500 transition-colors font-orbitron"
+                      className="text-gray-300 hover:text-red-500 transition-colors font-orbitron text-sm lg:text-base relative z-10"
                     >
                       Dark Web
                     </button>
-                    <AndroidDownloadButton />
+                    <button
+                      onClick={() => scrollToSection('legal-disclaimer')}
+                      className="text-gray-300 hover:text-red-500 transition-colors font-orbitron text-sm lg:text-base relative z-10"
+                    >
+                      Legal
+                    </button>
+                    
+                    {/* Global Availability / Domain Status Button */}
+                    <button
+                      onClick={() => setShowDiagnostics(true)}
+                      className="flex items-center gap-2 text-gray-300 hover:text-red-500 transition-colors font-orbitron text-sm lg:text-base relative z-10"
+                      title="Check global availability and domain status"
+                    >
+                      <Globe className="w-4 h-4 lg:w-5 lg:h-5" />
+                      <span className="hidden lg:inline">Global Availability</span>
+                      <span className="lg:hidden">Status</span>
+                    </button>
                     
                     {/* Language Selector */}
-                    <div className="relative group">
-                      <button className="flex items-center gap-2 text-gray-300 hover:text-red-500 transition-colors font-orbitron">
-                        <Globe className="w-5 h-5" />
+                    <div className="relative group z-10">
+                      <button className="flex items-center gap-2 text-gray-300 hover:text-red-500 transition-colors font-orbitron text-sm lg:text-base">
+                        <Globe className="w-4 h-4 lg:w-5 lg:h-5" />
                         <span>{languages.find(l => l.code === currentLanguage)?.flag} {languages.find(l => l.code === currentLanguage)?.name}</span>
                       </button>
                       <div className="absolute right-0 mt-2 w-48 bg-black/95 border border-red-500/50 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
@@ -178,7 +231,7 @@ function App() {
                           <button
                             key={lang.code}
                             onClick={() => setCurrentLanguage(lang.code)}
-                            className="block w-full text-left px-4 py-2 text-gray-300 hover:bg-red-500/10 hover:text-red-500 transition-colors font-orbitron"
+                            className="block w-full text-left px-4 py-2 text-gray-300 hover:bg-red-500/10 hover:text-red-500 transition-colors font-orbitron text-sm"
                           >
                             {lang.flag} {lang.name}
                           </button>
@@ -188,10 +241,11 @@ function App() {
                   </div>
 
                   {/* Mobile Menu Button */}
-                  <div className="md:hidden ml-auto">
+                  <div className="md:hidden ml-auto relative z-10">
                     <button
                       onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                      className="text-gray-300 hover:text-red-500 transition-colors"
+                      className="text-gray-300 hover:text-red-500 transition-colors p-2"
+                      aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
                     >
                       {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                     </button>
@@ -202,41 +256,54 @@ function App() {
 
             {/* Mobile Menu */}
             {mobileMenuOpen && (
-              <div className="md:hidden bg-black/95 border-t border-red-500/30">
-                <div className="px-4 py-4 space-y-4">
+              <div className="md:hidden header-matrix-black border-t border-red-500/30 relative" style={{ zIndex: 10 }}>
+                <div className="px-4 py-4 space-y-3">
                   <button
                     onClick={() => scrollToSection('portfolio-section')}
-                    className="block w-full text-left text-gray-300 hover:text-red-500 transition-colors font-orbitron"
+                    className="block w-full text-left text-gray-300 hover:text-red-500 transition-colors font-orbitron py-2"
                   >
                     Portfolio
                   </button>
                   <button
                     onClick={navigateToGovernance}
-                    className="block w-full text-left text-gray-300 hover:text-red-500 transition-colors font-orbitron"
+                    className="block w-full text-left text-gray-300 hover:text-red-500 transition-colors font-orbitron py-2"
                   >
                     Governance
                   </button>
                   <button
-                    onClick={() => scrollToSection('distribution-section')}
-                    className="block w-full text-left text-gray-300 hover:text-red-500 transition-colors font-orbitron"
+                    onClick={() => scrollToSection('daily-news')}
+                    className="block w-full text-left text-gray-300 hover:text-red-500 transition-colors font-orbitron py-2"
                   >
-                    Apps
+                    News
                   </button>
                   <button
                     onClick={() => scrollToSection('icp-section')}
-                    className="block w-full text-left text-gray-300 hover:text-red-500 transition-colors font-orbitron"
+                    className="block w-full text-left text-gray-300 hover:text-red-500 transition-colors font-orbitron py-2"
                   >
                     ICP
                   </button>
                   <button
                     onClick={() => scrollToSection('darkweb-section')}
-                    className="block w-full text-left text-gray-300 hover:text-red-500 transition-colors font-orbitron"
+                    className="block w-full text-left text-gray-300 hover:text-red-500 transition-colors font-orbitron py-2"
                   >
                     Dark Web
                   </button>
-                  <div className="pt-2 border-t border-red-500/30">
-                    <AndroidDownloadButton />
-                  </div>
+                  <button
+                    onClick={() => scrollToSection('legal-disclaimer')}
+                    className="block w-full text-left text-gray-300 hover:text-red-500 transition-colors font-orbitron py-2"
+                  >
+                    Legal
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowDiagnostics(true);
+                      setMobileMenuOpen(false);
+                    }}
+                    className="flex items-center gap-2 w-full text-left text-gray-300 hover:text-red-500 transition-colors font-orbitron py-2"
+                  >
+                    <Globe className="w-5 h-5" />
+                    <span>Global Availability</span>
+                  </button>
                   <div className="pt-2 border-t border-red-500/30">
                     {languages.map((lang) => (
                       <button
@@ -256,47 +323,56 @@ function App() {
             )}
           </nav>
 
-          {/* Main Content */}
-          <main className="relative z-10 pt-32 md:pt-40">
-            {/* Hero Section with Enhanced Holographic Effects */}
+          {/* Main Content - Adjusted top padding to account for header height */}
+          <main className="relative z-10 pt-40 sm:pt-44 md:pt-48 lg:pt-52">
+            {/* X39 Matrix Launch Hero Block - NEW FEATURED SECTION */}
+            <X39MatrixLaunchHeroBlock />
+
+            {/* Hero Section - Updated with new concise Spanish copy */}
             <section className="hero-section min-h-screen flex items-center justify-center px-4">
-              <div className="text-center animate-fade-in-up">
+              <div className="text-center animate-fade-in-up max-w-4xl">
                 <h1 
                   className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-6 font-orbitron"
                   style={{
                     textShadow: '0 0 40px rgba(255, 0, 0, 0.9), 0 0 80px rgba(255, 0, 0, 0.7)',
                   }}
                 >
-                  X39 Matrix
+                  {homeHeroCopy.title}
                 </h1>
-                <p className="text-xl sm:text-2xl md:text-3xl text-gray-300 font-montserrat mb-4">
-                  Token ICP DeFi - Protocolo Matrix Descentralizado
+                <p className="text-xl sm:text-2xl md:text-3xl text-gray-300 font-montserrat mb-4 leading-relaxed">
+                  {homeHeroCopy.subtitle}
                 </p>
-                <div className="flex items-center justify-center gap-3 mt-6">
-                  <Award className="w-8 h-8 text-yellow-500 animate-pulse" />
-                  <p className="text-lg sm:text-xl text-yellow-500 font-orbitron">
-                    Caffeine AI Builds Competition
-                  </p>
-                  <Award className="w-8 h-8 text-yellow-500 animate-pulse" />
-                </div>
+                <p className="text-lg sm:text-xl text-gray-400 font-montserrat mt-6">
+                  {homeHeroCopy.supporting}
+                </p>
               </div>
             </section>
+
+            {/* Daily News Updates Section - First in content flow */}
+            <DailyNewsUpdates />
+
+            {/* Admin Go-Live Toggle - Only visible to authenticated admins */}
+            <section className="admin-section py-8 px-4">
+              <div className="max-w-4xl mx-auto">
+                <AdminGoLiveToggle />
+              </div>
+            </section>
+
+            {/* March 15, 2026 Launch Information Section - Conditionally visible based on publication state */}
+            <March15LaunchInfoSection onOpenLaunchDryRun={() => setShowLaunchDryRun(true)} />
 
             {/* X39 MATRIX PORTFOLIO - NNS-STYLE BLUE UI */}
             <section id="portfolio-section" className="portfolio-section py-16 px-4">
               <X39PortfolioShell />
             </section>
 
-            {/* CROSS-PLATFORM DISTRIBUTION SECTION */}
-            <section id="distribution-section" className="distribution-section">
-              <CrossPlatformDistributionSection />
-            </section>
-
             {/* CROSS-PLATFORM PROMOTIONAL BANNER - FIRST VISIBLE BLOCK */}
             <CrossPlatformPromotionalBanner />
 
             {/* X39 MATRIX TOKEN INFORMATION SECTION - SECOND VISIBLE BLOCK */}
-            <X39TokenRegistrationSection />
+            <section id="token-registration">
+              <X39TokenRegistrationSection />
+            </section>
 
             {/* X39 MATRIX TOKEN PROMOTIONAL AIRDROP SECTION - THIRD VISIBLE BLOCK */}
             <X39TokenPromotionalAirdropSection />
@@ -304,212 +380,83 @@ function App() {
             {/* TrochoDrive Section with Live ICP Price */}
             <section className="trochodrive-section py-16 px-4">
               <div className="max-w-7xl mx-auto">
-                {/* Live ICP Price - Positioned above triangle */}
-                <div className="mb-12">
-                  <LiveICPPrice />
-                </div>
+                {/* Live ICP Price */}
+                <LiveICPPrice />
 
-                {/* Central Triangle and X39 Matrix Text */}
+                {/* TrochoDrive Element - Central Triangle Eye */}
                 <TrochoDriveElement />
-              </div>
-            </section>
 
-            {/* INTERACTIVE PERFORMANCE METRICS DASHBOARD */}
-            <PerformanceMetricsDashboard />
-
-            {/* Token Analytics Panel */}
-            <section className="token-analytics-section py-16 px-4">
-              <div className="max-w-7xl mx-auto">
+                {/* Token Analytics Panel */}
                 <TokenAnalyticsPanel />
               </div>
             </section>
 
-            {/* ANDROID MOBILE APP SECTION */}
-            <AndroidMobileAppSection />
-
-            {/* Davos Outcomes Report Section */}
-            <DavosOutcomesReportSection />
-
-            {/* Element Chat Section */}
-            <ElementChatSection />
+            {/* Performance Metrics Dashboard */}
+            <PerformanceMetricsDashboard />
 
             {/* ICP Section */}
             <section id="icp-section" className="icp-section py-16 px-4">
-              <div className="max-w-4xl mx-auto">
-                <div className="bg-black/70 border-2 border-red-500/50 rounded-lg p-8 backdrop-blur-sm">
-                  <div className="mb-4">
-                    <span className="inline-block px-4 py-2 bg-red-500/20 border border-red-500 rounded-full text-red-500 font-bold text-sm neon-text-red">
-                      ICP
-                    </span>
-                  </div>
-                  <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 font-orbitron neon-text-red">
-                    Secretos Exclusivos del Ecosistema ICP
-                  </h2>
-                  <p className="text-gray-400 mb-6 font-montserrat">
-                    Descubre el futuro de la web descentralizada
-                  </p>
-                  <div className="text-gray-300 space-y-4 font-montserrat text-base leading-relaxed">
-                    <p>
-                      El Internet Computer Protocol (ICP) representa una revolución en la infraestructura de Internet,
-                      permitiendo que aplicaciones web se ejecuten completamente en blockchain sin necesidad de
-                      servidores tradicionales.
-                    </p>
-                    <p>
-                      Con su arquitectura única de canisters y su capacidad de escalar infinitamente, ICP está
-                      redefiniendo lo que es posible en el mundo de las aplicaciones descentralizadas.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </section>
+              <div className="max-w-7xl mx-auto space-y-16">
+                {/* Premium ICP Sections */}
+                <PremiumICPSections />
 
-            {/* Gráficos Section */}
-            <GraficosSection />
-
-            {/* Premium ICP Sections */}
-            <PremiumICPSections />
-
-            {/* Family/Friends Message */}
-            <section className="family-message-section py-12 px-4">
-              <div className="max-w-4xl mx-auto text-center">
-                <p 
-                  className="text-2xl sm:text-3xl font-bold text-red-500 neon-text-red font-orbitron"
-                  style={{
-                    textShadow: '0 0 20px rgba(255, 0, 0, 0.8), 0 0 40px rgba(255, 0, 0, 0.6)',
-                  }}
-                >
-                  Si no somos una familia, somos amigos.
-                </p>
+                {/* Gráficos Section */}
+                <GraficosSection />
               </div>
             </section>
 
             {/* Dark Web Section */}
             <section id="darkweb-section" className="darkweb-section py-16 px-4">
-              <div className="max-w-4xl mx-auto">
-                <div className="bg-black/70 border-2 border-red-500/50 rounded-lg p-8 backdrop-blur-sm">
-                  <div className="mb-4">
-                    <span className="inline-block px-4 py-2 bg-red-500/20 border border-red-500 rounded-full text-red-500 font-bold text-sm neon-text-red">
-                      Dark Web
-                    </span>
-                  </div>
-                  <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 font-orbitron neon-text-red">
-                    Riesgos de las Criptomonedas en la Dark Web
-                  </h2>
-                  <p className="text-gray-400 mb-6 font-montserrat">
-                    Análisis profesional de ciberseguridad
-                  </p>
-                  <div className="text-gray-300 space-y-6 font-montserrat text-base leading-relaxed">
-                    <div>
-                      <h3 className="text-xl font-bold text-red-500 mb-2 font-orbitron">
-                        1. Mercados Ilegales
-                      </h3>
-                      <p>
-                        La Dark Web alberga mercados donde se comercian bienes y servicios ilegales usando
-                        criptomonedas como método de pago anónimo.
-                      </p>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-red-500 mb-2 font-orbitron">
-                        2. Estafas y Fraudes
-                      </h3>
-                      <p>
-                        Muchos sitios en la Dark Web son esquemas de estafa diseñados para robar criptomonedas
-                        de usuarios desprevenidos.
-                      </p>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-red-500 mb-2 font-orbitron">
-                        3. Malware y Ransomware
-                      </h3>
-                      <p>
-                        Los ciberdelincuentes distribuyen malware y ransomware, exigiendo pagos en criptomonedas
-                        para desbloquear sistemas infectados.
-                      </p>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-red-500 mb-2 font-orbitron">
-                        4. Lavado de Dinero
-                      </h3>
-                      <p>
-                        Las criptomonedas se utilizan en esquemas de lavado de dinero debido a su naturaleza
-                        pseudoanónima y la dificultad de rastrear transacciones.
-                      </p>
-                    </div>
-                    <p className="italic text-gray-400 mt-6">
-                      Es crucial mantener prácticas de seguridad rigurosas y evitar interactuar con sitios
-                      sospechosos en la Dark Web.
-                    </p>
-                  </div>
+              <div className="max-w-7xl mx-auto space-y-16">
+                {/* Davos Outcomes Report */}
+                <DavosOutcomesReportSection />
 
-                  {/* ICP Dark Web Dangers Warning */}
-                  <div className="mt-8 bg-black border-2 border-red-500 rounded-lg p-6">
-                    <h3 className="text-2xl font-bold text-red-500 mb-4 font-orbitron neon-text-red">
-                      🚨 PELIGROS ICP DARK WEB
-                    </h3>
-                    <ul className="text-green-400 space-y-2 font-montserrat text-base">
-                      <li>• Estafas de inversión falsas prometiendo retornos garantizados</li>
-                      <li>• Phishing de wallets ICP para robar tokens</li>
-                      <li>• Contratos inteligentes maliciosos disfrazados de legítimos</li>
-                      <li>• Esquemas Ponzi usando la marca ICP</li>
-                      <li>• Venta de tokens ICP falsos o robados</li>
-                    </ul>
-                  </div>
-                </div>
+                {/* Element Chat Section */}
+                <ElementChatSection />
               </div>
             </section>
 
             {/* Información Variada Section */}
             <InformacionVariadaSection />
 
-            {/* Reddit Promotional Message Section */}
+            {/* Reddit Promo Section */}
             <RedditPromoSection />
 
-            {/* Final Message Section */}
-            <section className="final-message-section py-12 px-4">
-              <div className="max-w-4xl mx-auto text-center">
-                <p 
-                  className="text-2xl sm:text-3xl font-bold text-red-500 neon-text-red font-orbitron"
-                  style={{
-                    textShadow: '0 0 20px rgba(255, 0, 0, 0.8), 0 0 40px rgba(255, 0, 0, 0.6)',
-                  }}
-                >
-                  Si no somos una familia, somos amigos. Esperamos que esto ayude a nuestra familia ICP.
-                </p>
-              </div>
+            {/* Legal Disclaimer Section */}
+            <section id="legal-disclaimer">
+              <LegalDisclaimerSection />
             </section>
+          </main>
 
-            {/* Footer */}
-            <footer className="footer-section py-12 px-4 bg-black/90 border-t border-red-500/30">
-              <div className="max-w-7xl mx-auto text-center">
-                <p className="text-gray-400 mb-4 font-montserrat">
-                  © 2026. Built with love using <a href="https://caffeine.ai" target="_blank" rel="noopener noreferrer" className="text-red-500 hover:text-red-400 transition-colors">caffeine.ai</a>
-                </p>
-                <p className="text-red-500 font-orbitron neon-text-red mb-2">
-                  Contacto: suporte@x39.com
-                </p>
-                <div className="flex items-center justify-center gap-2 mt-4">
-                  <Award className="w-5 h-5 text-yellow-500" />
-                  <p className="text-yellow-500 font-orbitron text-sm">
-                    Caffeine AI Builds Competition Entry
-                  </p>
-                  <Award className="w-5 h-5 text-yellow-500" />
+          {/* Footer */}
+          <footer className="relative z-10 bg-black/90 border-t border-red-500/30 py-12 px-4 safe-bottom">
+            <div className="max-w-7xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                {/* Official Website Link Card */}
+                <div className="md:col-span-3">
+                  <OfficialWebsiteLinkCard />
                 </div>
-                <div className="mt-6">
-                  <button
-                    onClick={() => setShowDiagnostics(true)}
-                    className="inline-flex items-center gap-2 text-gray-500 hover:text-red-500 transition-colors text-sm font-montserrat"
-                  >
-                    <Activity className="w-4 h-4" />
-                    Diagnostics
-                  </button>
+
+                {/* Audio Control */}
+                <div className="md:col-span-3 flex justify-center">
+                  <AudioControl audio={backgroundAudio} />
                 </div>
               </div>
-            </footer>
-          </main>
+
+              <div className="text-center text-gray-400 text-sm font-montserrat">
+                <p>© 2026. Built with ❤️ using <a href="https://caffeine.ai" target="_blank" rel="noopener noreferrer" className="text-red-500 hover:text-red-400 transition-colors">caffeine.ai</a></p>
+              </div>
+            </div>
+          </footer>
 
           {/* Diagnostics Modal */}
           {showDiagnostics && (
             <ConnectivityDiagnostics onClose={() => setShowDiagnostics(false)} />
+          )}
+
+          {/* Launch Dry-Run Modal */}
+          {showLaunchDryRun && (
+            <LaunchDryRun onClose={() => setShowLaunchDryRun(false)} />
           )}
         </div>
       </LanguageProvider>

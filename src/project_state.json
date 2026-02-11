@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 158,
+  "projectStateVersion": 162,
   "summary": "Project has expanded from x39Matrix.org minimal rebrand into a full X39Matrix token portal: canonical domain intended to be x39matrix.org (with x39dark.com as satellite 301 redirect), prominent triangular logo branding, multilingual messaging, airdrop/claim UX with wallet selector + manual address entry, token launch messaging/scheduling (now targeting March 15, 2026 with legal disclaimer), optional NNS-like staking/governance surfaces and market analytics panels; ongoing major blocker is custom-domain DNS/SSL resolution for x39matrix.org.",
   "architectural_notes": [
     "Frontend is a React SPA (TypeScript) styled with Tailwind CSS + custom cyberpunk animation utilities (neon glow, triangle pulse, mist float) and uses lucide-react icons extensively.",
@@ -26,7 +26,7 @@
     "Deployment failures/guard blocks occurred during publish attempts; draft expirations repeatedly interrupted releases.",
     "Requested prominent launch/countdown block on x39dark.com may conflict with the canonical-domain plan (x39matrix.org primary with x39dark.com 301 redirect), requiring a clarified redirect/content strategy."
   ],
-  "isFixRequest": false,
+  "isFixRequest": true,
   "generatedImages": [
     {
       "filename": "frontend/public/assets/generated/android-adaptive-background.dim_1024x1024.png",
@@ -914,6 +914,38 @@
         "REQ-34"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-update-the-repository-s-domain-documentation-to-provide-an-operator-ready-step-by-step-procedure-for-mapping-the-apex-custom-domain-x39matrix-org-to-the-existing-deployed-internet-computer-frontend-canister-so-that-visiting-https-x39matrix-org-loads-the-current-deployed-design",
+      "title": "Update the repository’s domain documentation to provide an operator-ready, step-by-step procedure for mapping the apex custom domain `x39matrix.org` to the existing deployed Internet Computer frontend canister so that visiting `https://x39matrix.org` loads the current deployed design.",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-the-in-app-domain-dns-verification-experience-so-an-operator-can-reliably-confirm-that-https-x39matrix-org-is-correctly-serving-the-deployed-app-not-a-default-page-with-clear-english-guidance-aligned-to-the-existing-release-runbooks",
+      "title": "Enhance the in-app Domain & DNS verification experience so an operator can reliably confirm that `https://x39matrix.org` is correctly serving the deployed app (not a default page), with clear, English guidance aligned to the existing release runbooks.",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-the-in-app-domain-dns-verification-ux-so-an-operator-can-validate-https-www-x39matrix-com-specifically-in-addition-to-the-canonical-domain-including-clear-english-guidance-for-the-most-common-failure-modes-dns-target-mismatch-default-nginx-page-symptom-tls-provisioning-delay-missing-ic-dashboard-custom-domain-registration",
+      "title": "Enhance the in-app Domain & DNS verification UX so an operator can validate `https://www.x39matrix.com` specifically (in addition to the canonical domain), including clear English guidance for the most common failure modes (DNS target mismatch, default Nginx page symptom, TLS provisioning delay, missing IC Dashboard custom-domain registration).",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-connectivity-domain-diagnostics-logic-to-add-satellite-domain-aware-checks-for-x39matrix-com-www-x39matrix-com-so-the-diagnostics-can-distinguish-between-a-correct-satellite-mapping-redirect-expectation-and-b-broken-mapping-e-g-default-nginx-page-wrong-dns-targets-and-present-actionable-next-steps",
+      "title": "Update connectivity/domain diagnostics logic to add satellite-domain-aware checks for `x39matrix.com`/`www.x39matrix.com`, so the diagnostics can distinguish between (a) correct satellite mapping + redirect expectation and (b) broken mapping (e.g., default Nginx page, wrong DNS targets) and present actionable next steps.",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -1129,6 +1161,34 @@
       "id": "AR-44",
       "summary": "Revise the top header/banner to be more visually prominent: apply a black Matrix-style background and add an intense neon-red (#FF0000) “code rain” effect composed of small red triangles (matching the main triangular logo) within the banner area.",
       "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-45",
+      "summary": "Connect custom domain x39matrix.org to the existing deployed ICP canister (Caffeine project) so visiting https://x39matrix.org loads the current frontend design, including required DNS/SSL/canister domain-mapping configuration steps (e.g., Namecheap).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-48",
+      "summary": "Perform a regression pass focused on canonical-domain behavior so that when the app is accessed via `https://x39matrix.org`, the user remains on that domain (no redirect loops), while satellite domains continue to best-effort redirect to the canonical domain without breaking deep links (path/query/hash).",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-49",
+      "summary": "Connect and verify custom domain https://www.x39matrix.com to the deployed ICP frontend canister (DNS/SSL/canister domain-mapping), aligned with the canonical-domain/redirect strategy.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-50",
+      "summary": "Update the domain strategy and release documentation to include an operator-ready procedure for mapping and verifying the satellite domain `x39matrix.com` and its `www` host (`www.x39matrix.com`) against the existing deployed Internet Computer frontend canister, aligned with the canonical-domain strategy (canonical remains `https://x39matrix.org`).",
+      "reqIds": [
+        "REQ-38"
+      ],
       "status": "pending"
     }
   ],

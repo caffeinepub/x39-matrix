@@ -1,6 +1,6 @@
 import React from 'react';
 import { Zap, Globe, TrendingUp } from 'lucide-react';
-import { OFFICIAL_PORTAL_URL, getCurrentOrigin } from '../utils/urls';
+import { OFFICIAL_PORTAL_URL } from '../utils/urls';
 
 export function CrossPlatformPromotionalBanner() {
   const platformLogos = [
@@ -28,7 +28,7 @@ export function CrossPlatformPromotionalBanner() {
             <div className="flex items-center justify-center gap-3 mb-4">
               <Zap className="w-10 h-10 text-red-500 animate-pulse" />
               <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-red-500 font-orbitron uppercase tracking-wider animate-title-glow">
-                ¡X39 Matrix Token - Disponible en {OFFICIAL_PORTAL_URL}!
+                ¡X39 Matrix Token - Disponible Ahora!
               </h1>
               <Zap className="w-10 h-10 text-red-500 animate-pulse" />
             </div>
@@ -44,7 +44,7 @@ export function CrossPlatformPromotionalBanner() {
             {/* Left Column: Domain Display */}
             <div className="bg-black/50 rounded-lg p-6 md:p-8 border-2 border-red-500/50">
               <h2 className="text-2xl md:text-3xl font-bold text-red-500 neon-text-red font-orbitron text-center mb-6 uppercase">
-                Visita Nuestro Portal
+                Official Portal
               </h2>
               <div className="bg-gradient-to-br from-red-500/30 via-red-500/20 to-transparent border-2 border-red-500/70 rounded-lg p-6 text-center">
                 <a 
@@ -61,17 +61,6 @@ export function CrossPlatformPromotionalBanner() {
                 <p className="text-red-500 text-sm md:text-base font-montserrat mt-4 neon-text-red">
                   Portal Oficial del Token X39 Matrix
                 </p>
-                
-                {/* Fallback link using current origin */}
-                <div className="mt-6 pt-4 border-t border-red-500/30">
-                  <p className="text-gray-400 text-xs mb-2">O accede desde este entorno:</p>
-                  <a 
-                    href={getCurrentOrigin()}
-                    className="relative z-10 inline-block text-lg md:text-xl font-semibold text-gray-300 font-orbitron hover:text-red-400 transition-colors duration-300 cursor-pointer underline"
-                  >
-                    {getCurrentOrigin()}
-                  </a>
-                </div>
               </div>
             </div>
 

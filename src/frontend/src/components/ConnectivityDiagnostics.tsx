@@ -254,7 +254,6 @@ export function ConnectivityDiagnostics({ onClose }: ConnectivityDiagnosticsProp
               checks={checks}
               backendHealth={backendHealth}
               onCopyReport={handleCopyCutoverReport}
-              copyStatus={copyStatus}
             />
           )}
         </div>

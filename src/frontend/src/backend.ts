@@ -215,8 +215,11 @@ export interface backendInterface {
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
     getHolding(id: bigint): Promise<Holding | null>;
+    getLaunchDate(): Promise<string>;
     getProducts(): Promise<Array<Product>>;
     getProposal(id: bigint): Promise<Proposal | null>;
+    getPublicationState(): Promise<boolean>;
+    getReceiverPrincipal(): Promise<Principal>;
     getStripeSessionStatus(sessionId: string): Promise<StripeSessionStatus>;
     getUserHoldings(principal: Principal): Promise<Array<Holding>>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
@@ -226,6 +229,7 @@ export interface backendInterface {
     proxyIcpKlines(): Promise<string>;
     proxyIcpPrice(): Promise<string>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
+    setPublicationState(state: boolean): Promise<void>;
     setStripeConfiguration(config: StripeConfiguration): Promise<void>;
     transform(input: TransformationInput): Promise<TransformationOutput>;
     unlockHolding(id: bigint): Promise<void>;
@@ -501,6 +505,20 @@ export class Backend implements backendInterface {
             return from_candid_opt_n23(this._uploadFile, this._downloadFile, result);
         }
     }
+    async getLaunchDate(): Promise<string> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getLaunchDate();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getLaunchDate();
+            return result;
+        }
+    }
     async getProducts(): Promise<Array<Product>> {
         if (this.processError) {
             try {
@@ -527,6 +545,34 @@ export class Backend implements backendInterface {
         } else {
             const result = await this.actor.getProposal(arg0);
             return from_candid_opt_n24(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getPublicationState(): Promise<boolean> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getPublicationState();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getPublicationState();
+            return result;
+        }
+    }
+    async getReceiverPrincipal(): Promise<Principal> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getReceiverPrincipal();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getReceiverPrincipal();
+            return result;
         }
     }
     async getStripeSessionStatus(arg0: string): Promise<StripeSessionStatus> {
@@ -652,6 +698,20 @@ export class Backend implements backendInterface {
             }
         } else {
             const result = await this.actor.saveCallerUserProfile(arg0);
+            return result;
+        }
+    }
+    async setPublicationState(arg0: boolean): Promise<void> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.setPublicationState(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.setPublicationState(arg0);
             return result;
         }
     }
